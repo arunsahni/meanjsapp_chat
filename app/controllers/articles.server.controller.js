@@ -15,6 +15,22 @@ exports.create = function(req, res) {
 	var article = new Article(req.body);
 	article.user = req.user;
 
+	/* Bulk Data Script - Should be remove in future commit*/
+	/*for(var i = 0;i <= 500; i++) {
+		var articleloop = new Article(req.body);
+		articleloop.title = 'Pankaj-'+i;
+		articleloop.content = 'Dewangan ' +i;
+		articleloop.save(function(err) {
+			if (err) {
+				return res.status(400).send({
+					message: errorHandler.getErrorMessage(err)
+				});
+			} else {
+				console.log('Saved Data '+articleloop.title);
+			}
+		});
+	}*/
+
 	article.save(function(err) {
 		if (err) {
 			return res.status(400).send({
@@ -37,26 +53,41 @@ exports.read = function(req, res) {
  * Update a article
  */
 exports.update = function(req, res) {
-	var article = req.article;
-
-	article = _.extend(article, req.body);
-
-	article.save(function(err) {
+	var conditions = {_id: req.body._id},
+		update = {
+			title: req.body.title,
+			content: req.body.content
+		};
+	Article.findOneAndUpdate(conditions, update, function (err, article){
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
-		} else {
-			res.json(article);
 		}
+		res.json(article);
 	});
+
+	/*This is another way to update the record*/
+	/*Article.findOne({ _id: req.body._id }, function (err, article) {
+		article.title = req.body.title;
+		article.content = req.body.content;
+		article.save(function(err) {
+			if (err) {
+				return res.status(400).send({
+					message: errorHandler.getErrorMessage(err)
+				});
+			} else {
+				res.json(article);
+			}
+		});
+	});*/
 };
 
 /**
  * Delete an article
  */
 exports.delete = function(req, res) {
-	var article = req.article;
+	var article = new Article(req.body);
 
 	article.remove(function(err) {
 		if (err) {
@@ -87,18 +118,29 @@ exports.list = function(req, res) {
 /**
  * Article middleware
  */
-exports.articleByID = function(req, res, next, id) {
-	Article.findById(id).populate('user', 'displayName').exec(function(err, article) {
+exports.articleByID = function(req, res, next) {
+
+	if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+		return res.status(400).send({
+			message: 'Article is invalid'
+		});
+	}
+
+	Article.findById(req.params.id).populate('user', 'displayName').exec(function(err, article) {
 		if (err) return next(err);
-		if (!article) return next(new Error('Failed to load article ' + id));
-		req.article = article;
-		next();
+		if (!article) {
+			return res.status(404).send({
+				message: 'Article not found'
+			});
+		}
+		res.json(article);
 	});
 };
 
 /**
  * Article authorization middleware
  */
+/*This should be remove and place somewhere in the middle layer as midleware*/
 exports.hasAuthorization = function(req, res, next) {
 	if (req.article.user.id !== req.user.id) {
 		return res.status(403).send({
