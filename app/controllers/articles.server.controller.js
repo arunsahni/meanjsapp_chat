@@ -8,6 +8,12 @@ var mongoose = require('mongoose'),
 	Article = mongoose.model('Article'),
 	_ = require('lodash');
 
+var Pusher = require('pusher');
+var pusher = new Pusher({
+	appId: '114340',
+	key: 'f9ee22d1cb0b7cc349e6',
+	secret: '76fccf9f4cf77599cdd6'
+});
 /**
  * Create a article
  */
@@ -37,6 +43,7 @@ exports.create = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
+			pusher.trigger('Article-channel', 'Created-event', {"message": "Article Created"});
 			res.json(article);
 		}
 	});
@@ -64,6 +71,8 @@ exports.update = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		}
+		pusher.trigger('Article-channel', 'Update-event', {"message": "Article Updated"});
+
 		res.json(article);
 	});
 
@@ -95,6 +104,7 @@ exports.delete = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
+			pusher.trigger('Article-channel', 'Deleted-event', {"message": "Article Deleted"});
 			res.json(article);
 		}
 	});
