@@ -29,4 +29,8 @@ module.exports = function(app) {
 	app.post('/article/delete', function(req, res) {
 		articles.delete(req, res);
 	});
+
+	app.get('/pusher',function(req,res){
+		articles.generatePusher(req,res);
+	})
 };

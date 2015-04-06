@@ -24,7 +24,9 @@
 		serviceFactory.deleteArticle = function (req, res) {
 			return $http.post('/article/delete', req);
 		};
-
+		serviceFactory.generatePusher = function (req, res){
+			return $http.get('/pusher');
+		}
 		return serviceFactory;
 	}
 ]);

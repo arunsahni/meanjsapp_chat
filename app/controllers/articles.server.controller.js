@@ -43,7 +43,7 @@ exports.create = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			pusher.trigger('Article-channel', 'Created-event', {'message': 'Article Created'});
+
 			res.json(article);
 		}
 	});
@@ -71,7 +71,7 @@ exports.update = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		}
-		pusher.trigger('Article-channel', 'Update-event', {'message': 'Article Updated'});
+
 
 		res.json(article);
 	});
@@ -104,7 +104,7 @@ exports.delete = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			pusher.trigger('Article-channel', 'Deleted-event', {'message': 'Article Deleted'});
+
 			res.json(article);
 		}
 	});
@@ -159,3 +159,8 @@ exports.hasAuthorization = function(req, res, next) {
 	}
 	next();
 };
+
+exports.generatePusher =function(req,res){
+	//console.log("Here");
+	pusher.trigger('Pusher-channel', 'Pusher-event', {'message': 'Pusher Genetrated'});
+}
