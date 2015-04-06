@@ -43,7 +43,7 @@ exports.create = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			pusher.trigger('Article-channel', 'Created-event', {"message": "Article Created"});
+			pusher.trigger('Article-channel', 'Created-event', {'message': 'Article Created'});
 			res.json(article);
 		}
 	});
@@ -62,7 +62,7 @@ exports.read = function(req, res) {
 exports.update = function(req, res) {
 	var conditions = {_id: req.body._id},
 		update = {
-			title: req.body.title,
+			tile: req.body.title,
 			content: req.body.content
 		};
 	Article.findOneAndUpdate(conditions, update, function (err, article){
@@ -71,7 +71,7 @@ exports.update = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		}
-		pusher.trigger('Article-channel', 'Update-event', {"message": "Article Updated"});
+		pusher.trigger('Article-channel', 'Update-event', {'message': 'Article Updated'});
 
 		res.json(article);
 	});
@@ -104,7 +104,7 @@ exports.delete = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			pusher.trigger('Article-channel', 'Deleted-event', {"message": "Article Deleted"});
+			pusher.trigger('Article-channel', 'Deleted-event', {'message': 'Article Deleted'});
 			res.json(article);
 		}
 	});
