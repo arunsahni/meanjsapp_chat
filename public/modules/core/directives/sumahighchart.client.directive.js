@@ -5,8 +5,8 @@ angular.module('core').directive('sumahighchart', function () {
 		restrict: 'E',
 		template: '<div></div>',
 		scope: {
-			chartData: "=value",
-			chartObj: "=?"
+			chartData: '=value',
+			chartObj: '=?'
 		},
 		transclude: true,
 		replace: true,
