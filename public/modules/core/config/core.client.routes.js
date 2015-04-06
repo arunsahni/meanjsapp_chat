@@ -12,8 +12,8 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider',
 			url: '/',
 			templateUrl: 'modules/users/views/authentication/signin.client.view.html'
 		}).
-        state('deshboard', {
-            url: '/deshboard',
+        state('dashboard', {
+            url: '/dashboard',
             templateUrl: 'modules/core/views/home.client.view.html'
         });
 	}
