@@ -5,6 +5,22 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
 	function($scope, $stateParams, $location, Authentication, Articles) {
 		$scope.authentication = Authentication;
 
+		$scope.sumaChart = {
+			chart: {
+				type: 'bar',
+				height: '400'
+
+			},
+			series: [{
+				data: [10, 15, 12, 8, 7]
+			}],
+			title: {
+				text: 'Sumasoft Highchart'
+			},
+
+			loading: false
+		};
+
 		$scope.create = function() {
 			$scope.title = this.title;
 			$scope.content = this.content;
