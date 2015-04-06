@@ -11,6 +11,10 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider',
 		state('home', {
 			url: '/',
 			templateUrl: 'modules/users/views/authentication/signin.client.view.html'
-		});
+		}).
+        state('deshboard', {
+            url: '/deshboard',
+            templateUrl: 'modules/core/views/home.client.view.html'
+        });
 	}
 ]);
