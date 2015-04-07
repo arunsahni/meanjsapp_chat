@@ -26,7 +26,7 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$http
 
 				// And redirect to the index page
 				$location.path('/dashboard');
-                toastr.success('You are successfully logged in.', 'done')
+                toastr.success('You are successfully logged in.', 'done');
 			}).error(function(response) {
 				$scope.error = response.message;
 			});
