@@ -7,13 +7,8 @@ var mongoose = require('mongoose'),
 	errorHandler = require('./errors.server.controller'),
 	Article = mongoose.model('Article'),
 	_ = require('lodash');
+var pusherService = require('../../config/pusher');
 
-var Pusher = require('pusher');
-var pusher = new Pusher({
-	appId: '114340',
-	key: 'f9ee22d1cb0b7cc349e6',
-	secret: '76fccf9f4cf77599cdd6'
-});
 /**
  * Create a article
  */
@@ -159,8 +154,9 @@ exports.hasAuthorization = function(req, res, next) {
 	}
 	next();
 };
-
+/*
+* Pusher creating
+* */
 exports.generatePusher =function(req,res){
-	//console.log("Here");
-	pusher.trigger('Pusher-channel', 'Pusher-event', {'message': 'Pusher Genetrated'});
+	pusherService.pusherGenerate('Pusher-channel', 'Pusher-event', {'message': 'Pusher Genetrated'});
 };
