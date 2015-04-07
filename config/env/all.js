@@ -26,6 +26,8 @@ module.exports = {
 				'public/lib/angular-ui-router/release/angular-ui-router.js',
 				'public/lib/angular-ui-utils/ui-utils.js',
 				'public/lib/angular-bootstrap/ui-bootstrap-tpls.js',
+				'public/lib/highcharts-release/adapters/standalone-framework.src.js',
+				'public/lib/highcharts-release/highcharts.src.js',
 				'public/lib/pusher-angular/lib/pusher-angular.js'
 			]
 		},
