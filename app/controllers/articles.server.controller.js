@@ -7,7 +7,7 @@ var mongoose = require('mongoose'),
 	errorHandler = require('./errors.server.controller'),
 	Article = mongoose.model('Article'),
 	_ = require('lodash');
-var pusherService = require('../../config/pusher');
+var pusherService = require('../core/pusher');
 
 /**
  * Create a article
