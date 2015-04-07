@@ -38,14 +38,13 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
 
 		};
 
+		PusherService.listen('Pusher-channel','Pusher-event', function(err, data) {
+			window.alert(data.message);
+		});
+
 		// Find a list of Articles
 		$scope.find = function() {
 			Articles.getArticles().success(function(articles){
-				PusherService.channel('Pusher-channel','Pusher-event', function(err, data) {
-					window.alert(data.message);
-				});/*.bind('Pusher-event', function(data) {
-					window.alert('Message: ' + data.message);
-				});*/
 				$scope.articles = articles;
 			});
 		};

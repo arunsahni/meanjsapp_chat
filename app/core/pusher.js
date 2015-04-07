@@ -4,6 +4,7 @@
 'use strict';
 
 var Pusher = require('pusher');
+//We will move the API key somewhere in Enum file - Pankaj
 var pusher = new Pusher({
     appId: '114340',
     key: 'f9ee22d1cb0b7cc349e6',
