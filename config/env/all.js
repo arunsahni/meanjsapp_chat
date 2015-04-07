@@ -15,6 +15,7 @@ module.exports = {
 			css: [
 				'public/lib/bootstrap/dist/css/bootstrap.css',
 				'public/lib/bootstrap/dist/css/bootstrap-theme.css',
+				'public/lib/angular-toastr/dist/angular-toastr.css'
 			],
 			js: [
 				'public/lib/angular/angular.js',
@@ -28,6 +29,8 @@ module.exports = {
 				'public/lib/angular-bootstrap/ui-bootstrap-tpls.js',
 				'public/lib/highcharts-release/adapters/standalone-framework.src.js',
 				'public/lib/highcharts-release/highcharts.src.js',
+                'public/lib/angular-toastr/dist/angular-toastr.js',
+				'public/lib/angular-bootstrap/ui-bootstrap-tpls.js',
 				'public/lib/pusher-angular/lib/pusher-angular.js'
 			]
 		},

@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('users').controller('SettingsController', ['$scope', '$http', '$location', 'Users', 'Authentication',
-	function($scope, $http, $location, Users, Authentication) {
+angular.module('users').controller('SettingsController', ['$scope', '$http', '$location', 'Users', 'Authentication', 'toastr',
+	function($scope, $http, $location, Users, Authentication, toastr) {
 		$scope.user = Authentication.user;
 
 		// If user is not signed in then redirect back home
@@ -47,6 +47,7 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$l
 				user.$update(function(response) {
 					$scope.success = true;
 					Authentication.user = response;
+					toastr.success('Your Profile Updated Successfully ', 'Done');
 				}, function(response) {
 					$scope.error = response.data.message;
 				});
@@ -63,6 +64,7 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$l
 				// If successful show success message and clear form
 				$scope.success = true;
 				$scope.passwordDetails = null;
+				toastr.success('Your Password Change Successfully ', 'Done');
 			}).error(function(response) {
 				$scope.error = response.message;
 			});

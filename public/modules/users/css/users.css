@@ -12,3 +12,14 @@
 	right: 10px;
 	position: absolute;
 }
+.panel-radius {
+    border-radius: 10px;
+}
+.required label {
+    font-weight: bold;
+}
+.required label:after {
+    color: #e32;
+    content: ' *';
+    display:inline;
+}

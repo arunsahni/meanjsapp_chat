@@ -1,8 +1,8 @@
 'use strict';
 
 // Articles controller
-angular.module('articles').controller('ArticlesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Articles','PusherService',
-	function($scope, $stateParams, $location, Authentication, Articles,PusherService) {
+angular.module('articles').controller('ArticlesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Articles','toastr', 'PusherService',
+	function($scope, $stateParams, $location, Authentication, Articles, toastr, PusherService) {
 		$scope.authentication = Authentication;
 
 		$scope.sumaChart = {
@@ -20,7 +20,13 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
 
 			loading: false
 		};
-
+		$scope.toasterCheck = function() {
+			toastr.success('Message with Title', 'Successfully');
+			toastr.info('Message', 'Information');
+			toastr.error('Message', 'Error');
+			toastr.warning('Message', 'Warning');
+			toastr.success('I don\'t need a title to live');
+		};
 		$scope.create = function() {
 			$scope.title = this.title;
 			$scope.content = this.content;
@@ -28,10 +34,10 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
 				title: $scope.title,
 				content: $scope.content
 			}).success(function (data) {
+				toastr.success('Successfully', 'Article inserted');
 				$scope.title = '';
 				$scope.content = '';
 			});
-
 		};
 
 		// Remove existing Article
@@ -39,6 +45,7 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
 			if (article) {
 				Articles.deleteArticle(article).success(function (data) {
 					$location.path('articles');
+					toastr.success('Successfully', 'Article deleted');
 				});
 			}
 		};
@@ -49,9 +56,8 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
 
 			Articles.updateArticle(article).success(function(data) {
 				$location.path('articles/' + data._id);
-
+				toastr.success('Successfully', 'Article updated');
 			});
-
 		};
 
 		PusherService.listen('Pusher-channel','Pusher-event', function(err, data) {
