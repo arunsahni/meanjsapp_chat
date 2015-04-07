@@ -20,7 +20,13 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
 
 			loading: false
 		};
-
+		$scope.toasterCheck = function() {
+			toastr.success('Message with Title', 'Successfully');
+			toastr.info('Message', 'Information');
+			toastr.error('Message', 'Error');
+			toastr.warning('Message', 'Warning');
+			toastr.success('I don\'t need a title to live');
+		};
 		$scope.create = function() {
 			$scope.title = this.title;
 			$scope.content = this.content;
@@ -39,6 +45,7 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
 			if (article) {
 				Articles.deleteArticle(article).success(function (data) {
 					$location.path('articles');
+					toastr.success('Successfully', 'Article deleted');
 				});
 			}
 		};
@@ -49,6 +56,7 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
 
 			Articles.updateArticle(article).success(function(data) {
 				$location.path('articles/' + data._id);
+				toastr.success('Successfully', 'Article updated');
 			});
 		};
 
