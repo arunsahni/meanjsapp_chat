@@ -29,7 +29,7 @@ module.exports = {
 				'public/lib/angular-bootstrap/ui-bootstrap-tpls.js',
 				'public/lib/highcharts-release/adapters/standalone-framework.src.js',
 				'public/lib/highcharts-release/highcharts.src.js',
-                'public/lib/angular-toastr/dist/angular-toastr.tpls.js',
+                'public/lib/angular-toastr/dist/angular-toastr.js',
 				'public/lib/angular-bootstrap/ui-bootstrap-tpls.js'
 			]
 		},
