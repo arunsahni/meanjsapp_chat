@@ -32,5 +32,5 @@ module.exports = function(app) {
 
 	app.get('/pusher',function(req,res){
 		articles.generatePusher(req,res);
-	})
+	});
 };

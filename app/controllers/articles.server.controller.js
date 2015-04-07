@@ -163,4 +163,4 @@ exports.hasAuthorization = function(req, res, next) {
 exports.generatePusher =function(req,res){
 	//console.log("Here");
 	pusher.trigger('Pusher-channel', 'Pusher-event', {'message': 'Pusher Genetrated'});
-}
+};

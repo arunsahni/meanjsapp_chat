@@ -28,7 +28,6 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
 					$location.path('articles');
 				});
 			}
-
 		};
 
 		// Update existing Article
@@ -63,8 +62,8 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
 		$scope.GeneratPusher=function(){
 			//window.alert("Generating pusher");
 			Articles.generatePusher().success(function(){
-				console.log("Pusher Generated");
+				console.log('Pusher Generated');
 			});
-		}
+		};
 	}
 ]);

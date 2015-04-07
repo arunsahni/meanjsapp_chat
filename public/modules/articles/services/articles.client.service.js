@@ -26,7 +26,7 @@
 		};
 		serviceFactory.generatePusher = function (req, res){
 			return $http.get('/pusher');
-		}
+		};
 		return serviceFactory;
 	}
 ]);
