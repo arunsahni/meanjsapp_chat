@@ -1,8 +1,8 @@
 'use strict';
 
 // Articles controller
-angular.module('articles').controller('ArticlesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Articles',
-	function($scope, $stateParams, $location, Authentication, Articles) {
+angular.module('articles').controller('ArticlesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Articles','PusherService',
+	function($scope, $stateParams, $location, Authentication, Articles,PusherService) {
 		$scope.authentication = Authentication;
 
 		$scope.sumaChart = {
@@ -31,6 +31,7 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
 				$scope.title = '';
 				$scope.content = '';
 			});
+
 		};
 
 		// Remove existing Article
@@ -48,8 +49,14 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
 
 			Articles.updateArticle(article).success(function(data) {
 				$location.path('articles/' + data._id);
+
 			});
+
 		};
+
+		PusherService.listen('Pusher-channel','Pusher-event', function(err, data) {
+			window.alert(data.message);
+		});
 
 		// Find a list of Articles
 		$scope.find = function() {
@@ -64,6 +71,12 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
 				articleId: $stateParams.articleId
 			}).success(function (article) {
 				$scope.article = article;
+			});
+		};
+		$scope.GeneratPusher=function(){
+			//window.alert("Generating pusher");
+			Articles.generatePusher().success(function(){
+				console.log('Pusher Generated');
 			});
 		};
 	}
