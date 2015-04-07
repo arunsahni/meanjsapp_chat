@@ -1,14 +1,11 @@
 'use strict';
 
 // Articles controller
-angular.module('articles').controller('ArticlesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Articles','$pusher',
-	function($scope, $stateParams, $location, Authentication, Articles, $pusher) {
+angular.module('articles').controller('ArticlesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Articles','PusherService',
+	function($scope, $stateParams, $location, Authentication, Articles,PusherService) {
 		$scope.authentication = Authentication;
 
-		var client = new Pusher('f9ee22d1cb0b7cc349e6');
-		var pusher = $pusher(client);
-		var channel = pusher.subscribe('Pusher-channel');
-		$scope.create = function() {
+		    $scope.create = function() {
 			$scope.title = this.title;
 			$scope.content = this.content;
 			Articles.saveArticle({
@@ -44,9 +41,11 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
 		// Find a list of Articles
 		$scope.find = function() {
 			Articles.getArticles().success(function(articles){
-				channel.bind('Pusher-event', function(data) {
+				PusherService.channel('Pusher-channel','Pusher-event', function(err, data) {
+					window.alert(data.message);
+				});/*.bind('Pusher-event', function(data) {
 					window.alert('Message: ' + data.message);
-				});
+				});*/
 				$scope.articles = articles;
 			});
 		};
