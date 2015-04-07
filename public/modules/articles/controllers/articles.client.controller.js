@@ -1,8 +1,8 @@
 'use strict';
 
 // Articles controller
-angular.module('articles').controller('ArticlesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Articles',
-	function($scope, $stateParams, $location, Authentication, Articles) {
+angular.module('articles').controller('ArticlesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Articles','toastr',
+	function($scope, $stateParams, $location, Authentication, Articles, toastr) {
 		$scope.authentication = Authentication;
 
 		$scope.sumaChart = {
@@ -28,6 +28,7 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
 				title: $scope.title,
 				content: $scope.content
 			}).success(function (data) {
+				toastr.success('Successfully', 'Article inserted');
 				$scope.title = '';
 				$scope.content = '';
 			});
