@@ -10,6 +10,6 @@ var pusher = new Pusher({
     secret: '76fccf9f4cf77599cdd6'
 });
 
-exports.pusherGenerate= function (channelName,eventName,data){
+exports.pusherGenerate= function (channelName, eventName, data) {
     pusher.trigger(channelName,eventName,data);
 };

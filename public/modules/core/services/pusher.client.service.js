@@ -4,7 +4,7 @@
 'use strict';
 
 //Pusher service used for communicating with the articles REST endpoints
-angular.module('articles').factory('PusherService', ['$pusher' ,
+angular.module('core').factory('PusherService', ['$pusher' ,
     function($pusher){
         var PusherService={};
         var client = new Pusher('f9ee22d1cb0b7cc349e6');
