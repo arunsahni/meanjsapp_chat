@@ -1,7 +1,8 @@
 'use strict';
 
-angular.module('users').controller('SettingsController', ['$scope', '$http', '$location', 'Users', 'Authentication', '$upload',
-	function($scope, $http, $location, Users, Authentication, $upload) {
+angular.module('users').controller('SettingsController', ['$scope', '$http', '$location', 'Users', 'Authentication', 'toastr','$upload',
+	function($scope, $http, $location, Users, Authentication, toastr, $upload) {
+
 		$scope.user = Authentication.user;
 
 		$scope.onFileSelect = function(image) {
@@ -73,6 +74,7 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$l
 				user.$update(function(response) {
 					$scope.success = true;
 					Authentication.user = response;
+					toastr.success('Your Profile Updated Successfully ', 'Done');
 				}, function(response) {
 					$scope.error = response.data.message;
 				});
@@ -89,6 +91,7 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$l
 				// If successful show success message and clear form
 				$scope.success = true;
 				$scope.passwordDetails = null;
+				toastr.success('Your Password Change Successfully ', 'Done');
 			}).error(function(response) {
 				$scope.error = response.message;
 			});

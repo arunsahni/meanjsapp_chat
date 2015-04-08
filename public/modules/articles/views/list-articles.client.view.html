@@ -1,12 +1,13 @@
 <section data-ng-controller="ArticlesController" data-ng-init="find()">
 	<div class="page-header">
+		<button class="btn btn-primary btn-lg" ng-click="GeneratPusher()">Pusher</button>
 		<h1>Articles</h1>
 	</div>
 
 	<!--HighChart - Should be move somewhere else in future commits-->
 	<sumahighchart value='sumaChart' type="bar" height="400" chart-obj='chartObj'></sumahighchart>
 	<!---->
-
+<button ng-click="toasterCheck()">All Toaster Message </button>
 	<div class="list-group">
 		<a data-ng-repeat="article in articles" data-ng-href="#!/articles/{{article._id}}" class="list-group-item">
 			<small class="list-group-item-text">
