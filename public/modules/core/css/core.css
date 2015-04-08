@@ -13,3 +13,8 @@
 .ng-valid.ng-dirty {
 	border-color: #78FA89;
 }
+.navbar-brand img {
+	width: 100px;
+	height: 50px;
+	margin-top: -12px;
+}

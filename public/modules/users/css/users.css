@@ -12,7 +12,7 @@
 	right: 10px;
 	position: absolute;
 }
-
+/*Remove this button CSS*/
 .button {
 	-moz-appearance: button;
 	/* Firefox */
@@ -21,4 +21,15 @@
 	padding: 10px;
 	margin: 10px;
 	width: 70px;
+}
+.panel-radius {
+    border-radius: 10px;
+}
+.required label {
+    font-weight: bold;
+}
+.required label:after {
+    color: #e32;
+    content: ' *';
+    display:inline;
 }

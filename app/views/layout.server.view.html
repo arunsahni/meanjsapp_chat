@@ -40,11 +40,18 @@
 	<!-- HTML5 Shim -->
 	<!--[if lt IE 9]>
 		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+
 	<![endif]-->
+
+	<!-- pusher-js -->
+	<script src="//js.pusher.com/2.2/pusher.min.js"></script>
+
+	<!-- pusher-angular -->
+	<!--<script src="//cdn.jsdelivr.net/angular.pusher/latest/pusher-angular.min.js"></script>-->
 </head>
 
 <body class="ng-cloak">
-	<header data-ng-include="'/modules/core/views/header.client.view.html'" class="navbar navbar-fixed-top navbar-inverse"></header>
+	<header data-ng-include="'/modules/core/views/header.client.view.html'"></header>
 	<section class="content">
 		<section class="container">
 			{% block content %}{% endblock %}
