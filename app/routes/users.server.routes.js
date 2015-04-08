@@ -25,6 +25,7 @@ module.exports = function(app) {
 	app.route('/auth/signin').post(users.signin);
 	app.route('/auth/signout').get(users.signout);
 
+	app.route('/settings/profile').post(users.upload);
 	// Setting the facebook oauth routes
 	app.route('/auth/facebook').get(passport.authenticate('facebook', {
 		scope: ['email']
@@ -51,6 +52,7 @@ module.exports = function(app) {
 	// Setting the github oauth routes
 	app.route('/auth/github').get(passport.authenticate('github'));
 	app.route('/auth/github/callback').get(users.oauthCallback('github'));
+
 
 	// Finish by binding the user middleware
 	app.param('userId', users.userByID);

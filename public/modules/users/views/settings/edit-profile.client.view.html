@@ -28,6 +28,7 @@
 				<div data-ng-show="error" class="text-center text-danger">
 					<strong data-ng-bind="error"></strong>
 				</div>
+				<input type="file" ng-file-select="onFileSelect($files)" multiple>
 			</fieldset>
 		</form>
 	</div>
