@@ -158,5 +158,5 @@ exports.hasAuthorization = function(req, res, next) {
 * Pusher creating
 * */
 exports.generatePusher =function(req,res){
-	pusherService.pusherGenerate('Pusher-channel', 'Pusher-event', {'message': 'Pusher Genetrated'});
+	pusherService.pusherGenerate('Pusher-channel', 'Pusher-event', {'message': 'Pusher Genetrated By - ' + req.user.displayName});
 };
