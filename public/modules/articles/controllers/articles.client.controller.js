@@ -61,7 +61,7 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
 		};
 
 		PusherService.listen('Pusher-channel','Pusher-event', function(err, data) {
-			window.alert(data.message);
+			toastr.success(data.message);
 		});
 
 		// Find a list of Articles
