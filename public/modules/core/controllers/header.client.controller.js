@@ -3,6 +3,7 @@
 angular.module('core').controller('HeaderController', ['$scope', 'Authentication', 'Menus',
 	function($scope, Authentication, Menus) {
 		$scope.authentication = Authentication;
+		$scope.imgPath = Authentication.user._id + '.png';
 		$scope.isCollapsed = false;
 		$scope.menu = Menus.getMenu('topbar');
 

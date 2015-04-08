@@ -28,7 +28,9 @@
 				<div data-ng-show="error" class="text-center text-danger">
 					<strong data-ng-bind="error"></strong>
 				</div>
-				<input type="file" ng-file-select="onFileSelect($files)" multiple>
+				Upload image <input type="file" data-ng-file-select="onFileSelect($files)" accept="image/png, image/jpeg">
+				<span data-ng-if="uploadInProgress">Upload progress: {{ uploadProgress }}</span>
+				<img src="/profileImg/{{uploadedImage}}" data-ng-if="uploadedImage" height="20" width="40">
 			</fieldset>
 		</form>
 	</div>
