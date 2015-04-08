@@ -4,37 +4,32 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$l
 	function($scope, $http, $location, Users, Authentication, toastr, $upload) {
 		$scope.user = Authentication.user;
 
-		$scope.onFileSelect = function($files) {
-			console.log($files);
-			//$files: an array of files selected, each file has name, size, and type.
-			if($files.length) {
-				$http.post('/settings/profile', {files : $files}
-				).success(function(response) {
-					// If successful show success message and clear form
-					$scope.success = true;
-				}).error(function(response) {
-					$scope.error = response.message;
-				});
+		$scope.onFileSelect = function(image) {
+			if (angular.isArray(image)) {
+				image = image[0];
 			}
-			/*for (var i = 0; i < $files.length; i++) {
-				var file = $files[i];
-				console.log(file);
-				$scope.upload = $upload.upload({
-					url: '/settings/profile', //upload.php script, node.js route, or servlet url
-					headers: {
-						'Content-Type': 'multipart/form-data'
-					},
-					data: { dest: $scope.fileDest,
-						filename:$scope.filename},
-					file: file
-				}).progress(function(evt) {
-					console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
-				}).success(function(data, status, headers, config) {
-					// file is uploaded successfully
-					console.log(data);
-				});
-			}*/
+			if (image.type !== 'image/png' && image.type !== 'image/jpeg') {
+				alert('Only PNG and JPEG are accepted.');
+				return;
+			}
+			$scope.uploadInProgress = true;
+			$scope.uploadProgress = 0;
+
+			$scope.upload = $upload.upload({
+				url: '/upload/image',
+				method: 'POST',
+				file: image
+			}).progress(function(event) {
+				$scope.uploadProgress = Math.floor(event.loaded / event.total);
+			}).success(function(data, status, headers, config) {
+				$scope.uploadInProgress = false;
+				$scope.uploadedImage = $scope.user._id + '.png';
+			}).error(function(err) {
+				$scope.uploadInProgress = false;
+				console.log('Error uploading file: ' + err.message || err);
+			});
 		};
+
 		// If user is not signed in then redirect back home
 		if (!$scope.user) $location.path('/');
 
