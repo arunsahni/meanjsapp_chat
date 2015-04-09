@@ -31,9 +31,7 @@ module.exports = {
 				'public/lib/highcharts-release/highcharts.src.js',
                 'public/lib/angular-toastr/dist/angular-toastr.js',
 				'public/lib/pusher-angular/lib/pusher-angular.js',
-				'public/lib/ng-file-upload/FileAPI.min.js',
-				'public/lib/ng-file-upload/angular-file-upload-shim.min.js',
-				'public/lib/ng-file-upload/angular-file-upload.min.js'
+				'public/lib/ng-file-upload/angular-file-upload.js'
 			]
 		},
 		css: [
