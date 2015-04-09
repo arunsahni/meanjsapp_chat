@@ -1,10 +1,10 @@
 'use strict';
 
 // Articles controller
-angular.module('articles').controller('ArticlesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Articles','toastr',
-	function($scope, $stateParams, $location, Authentication, Articles, toastr) {
+angular.module('articles').controller('ArticlesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Articles','toastr', '$modal',
+	function($scope, $stateParams, $location, Authentication, Articles, toastr, $modal) {
 		$scope.authentication = Authentication;
-
+		var modalInstance;
 		$scope.toasterCheckSuc = function() {
 			toastr.success('Message with Title', 'Successfully');
 		};
@@ -53,10 +53,10 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
 		// Update existing Article
 		$scope.update = function() {
 			var article = $scope.article;
-
 			Articles.updateArticle(article).success(function(data) {
 				$location.path('articles/' + data._id);
 				toastr.success('Successfully', 'Article updated');
+				modalInstance.close();
 			});
 		};
 
@@ -75,10 +75,25 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
 				$scope.article = article;
 			});
 		};
-		$scope.GeneratPusher=function(){
+		$scope.GeneratPusher = function(){
 			//window.alert("Generating pusher");
 			Articles.generatePusher().success(function(){
 				console.log('Pusher Generated');
+			});
+		};
+		$scope.open = function(){
+			modalInstance = $modal.open({
+				templateUrl: 'modules/articles/views/edit-article.client.view.html',
+				scope: $scope,
+				resolve: {
+					article: function () {
+						return $scope.article;
+					}
+				}
+			});
+			modalInstance.result.then(function () {
+			}, function () {
+				//console.log('Modal dismissed at: ' + new Date());
 			});
 		};
 	}
