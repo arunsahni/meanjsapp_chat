@@ -23,8 +23,8 @@ angular.module('users').directive('uiUpload', function($upload) {
                 $scope.files = $files;
 
                 //$files: an array of files selected, each file has name, size, and type.
-                for (var i = 0; i < $files.length; i++) {
-                    var file = $files[i];
+                //for (var i = 0; i < $files.length; i++) {
+                    var file = $files[0];
                     console.log(file);
                     $scope.upload = $upload.upload({
                         url: 'fileUpload/upload',
@@ -55,7 +55,7 @@ angular.module('users').directive('uiUpload', function($upload) {
                             }
                         }
                     });
-                }
+                //}
             };
         }
     };

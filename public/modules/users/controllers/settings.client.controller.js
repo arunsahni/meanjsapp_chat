@@ -5,29 +5,31 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$l
 		$scope.user = Authentication.user;
 
 		$scope.onFileSelect = function(image) {
-			if (angular.isArray(image)) {
-				image = image[0];
-			}
-			if (image.type !== 'image/png' && image.type !== 'image/jpeg') {
-				alert('Only PNG and JPEG are accepted.');
-				return;
-			}
-			$scope.uploadInProgress = true;
-			$scope.uploadProgress = 0;
+			if (image.length) {
+				if (angular.isArray(image)) {
+					image = image[0];
+				}
+				if (image.type !== 'image/png' && image.type !== 'image/jpeg') {
+					alert('Only PNG and JPEG are accepted.');
+					return;
+				}
+				$scope.uploadInProgress = true;
+				$scope.uploadProgress = 0;
 
-			$scope.upload = $upload.upload({
-				url: '/upload/image',
-				method: 'POST',
-				file: image
-			}).progress(function(event) {
-				$scope.uploadProgress = Math.floor(event.loaded / event.total);
-			}).success(function(data, status, headers, config) {
-				$scope.uploadInProgress = false;
-				$scope.uploadedImage = $scope.user._id + '.png';
-			}).error(function(err) {
-				$scope.uploadInProgress = false;
-				console.log('Error uploading file: ' + err.message || err);
-			});
+				$scope.upload = $upload.upload({
+					url: '/upload/image',
+					method: 'POST',
+					file: image
+				}).progress(function (event) {
+					$scope.uploadProgress = Math.floor(event.loaded / event.total);
+				}).success(function (data, status, headers, config) {
+					$scope.uploadInProgress = false;
+					$scope.uploadedImage = $scope.user._id + '.png';
+				}).error(function (err) {
+					$scope.uploadInProgress = false;
+					console.log('Error uploading file: ' + err.message || err);
+				});
+			}
 		};
 
 		// If user is not signed in then redirect back home
