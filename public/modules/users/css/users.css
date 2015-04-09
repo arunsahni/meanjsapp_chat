@@ -33,3 +33,14 @@
     content: ' *';
     display:inline;
 }
+.avatar {
+    height:100px; width: 100px; margin-left: -11px;margin-top: -14px;
+}
+.avatar-uploaded {
+    max-width: none;
+    width: 125px;
+    height: 125px;
+}
+.panel-top-margin {
+    margin-top: 20px;
+}
