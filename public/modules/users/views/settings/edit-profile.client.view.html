@@ -22,14 +22,15 @@
                             </div>
                         </div>
                         <div>
-                            <div class="input-group">
-                                <!--<div class="panel panel-default col-xs-offset-1 col-xs-6 col-md-offset-3 col-md-5 panel-radius ">-->
-                                    <!--<div class="panel-body">-->
-                                        <img ng-src="../imgs/default-avatar.jpg" data-ng-if="!user.isImage" class="img-thumbnail col-xs-offset-2 col-sm-offset-3">
-                                        <img ng-src="/profileImg/{{uploadedImage}}" data-ng-if="user.isImage" class="img-thumbnail avatar-uploaded col-xs-offset-3 col-sm-offset-4">
-                                    <!--</div>-->
-                                <!--</div>-->
-                                <input type="file" data-ng-file-select="onFileSelect($files)" accept="image/png, image/jpeg">
+                            <h3 class="col-md-12 text-center">
+                                <img ng-src="../imgs/default-avatar.jpg" data-ng-if="user.isImage" class="img-thumbnail">
+                                <img ng-src="/profileImg/{{uploadedImage}}" data-ng-if="!user.isImage" class="img-thumbnail avatar-uploaded">
+
+                            </h3>
+                            <div class="form-group">
+                                <div class="input-group col-md-12 col-xs-1">
+                                    <input type="file" data-ng-file-select="onFileSelect($files)" accept="image/png, image/jpeg">
+                                </div>
                             </div>
                             <span data-ng-if="uploadInProgress">Upload progress: {{ uploadProgress }}</span>
                         </div>
