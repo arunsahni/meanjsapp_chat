@@ -1,26 +1,26 @@
 'use strict';
 
 // Articles controller
-angular.module('articles').controller('ArticlesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Articles','toastr', 'PusherService','$modal',
-	function($scope, $stateParams, $location, Authentication, Articles, toastr, PusherService, $modal) {
+angular.module('articles').controller('ArticlesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Articles','toastr', '$modal',
+	function($scope, $stateParams, $location, Authentication, Articles, toastr, $modal) {
 		$scope.authentication = Authentication;
 		var modalInstance;
-		$scope.sumaChart = {
-			chart: {
-				type: 'bar',
-				height: '400'
-
-			},
-			series: [{
-				data: [10, 15, 12, 8, 7]
-			}],
-			title: {
-				text: 'Sumasoft Highchart'
-			},
-
-			loading: false
+		$scope.toasterCheckSuc = function() {
+			toastr.success('Message with Title', 'Successfully');
 		};
-		$scope.toasterCheck = function() {
+		$scope.toasterCheckInf = function() {
+			toastr.info('Message', 'Information');
+		};
+		$scope.toasterCheckErr = function() {
+			toastr.error('Message', 'Error');
+		};
+		$scope.toasterCheckWar = function() {
+			toastr.warning('Message', 'Warning');
+		};
+		$scope.toasterCheckWit = function() {
+			toastr.success('I don\'t need a title to live');
+		};
+		$scope.toasterCheckAll = function() {
 			toastr.success('Message with Title', 'Successfully');
 			toastr.info('Message', 'Information');
 			toastr.error('Message', 'Error');
@@ -53,17 +53,12 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
 		// Update existing Article
 		$scope.update = function() {
 			var article = $scope.article;
-
 			Articles.updateArticle(article).success(function(data) {
 				$location.path('articles/' + data._id);
 				toastr.success('Successfully', 'Article updated');
 				modalInstance.close();
 			});
 		};
-
-		PusherService.listen('Pusher-channel','Pusher-event', function(err, data) {
-			toastr.success(data.message);
-		});
 
 		// Find a list of Articles
 		$scope.find = function() {
@@ -89,7 +84,6 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
 		$scope.open = function(){
 			modalInstance = $modal.open({
 				templateUrl: 'modules/articles/views/edit-article.client.view.html',
-				//controller: 'ModalController',
 				scope: $scope,
 				resolve: {
 					article: function () {
@@ -98,10 +92,8 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
 				}
 			});
 			modalInstance.result.then(function () {
-				//console.log('here');
-				//modalInstance1232.close();
 			}, function () {
-				console.log('Modal dismissed at: ' + new Date());
+				//console.log('Modal dismissed at: ' + new Date());
 			});
 		};
 	}
