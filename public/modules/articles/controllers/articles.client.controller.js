@@ -1,8 +1,8 @@
 'use strict';
 
 // Articles controller
-angular.module('articles').controller('ArticlesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Articles','toastr', 'PusherService',
-	function($scope, $stateParams, $location, Authentication, Articles, toastr, PusherService) {
+angular.module('articles').controller('ArticlesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Articles','toastr',
+	function($scope, $stateParams, $location, Authentication, Articles, toastr) {
 		$scope.authentication = Authentication;
 
 		$scope.sumaChart = {
@@ -59,10 +59,6 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
 				toastr.success('Successfully', 'Article updated');
 			});
 		};
-
-		PusherService.listen('Pusher-channel','Pusher-event', function(err, data) {
-			toastr.success(data.message);
-		});
 
 		// Find a list of Articles
 		$scope.find = function() {
