@@ -22,6 +22,7 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$l
 			}).progress(function(event) {
 				$scope.uploadProgress = Math.floor(event.loaded / event.total);
 			}).success(function(data, status, headers, config) {
+				$scope.user.isImage = true;
 				$scope.uploadInProgress = false;
 				$scope.uploadedImage = $scope.user._id + '.png';
 			}).error(function(err) {
@@ -68,11 +69,15 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$l
 		$scope.updateUserProfile = function(isValid) {
 			if (isValid) {
 				$scope.success = $scope.error = null;
+				if($scope.uploadedImage){
+					$scope.user.isImage = true;
+				}
 				var user = new Users($scope.user);
-
 				user.$update(function(response) {
 					$scope.success = true;
 					Authentication.user = response;
+
+
 					toastr.success('Your Profile Updated Successfully ', 'Done');
 				}, function(response) {
 					$scope.error = response.data.message;
