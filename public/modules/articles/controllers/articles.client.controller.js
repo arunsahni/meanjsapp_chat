@@ -5,22 +5,22 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
 	function($scope, $stateParams, $location, Authentication, Articles, toastr) {
 		$scope.authentication = Authentication;
 
-		$scope.sumaChart = {
-			chart: {
-				type: 'bar',
-				height: '400'
-
-			},
-			series: [{
-				data: [10, 15, 12, 8, 7]
-			}],
-			title: {
-				text: 'Sumasoft Highchart'
-			},
-
-			loading: false
+		$scope.toasterCheckSuc = function() {
+			toastr.success('Message with Title', 'Successfully');
 		};
-		$scope.toasterCheck = function() {
+		$scope.toasterCheckInf = function() {
+			toastr.info('Message', 'Information');
+		};
+		$scope.toasterCheckErr = function() {
+			toastr.error('Message', 'Error');
+		};
+		$scope.toasterCheckWar = function() {
+			toastr.warning('Message', 'Warning');
+		};
+		$scope.toasterCheckWit = function() {
+			toastr.success('I don\'t need a title to live');
+		};
+		$scope.toasterCheckAll = function() {
 			toastr.success('Message with Title', 'Successfully');
 			toastr.info('Message', 'Information');
 			toastr.error('Message', 'Error');
