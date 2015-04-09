@@ -49,7 +49,7 @@ var UserSchema = new Schema({
 		match: [/.+\@.+\..+/, 'Please fill a valid email address']
 	},
 	isImage: {
-		type: String,
+		type: Boolean,
 		default: false
 	},
 	username: {
