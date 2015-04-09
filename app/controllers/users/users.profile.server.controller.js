@@ -22,7 +22,7 @@ exports.postImage = function(req, res) {
 		var extension = (extIndex < 0) ? '' : tmpPath.substr(extIndex);
 		// uuid is for generating unique filenames.
 		var fileName = req.user._id + '.png';
-		var destPath = 'images/profileImg/' + fileName;
+		var destPath = 'public/imgs/profileImg/' + fileName;
 
 		// Server side file type checker.
 		if (contentType !== 'image/png' && contentType !== 'image/jpeg') {
