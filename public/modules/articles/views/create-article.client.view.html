@@ -5,7 +5,7 @@
 		<button ng-click="changeLanguage('en')" translate="en" class="btn btn-primary"></button>
 	</div>
 	<div class="col-md-12">
-		<form name="articleForm" class="form-horizontal" data-ng-submit="create()" novalidate>
+		<form name="articleForm" class="form-horizontal" novalidate>
 			<fieldset>
 				<div class="form-group" ng-class="{ 'has-error': articleForm.title.$dirty && articleForm.title.$invalid }">
 					<label class="control-label" for="title" translate="Tit"></label>
@@ -20,7 +20,7 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary">
+					<button ng-click="create()" translate="sub" class="btn btn-primary"></button>
 				</div>
 				<div data-ng-show="error" class="text-danger">
 					<strong data-ng-bind="error"></strong>
