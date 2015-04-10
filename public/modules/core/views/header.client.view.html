@@ -26,6 +26,19 @@
 				<a ng-switch-default href="/#!/{{item.link}}" data-ng-bind="item.title"></a>
 			</li>
 		</ul>
+
+		<ul class="nav navbar-nav language-button">
+			<div class="btn-group btn-toggle">
+				<button ng-class="{false: 'btn btn-sm btn-default', true: 'btn btn-sm btn-primary active'}[isActive]"  ng-click="changeLanguage('hi')" translate="hi"></button>
+				<button ng-class="{true: 'btn btn-sm btn-default', false: 'btn btn-sm btn-primary active'}[isActive]" ng-click="changeLanguage('en')" translate="en"></button>
+			</div>
+		</ul>
+			<!--<div class="btn-group btn-toggle">
+				<button ng-class="{false: 'btn btn-sm btn-default', true: 'btn btn-sm btn-primary active'}[isActive]"  ng-click="changeLanguage('hi')" translate="hi"></button>
+				<button ng-class="{true: 'btn btn-sm btn-default', false: 'btn btn-sm btn-primary active'}[isActive]" ng-click="changeLanguage('en')" translate="en"></button>
+			</div>-->
+
+
 		<ul class="nav navbar-nav navbar-right" data-ng-hide="authentication.user">
 			<li ui-route="/signup" ng-class="{active: $uiRoute}">
 				<a href="/#!/signup" translate="header.sigu"></a>
@@ -42,10 +55,7 @@
 					<img ng-show="authentication.user.isImage" ng-src="{{imgPath}}" height="20" width="40">
 					<span data-ng-bind="authentication.user.displayName"></span> <b class="caret"></b>
 				</a>
-				<div class="btn-group btn-toggle language">
-					<button ng-class="{false: 'btn btn-sm btn-default', true: 'btn btn-sm btn-primary active'}[isActive]"  ng-click="changeLanguage('hi')" translate="hi"></button>
-					<button ng-class="{true: 'btn btn-sm btn-default', false: 'btn btn-sm btn-primary active'}[isActive]" ng-click="changeLanguage('en')" translate="en"></button>
-				</div>
+
 				<ul class="dropdown-menu">
 					<li>
 						<a href="/#!/settings/profile" translate="header.eprf"></a>
