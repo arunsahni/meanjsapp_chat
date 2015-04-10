@@ -3,11 +3,14 @@
 		<button class="btn btn-primary btn-lg" ng-click="GeneratPusher()">Pusher</button>
 		<h1>Articles</h1>
 	</div>
-
-	<!--HighChart - Should be move somewhere else in future commits-->
-	<sumahighchart value='sumaChart' type="bar" height="400" chart-obj='chartObj'></sumahighchart>
-	<!---->
-<button ng-click="toasterCheck()">All Toaster Message </button>
+	<div class="page-header">
+		<button ng-click="toasterCheckSuc()" class="btn btn-success">Successfully</button>
+		<button ng-click="toasterCheckInf()" class="btn btn-info">Information</button>
+		<button ng-click="toasterCheckErr()" class="btn btn-danger">Error</button>
+		<button ng-click="toasterCheckWar()" class="btn btn-warning">Warning</button>
+		<button ng-click="toasterCheckWit()" class="btn btn-primary">Without Title</button>
+		<button ng-click="toasterCheckAll()" class="btn btn-default">All Message</button>
+	</div>
 	<div class="list-group">
 		<a data-ng-repeat="article in articles" data-ng-href="#!/articles/{{article._id}}" class="list-group-item">
 			<small class="list-group-item-text">

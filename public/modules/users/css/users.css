@@ -12,6 +12,16 @@
 	right: 10px;
 	position: absolute;
 }
+/*Remove this button CSS*/
+.button {
+	-moz-appearance: button;
+	/* Firefox */
+	-webkit-appearance: button;
+	/* Safari and Chrome */
+	padding: 10px;
+	margin: 10px;
+	width: 70px;
+}
 .panel-radius {
     border-radius: 10px;
 }
@@ -22,4 +32,15 @@
     color: #e32;
     content: ' *';
     display:inline;
+}
+.avatar {
+    height:100px; width: 100px; margin-left: -11px;margin-top: -14px;
+}
+.avatar-uploaded {
+    max-width: none;
+    width: 125px;
+    height: 125px;
+}
+.panel-top-margin {
+    margin-top: 20px;
 }

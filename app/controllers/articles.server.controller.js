@@ -57,7 +57,7 @@ exports.read = function(req, res) {
 exports.update = function(req, res) {
 	var conditions = {_id: req.body._id},
 		update = {
-			tile: req.body.title,
+			title: req.body.title,
 			content: req.body.content
 		};
 	Article.findOneAndUpdate(conditions, update, function (err, article){
