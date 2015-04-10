@@ -1,10 +1,13 @@
 'use strict';
 
 // Articles controller
-angular.module('articles').controller('ArticlesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Articles','toastr', '$modal',
-	function($scope, $stateParams, $location, Authentication, Articles, toastr, $modal) {
+angular.module('articles').controller('ArticlesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Articles','toastr', '$modal','$translate',
+	function($scope, $stateParams, $location, Authentication, Articles, toastr, $modal,$translate) {
 		$scope.authentication = Authentication;
 		var modalInstance;
+		$scope.changeLanguage = function (langKey) {
+			$translate.use(langKey);
+		};
 		$scope.toasterCheckSuc = function() {
 			toastr.success('Message with Title', 'Successfully');
 		};

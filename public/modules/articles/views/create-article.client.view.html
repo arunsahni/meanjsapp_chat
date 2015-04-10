@@ -1,6 +1,8 @@
 <section data-ng-controller="ArticlesController">
 	<div class="page-header">
 		<h1 translate="Nart"></h1>
+		<button ng-click="changeLanguage('hi')" translate="hi" class="btn btn-primary"></button>
+		<button ng-click="changeLanguage('en')" translate="en" class="btn btn-primary"></button>
 	</div>
 	<div class="col-md-12">
 		<form name="articleForm" class="form-horizontal" data-ng-submit="create()" novalidate>
