@@ -10,6 +10,13 @@ angular.module(ApplicationConfiguration.applicationModuleName).config(['$locatio
 	}
 ]);
 
+angular.module(ApplicationConfiguration.applicationModuleName).config(function ($translateProvider) {
+	$translateProvider.useStaticFilesLoader({
+		prefix: '/language/',
+		suffix: '.json'
+	});
+	$translateProvider.preferredLanguage('en');
+});
 //Then define the init function for starting up the application
 angular.element(document).ready(function() {
 	//Fixing facebook bug with redirect
