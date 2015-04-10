@@ -4,5 +4,45 @@
   "Nart": "New Article",
   "en": "English",
   "hi": "Hindi",
-  "sub": "Submit"
+  "sub": "Submit",
+  "header": {
+    "sigu": "Sign Up",
+    "sigi": "Sign In",
+    "eprf": "Edit Profile",
+    "msa": "Manage Social Accounts",
+    "cpw": "Change Password",
+    "sigo": "Signout"
+  },
+  "home": {
+    "dash": "Dashboard",
+    "artl": "Articale List!",
+    "viwd": "View Details",
+    "spt": "Support Tickets!",
+    "ntsk": "New Tasks!",
+    "nord": "New Orders!"
+  },
+  "edit": {
+    "eart": "Edit Article",
+    "titr": "Title is required",
+    "creq": "Content is required",
+    "updt": "Update",
+    "can": "Cancel"
+  },
+  "list": {
+    "art": "Articles",
+    "push": "Pusher",
+    "suc": "Successfully",
+    "inf": "Information",
+    "err": "Error",
+    "war": "Warning",
+    "wtit": "Without Title",
+    "allm": "All Message",
+    "pon": "Posted on",
+    "by": "by",
+    "nayw": "No articles yet, why don't you",
+    "crto": "create one"
+  },
+  "view": {
+
+  }
 }

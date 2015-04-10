@@ -1,22 +1,22 @@
 <section data-ng-controller="ArticlesController" data-ng-init="find()">
 	<div class="page-header">
-		<button class="btn btn-primary btn-lg" ng-click="GeneratPusher()">Pusher</button>
-		<h1>Articles</h1>
+		<button class="btn btn-primary btn-lg" ng-click="GeneratPusher()" translate="list.push"></button>
+		<h1 translate="list.art"></h1>
 	</div>
 	<div class="page-header">
-		<button ng-click="toasterCheckSuc()" class="btn btn-success">Successfully</button>
-		<button ng-click="toasterCheckInf()" class="btn btn-info">Information</button>
-		<button ng-click="toasterCheckErr()" class="btn btn-danger">Error</button>
-		<button ng-click="toasterCheckWar()" class="btn btn-warning">Warning</button>
-		<button ng-click="toasterCheckWit()" class="btn btn-primary">Without Title</button>
-		<button ng-click="toasterCheckAll()" class="btn btn-default">All Message</button>
+		<button ng-click="toasterCheckSuc()" class="btn btn-success" translate="list.suc"></button>
+		<button ng-click="toasterCheckInf()" class="btn btn-info" translate="list.inf"></button>
+		<button ng-click="toasterCheckErr()" class="btn btn-danger" translate="list.err"></button>
+		<button ng-click="toasterCheckWar()" class="btn btn-warning" translate="list.war"></button>
+		<button ng-click="toasterCheckWit()" class="btn btn-primary" translate="list.wtit"></button>
+		<button ng-click="toasterCheckAll()" class="btn btn-default" translate="list.allm"></button>
 	</div>
 	<div class="list-group">
 		<a data-ng-repeat="article in articles" data-ng-href="#!/articles/{{article._id}}" class="list-group-item">
 			<small class="list-group-item-text">
-				Posted on
+				<span translate="list.pon"></span>
 				<span data-ng-bind="article.created | date:'mediumDate'"></span>
-				by
+				<span translate="list.by"></span>
 				<span data-ng-bind="article.user.displayName"></span>
 			</small>
 			<h4 class="list-group-item-heading" data-ng-bind="article.title"></h4>
@@ -24,6 +24,6 @@
 		</a>
 	</div>
 	<div class="alert alert-warning text-center" data-ng-if="articles.$resolved && !articles.length">
-		No articles yet, why don't you <a href="/#!/articles/create">create one</a>?
+		<span translate="list.nayw"></span> <a href="/#!/articles/create" translate="list.crto"></a>?
 	</div>
 </section>

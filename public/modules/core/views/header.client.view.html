@@ -11,6 +11,10 @@
 			<img ng-src="../imgs/SumaLogo.png"/>
 		</a>
 	</div>
+		<div class="btn-group btn-toggle" style="display: block;">
+			<button class="btn btn-sm btn-default" ng-click="changeLanguage('hi')" translate="hi"></button>
+			<button class="btn btn-sm btn-primary active" ng-click="changeLanguage('en')" translate="en"></button>
+		</div>
 	<nav class="collapse navbar-collapse" collapse="!isCollapsed" role="navigation">
 		<ul class="nav navbar-nav" data-ng-if="menu.shouldRender(authentication.user);">
 			<li data-ng-repeat="item in menu.items | orderBy: 'position'" data-ng-if="item.shouldRender(authentication.user);" ng-switch="item.menuItemType" ui-route="{{item.uiRoute}}" class="{{item.menuItemClass}}" ng-class="{active: ($uiRoute)}" dropdown="item.menuItemType === 'dropdown'">
@@ -28,11 +32,11 @@
 		</ul>
 		<ul class="nav navbar-nav navbar-right" data-ng-hide="authentication.user">
 			<li ui-route="/signup" ng-class="{active: $uiRoute}">
-				<a href="/#!/signup">Sign Up</a>
+				<a href="/#!/signup" translate="header.sigu"></a>
 			</li>
 			<li class="divider-vertical"></li>
 			<li ui-route="/signin" ng-class="{active: $uiRoute}">
-				<a href="/#!/signin">Sign In</a>
+				<a href="/#!/signin" translate="header.sigi"></a>
 			</li>
 		</ul>
 		<ul class="nav navbar-nav navbar-right" data-ng-show="authentication.user">
@@ -44,17 +48,17 @@
 				</a>
 				<ul class="dropdown-menu">
 					<li>
-						<a href="/#!/settings/profile">Edit Profile</a>
+						<a href="/#!/settings/profile" translate="header.eprf"></a>
 					</li>
 					<li>
-						<a href="/#!/settings/accounts">Manage Social Accounts</a>
+						<a href="/#!/settings/accounts" translate="header.msa"></a>
 					</li>
 					<li data-ng-show="authentication.user.provider === 'local'">
-						<a href="/#!/settings/password">Change Password</a>
+						<a href="/#!/settings/password" translate="header.cpw"></a>
 					</li>
 					<li class="divider"></li>
 					<li>
-						<a href="/auth/signout">Signout</a>
+						<a href="/auth/signout" translate="header.sigo"></a>
 					</li>
 				</ul>
 			</li>
