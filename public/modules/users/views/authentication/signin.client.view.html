@@ -4,7 +4,7 @@
 
     <div class="panel panel-default col-xs-offset-1 col-xs-10 col-md-offset-4 col-md-4 panel-radius">
         <div class="">
-            <h3 class="col-md-12 text-center">Login or <a href="/#!/signup">Sign up</a></h3>
+            <h3 class="col-md-12 text-center"> <span translate="signin.log"></span> <a href="/#!/signup" translate="signin.up"> </a></h3>
         </div>
         <div class="panel-body">
             <form data-ng-submit="signin()" class="signin form-horizontal" autocomplete="off">
@@ -31,12 +31,12 @@
                     </div>
                     <span class="help-block"></span>
                     <div class="text center form-group">
-                        <button type="submit" class="btn btn-lg btn-primary btn-block">Login</button>
+                        <button type="submit" class="btn btn-lg btn-primary btn-block" translate="signin.login"></button>
                     </div>
                     <p class="forgot-password">
                         <label class="checkbox">
-                            <input type="checkbox" value="remember-me">Remember Me &nbsp; OR &nbsp;
-                            <a href="/#!/password/forgot">Forgot password?</a>
+                            <input type="checkbox" value="remember-me" ><span translate="signin.rem"> </span> &nbsp; <span translate="signin.or"></span> &nbsp;
+                            <a href="/#!/password/forgot" translate="signin.fpass"></a>
                         </label>
                     </p>
                 </fieldset>
