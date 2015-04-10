@@ -27,6 +27,8 @@ module.exports = function(app) {
 
 	app.route('/upload/image').post(users.postImage);
 
+	app.route('/sign_s3').get(users.getSignedURL);
+
 	// Setting the facebook oauth routes
 	app.route('/auth/facebook').get(passport.authenticate('facebook', {
 		scope: ['email']

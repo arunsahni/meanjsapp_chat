@@ -9,7 +9,40 @@ var _ = require('lodash'),
 	passport = require('passport'),
 	User = mongoose.model('User'),
 	multiparty = require('multiparty'),
-	fs = require('fs');
+	fs = require('fs'),
+	aws = require('aws-sdk'),
+    AWS_ACCESS_KEY = 'AKIAJGHRJFHBQUZJEJWQ',
+ 	AWS_SECRET_KEY = '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',
+ 	S3_BUCKET = 'sumacrm/avatars';
+
+exports.getSignedURL = function (req, res) {
+	aws.config.update({accessKeyId: AWS_ACCESS_KEY , secretAccessKey: AWS_SECRET_KEY });
+	var s3 = new aws.S3();
+	var fileName = req.user.id;
+	var s3_params = {
+		Bucket: S3_BUCKET,
+		Key: fileName,
+		Expires: 60,
+		ContentType: req.query.s3_object_type,
+		ACL: 'public-read'
+	};
+	s3.getSignedUrl('putObject', s3_params, function(err, data){
+		if(err){
+			console.log(err);
+		}
+		else{
+			var return_data = {
+				signed_request: data,
+				//url: 'https://'+S3_BUCKET+'.s3.amazonaws.com/'+'Arun'
+				url: 'https://s3.amazonaws.com/sumacrm/avatars/' + fileName
+			};
+			res.write(JSON.stringify(return_data));
+			res.end();
+		}
+	});
+};
+
+
 
 exports.postImage = function(req, res) {
 	var form = new multiparty.Form();
