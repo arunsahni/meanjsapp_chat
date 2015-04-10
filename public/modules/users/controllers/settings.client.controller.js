@@ -54,7 +54,7 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$l
 						//this_s3upload.onProgress(100, 'Upload completed.');
 						//return this_s3upload.onFinishS3Put(public_url);
 						$scope.uploadedImage = public_url;
-						toastr.success("File Uploaded Succsessfully");
+						toastr.success('File Uploaded Succsessfully');
 						$scope.$apply();
 						window.location.reload();
 						//$location.path('/settings/profile');
