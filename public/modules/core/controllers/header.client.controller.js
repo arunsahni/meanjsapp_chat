@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('core').controller('HeaderController', ['$scope', 'Authentication', 'Menus','toastr', 'PusherService','$translate','$location',
-	function($scope, Authentication, Menus, toastr, PusherService, $translate, $location) {
+angular.module('core').controller('HeaderController', ['$scope', 'Authentication', 'Menus','toastr', 'PusherService','$translate','$location','$stateParams',
+	function($scope, Authentication, Menus, toastr, PusherService, $translate, $location, $stateParams) {
 
 		$scope.authentication = Authentication;
 		$scope.isCollapsed = false;
@@ -21,6 +21,10 @@ angular.module('core').controller('HeaderController', ['$scope', 'Authentication
 			if (!$scope.authentication.user ) {
 				if ($location.path() === '/signup') {
 					$location.path('/signup');
+				}else if ($location.path() === '/password/forgot') {
+					$location.path('/password/forgot');
+				} else if($location.path() ==='/password/reset/' +$stateParams.token){
+					$location.path('/password/reset/' +$stateParams.token);
 				}
 				else {
 					$location.path('/#!');
