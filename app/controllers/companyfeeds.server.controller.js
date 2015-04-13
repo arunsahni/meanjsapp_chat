@@ -105,3 +105,38 @@ exports.hasAuthorization = function(req, res, next) {
 	}
 	next();
 };
+
+exports.addComment = function(req,res){
+	Companyfeed.findOneAndUpdate({_id: mongoose.Types.ObjectId(req.body.compnayfeedId)},{$push:{ comment : req.body.comment}}).exec(function(err,data) {
+		if (err) {
+			return res.status(500).json({
+				error: 'Cannot add the bid'
+			});
+		} else {
+			res.json(data);
+		}
+	});
+};
+
+exports.addLikers = function(req,res){
+	Companyfeed.findOneAndUpdate({_id: mongoose.Types.ObjectId(req.body.compnayfeedId)},{$push : {likers:req.body.user_id}}).exec(function(err,data) {
+		if (err) {
+			return res.status(500).json({
+				error: 'Cannot add the bid'
+			});
+		} else {
+			var counts = data.likes +1;
+			Companyfeed.findOneAndUpdate({_id: mongoose.Types.ObjectId(req.body.compnayfeedId)},{$set : {likes:counts}}).exec(function(err,data) {
+				if (err) {
+					return res.status(500).json({
+						error: 'Cannot add the bid'
+					});
+				} else {
+
+					res.json(data);
+				}
+			});
+			//res.json(data);
+		}
+	});
+};

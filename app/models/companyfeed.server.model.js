@@ -23,7 +23,19 @@ var CompanyfeedSchema = new Schema({
 	user: {
 		type: Schema.ObjectId,
 		ref: 'User'
-	}
+	},
+	likes: {
+		type: Number,
+		default: 0
+	},
+	likers:{
+		type: Array
+	},
+	comment:[{
+		user_id : {	type: String },
+		comment: {	type: String },
+		commentLiker: {	type: [] }
+	}]
 });
 
 mongoose.model('Companyfeed', CompanyfeedSchema);

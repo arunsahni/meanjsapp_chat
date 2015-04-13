@@ -38,9 +38,14 @@
             <h4 class="list-group-item-heading" data-ng-bind="companyfeed.name"></h4>
             <div class="form-group">
                 <label class="control-label" for="name">Comment</label>
+                <div data-ng-repeat="comment in companyfeed.comment">
+                    {{comment.comment}}
+                </div>
                 <div class="controls">
-                    <input type="text" data-ng-model="name" class="form-control" placeholder="Comment" required>
-                    <button class="glyphicon glyphicon-thumbs-up"></button>
+                    <input type="text" data-ng-model="comment" class="form-control" placeholder="Comment">
+                    <button ng-click="addComment(companyfeed._id)">add comment</button>
+                    <button class="glyphicon glyphicon-thumbs-up" ng-click="addLiker(companyfeed._id)"></button>
+                    {{companyfeed.likes}}
                 </div>
             </div>
         </a>
