@@ -4,9 +4,9 @@
 angular.module('articles').run(['Menus',
 	function(Menus) {
 		// Set top bar menu items
-		Menus.addMenuItem('topbar', 'Dashboard','dropdown', '/#!(/dashboard)');
-		Menus.addMenuItem('topbar', 'Articles', 'articles', 'dropdown', '/articles(/create)?');
-		Menus.addSubMenuItem('topbar', 'articles', 'List Articles', 'articles');
-		Menus.addSubMenuItem('topbar', 'articles', 'New Article', 'articles/create');
+		Menus.addMenuItem('topbar', 'acc.sub.das','dropdown', '/#!(/dashboard)');
+		Menus.addMenuItem('topbar', 'acc.sub.art', 'articles', 'dropdown', '/articles(/create)?');
+		Menus.addSubMenuItem('topbar', 'articles', 'acc.sub.item', 'articles');
+		Menus.addSubMenuItem('topbar', 'articles', 'acc.sub.new', 'articles/create');
 	}
 ]);

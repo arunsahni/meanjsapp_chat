@@ -70,5 +70,13 @@
   },
   "social": {
     "cosa": "Connect other social accounts:"
+  },
+  "acc": {
+    "sub": {
+      "item": "List Articles",
+      "new": "New Article",
+      "art": "Articles",
+      "das": "Dashboard"
+    }
   }
 }
