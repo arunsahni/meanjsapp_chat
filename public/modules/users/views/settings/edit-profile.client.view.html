@@ -32,7 +32,13 @@
                                     <input type="file" data-ng-file-select="onFileSelect($files)" accept="image/png, image/jpeg">
                                 </div>
                             </div>
-                            <span data-ng-if="uploadInProgress">{{'editpfile.up' | translate}} {{ uploadProgress }}</span>
+                            <span data-ng-if="uploadInProgress">{{'editpfile.up' | translate}} {{ uploadProgress }} %</span>
+                            <div class="progress" data-ng-if="uploadInProgress">
+                                <div class="progress-bar" ng-style="{width:((uploadProgress / 100) * 100) + '%'}">
+                                    <span class="percent" ng-show="((uploadProgress / 100) * 100) <= 100">{{((uploadProgress / 100) * 100) | number:0}}%</span>
+                                    <span class="percent" ng-show="((uploadProgress / 100) * 100) > 100">100%</span>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="firstName" translate="editpfile.fnam"></label>
