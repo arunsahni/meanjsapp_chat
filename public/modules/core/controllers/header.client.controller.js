@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('core').controller('HeaderController', ['$scope', 'Authentication', 'Menus','toastr', 'PusherService','$translate','$location',
-	function($scope, Authentication, Menus, toastr, PusherService, $translate,$location) {
+	function($scope, Authentication, Menus, toastr, PusherService, $translate, $location) {
 
 		$scope.authentication = Authentication;
 		$scope.isCollapsed = false;
@@ -19,10 +19,10 @@ angular.module('core').controller('HeaderController', ['$scope', 'Authentication
 		// Collapsing the menu after navigation
 		$scope.$on('$stateChangeSuccess', function() {
 			if (!$scope.authentication.user ) {
-				if($location.path() === '/signup') {
+				if ($location.path() === '/signup') {
 					$location.path('/signup');
 				}
-				else{
+				else {
 					$location.path('/#!');
 				}
 			}
