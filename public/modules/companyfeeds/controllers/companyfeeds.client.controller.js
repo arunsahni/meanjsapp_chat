@@ -11,15 +11,11 @@ angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '
 		$scope.imgPathOwn = 'https://s3.amazonaws.com/sumacrm/avatars/';
 
 		$scope.create = function() {
-			// Create new Companyfeed object
-			/*var companyfeed = new Companyfeeds ({
-				name: this.name
-			});
-*/
 			Companyfeeds.savecompanyfeed({
 				name: this.name
-				//content: $scope.content
 			}).success(function (data) {
+				$scope.companyfeeds = data;
+				find();
 				/*toastr.success('Successfully', 'Article inserted');
 				$scope.title = '';
 				$scope.content = '';*/
@@ -76,16 +72,18 @@ angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '
 					user_id: Authentication.user._id,
 					comment: this.comment
 				}
-			}).success(function(companyfeed) {
-				console.log('Sucess');
+			}).success(function(companyfeeds) {
+				$scope.companyfeeds = companyfeeds;
 			});
 		};
-		$scope.addLiker = function(companyfeedId) {
+		$scope.addLiker = function(companyfeedId, likerCount) {
 			Companyfeeds.addLiker({
 				compnayfeedId : companyfeedId,
-				user_id: Authentication.user._id
-			}).success(function(likers){
-				$scope.likers=likers;
+				user_id: Authentication.user._id,
+				likerCount: likerCount
+			}).success(function(companyfeeds){
+				$scope.companyfeeds = companyfeeds;
+
 			});
 		};
 	}
