@@ -40,4 +40,7 @@ module.exports = function(app) {
 	app.post('/companyfeeds/addCommentLike', function(req, res) {
 		companyfeeds.addCommentLike(req, res);
 	});
+    app.post('/companyfeeds/getcompanyfeedByUserId', function(req, res) {
+        companyfeeds.getcompanyfeedByUserId(req, res);
+    });
 };

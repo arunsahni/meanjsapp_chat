@@ -21,6 +21,11 @@ angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '
 			});
 
 		};
+        $scope.autoCompleteData = {
+            EntityName: ['User'],
+            Projection: ['firstName', '_id', 'isImage'],
+            MatchField: 'firstName'
+        };
 
 		// Remove existing Companyfeed
 		$scope.remove = function (companyfeed) {
@@ -101,5 +106,20 @@ angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '
 				$scope.companyfeeds = companyfeeds;
 			});
 		};
+
+        function getCompanyFeedById (userIds) {
+            Companyfeeds.getcompanyfeedByUserId({userIds: userIds}).success(function (companyFeeds) {
+                $scope.companyfeeds = companyFeeds;
+            });
+        };
+
+        $scope.$watchCollection('data.tags',function(val){
+            if ($scope.data && $scope.data.tags.length) {
+                var userIds = $scope.data.tags.map(function (user) {
+                    return user._id;
+                });
+                getCompanyFeedById(userIds);
+            }
+        });
 	}
 ]);

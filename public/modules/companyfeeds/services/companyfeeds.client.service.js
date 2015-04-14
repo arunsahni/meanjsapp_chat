@@ -42,6 +42,9 @@ angular.module('companyfeeds').factory('Companyfeeds', ['$http',
 		serviceFactory.addCommentLike = function(req,res){
 			return $http.post('/companyfeeds/addCommentLike',req);
 		};
+        serviceFactory.getcompanyfeedByUserId = function(req,res){
+            return $http.post('/companyfeeds/getcompanyfeedByUserId', req);
+        };
 		return serviceFactory;
 
 	}
