@@ -15,11 +15,7 @@ angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '
 				name: this.name
 			}).success(function (data) {
 				$scope.companyfeeds = data;
-				/*toastr.success('Successfully', 'Article inserted');
-				 $scope.title = '';
-				 $scope.content = '';*/
 			});
-
 		};
         $scope.autoCompleteData = {
             EntityName: ['User'],
@@ -27,6 +23,12 @@ angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '
             MatchField: 'firstName'
         };
 
+		$scope.likersNmae = function(likerArray) {
+			$scope.LikerName = [];
+			for(var i = 0;i<likerArray.length;i++) {
+				$scope.LikerName.push(likerArray[i].user_name);
+			}
+		};
 		// Remove existing Companyfeed
 		$scope.remove = function (companyfeed) {
 			if (companyfeed) {
@@ -44,23 +46,13 @@ angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '
 			}
 		};
 
-		// Update existing Companyfeed
-		/*$scope.update = function() {
-		 var companyfeed = $scope.companyfeed;
-
-		 companyfeed.$update(function() {
-		 $location.path('companyfeeds/' + companyfeed._id);
-		 }, function(errorResponse) {
-		 $scope.error = errorResponse.data.message;
-		 });
-		 };
-		 */
 		// Find a list of Companyfeeds
 		$scope.find = function () {
 			Companyfeeds.getcompanyfeeds().success(function (companyfeeds) {
 				$scope.companyfeeds = companyfeeds;
 			});
 		};
+
 		// Find existing Companyfeed
 		$scope.findOne = function () {
 			Companyfeeds.getcompanyfeedById({
@@ -69,6 +61,7 @@ angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '
 				$scope.companyfeed = companyfeed;
 			});
 		};
+
 		$scope.addComment = function (companyfeedId) {
 			Companyfeeds.addCommentService({
 				compnayfeedId: companyfeedId,
@@ -81,6 +74,7 @@ angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '
 				$scope.companyfeeds = companyfeeds;
 			});
 		};
+
 		$scope.addLiker = function (companyfeedId) {
 			Companyfeeds.addLiker({
 				compnayfeedId: companyfeedId,

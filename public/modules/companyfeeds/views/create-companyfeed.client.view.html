@@ -57,7 +57,7 @@
             </div>
             <div class="row">
                 <div class = "col-md-8 col-md-offset-1">
-                    <button ng-if="companyfeed.likers.length>0" class="btn-primary glyphicon glyphicon-thumbs-up" ng-click="addLiker(companyfeed._id)">
+                    <button ng-if="companyfeed.likers.length>0" class="btn-primary glyphicon glyphicon-thumbs-up" ng-click="addLiker(companyfeed._id)" ng-mouseover ="likersNmae(companyfeed.likers)"  title="{{LikerName}}" data-toggle="tooltip">
                         {{companyfeed.likers.length}}
                     </button>
                     <button ng-if="companyfeed.likers.length===0" class="glyphicon glyphicon-thumbs-up" ng-click="addLiker(companyfeed._id)"></button>
@@ -77,7 +77,7 @@
                     <div class="col-md-5" ng-bind="comment.comment" style="margin-left: -40px">
                     </div>
                     <div  class="col-md-1">
-                        <button ng-if="comment.commentLiker.length > 0" class="btn-primary glyphicon glyphicon-thumbs-up" ng-click="addCommentLike(companyfeed._id, comment._id)" ng-bind="comment.commentLiker.length"></button>
+                        <button ng-if="comment.commentLiker.length > 0" class="btn-primary glyphicon glyphicon-thumbs-up" ng-click="addCommentLike(companyfeed._id, comment._id)" ng-bind="comment.commentLiker.length" ng-mouseover ="likersNmae(comment.commentLiker)"  title="{{LikerName}}" data-toggle="tooltip"></button>
                         <button ng-if="comment.commentLiker.length === 0" class="glyphicon glyphicon-thumbs-up" ng-click="addCommentLike(companyfeed._id, comment._id)"></button>
                     </div>
                 </div>
