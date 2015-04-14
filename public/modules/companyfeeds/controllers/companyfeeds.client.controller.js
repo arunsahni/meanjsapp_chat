@@ -8,6 +8,7 @@ angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '
 		// Create new Companyfeed
 		$scope.imgPath = Authentication.user._id + '.png';
 		$scope.imgPath = 'https://s3.amazonaws.com/sumacrm/avatars/' + Authentication.user._id;
+		$scope.imgPathOwn = 'https://s3.amazonaws.com/sumacrm/avatars/';
 
 		$scope.create = function() {
 			// Create new Companyfeed object
@@ -78,8 +79,6 @@ angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '
 			}).success(function(companyfeed) {
 				console.log('Sucess');
 			});
-
-			window.alert('Comment added' +this.comment);
 		};
 		$scope.addLiker = function(companyfeedId) {
 			Companyfeeds.addLiker({
