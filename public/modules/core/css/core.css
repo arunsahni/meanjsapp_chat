@@ -88,7 +88,8 @@
 .suggestions-list li {
     margin-left: -49px;
     color: #333333;
-    padding: 52px;
+    padding-left: 52px;
+    padding-right: 52px;
     font-size: 1em;
     cursor: pointer;
     background: #f2f2f2;
@@ -102,4 +103,5 @@
     color: #265a88;
     background: #dddddd;
 }
+
 
