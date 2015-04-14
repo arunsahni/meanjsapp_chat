@@ -36,7 +36,7 @@
 }
 .tags-cloud .tag {
     float: left;
-    padding: 0px 6px;
+    padding: 6px;
     font-size: 1em;
     margin-right: 5px;
     margin-bottom: 5px;
@@ -88,11 +88,11 @@
 .suggestions-list li {
     margin-left: -49px;
     color: #333333;
-    padding: 0px 52px;
+    padding: 52px;
     font-size: 1em;
     cursor: pointer;
     background: #f2f2f2;
-    border-bottom: 0px solid #dddddd;
+    border-bottom: solid #dddddd;
 }
 .suggestions-list li:hover {
     background: #dddddd;
