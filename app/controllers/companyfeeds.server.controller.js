@@ -135,7 +135,7 @@ exports.addComment = function(req,res){
 };
 
 exports.addLikers = function(req, res){
-	Companyfeed.findOneAndUpdate({_id: mongoose.Types.ObjectId(req.body.compnayfeedId)}, {$push : {likers:req.body.user_id}}).exec(function(err,data) {
+	Companyfeed.findOneAndUpdate({_id: mongoose.Types.ObjectId(req.body.compnayfeedId)}, {$push : {likers:req.body.liker}}).exec(function(err,data) {
 		if (err) {
 			return res.status(500).json({
 				error: 'Cannot add the bid'
@@ -155,7 +155,7 @@ exports.addLikers = function(req, res){
 };
 
 exports.addCommentLike = function(req, res) {
-	Companyfeed.findOneAndUpdate(({_id: mongoose.Types.ObjectId(req.body.compnayfeedId)},{'comment._id' : mongoose.Types.ObjectId(req.body.commentId)}), {$push : {'comment.$.commentLiker':req.body.user_id}}).exec(function (err, data) {
+	Companyfeed.findOneAndUpdate(({_id: mongoose.Types.ObjectId(req.body.compnayfeedId)},{'comment._id' : mongoose.Types.ObjectId(req.body.commentId)}), {$push : {'comment.$.commentLiker':req.body.commentLiker}}).exec(function (err, data) {
 		if (err) {
 			return res.status(500).json({
 				error: 'Cannot add the bid'

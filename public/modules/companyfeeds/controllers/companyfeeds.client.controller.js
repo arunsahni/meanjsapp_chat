@@ -69,17 +69,20 @@ angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '
 				compnayfeedId: companyfeedId,
 				comment: {
 					user_id: Authentication.user._id,
+					user_name:Authentication.user.displayName,
 					comment: this.comment
 				}
 			}).success(function (companyfeeds) {
 				$scope.companyfeeds = companyfeeds;
 			});
 		};
-		$scope.addLiker = function (companyfeedId, likerCount) {
+		$scope.addLiker = function (companyfeedId) {
 			Companyfeeds.addLiker({
 				compnayfeedId: companyfeedId,
-				user_id: Authentication.user._id,
-				likerCount: likerCount
+				liker : {
+					user_id: Authentication.user._id,
+					user_name:Authentication.user.displayName
+				}
 			}).success(function (companyfeeds) {
 				$scope.companyfeeds = companyfeeds;
 
@@ -89,8 +92,11 @@ angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '
 		$scope.addCommentLike = function (companyFeedId, commentId) {
 			Companyfeeds.addCommentLike({
 				compnayfeedId: companyFeedId,
-				user_id: Authentication.user._id,
-				commentId: commentId
+				commentId: commentId,
+				commentLiker: {
+					user_id: Authentication.user._id,
+					user_name:Authentication.user.displayName
+				}
 			}).success(function (companyfeeds) {
 				$scope.companyfeeds = companyfeeds;
 			});
