@@ -37,4 +37,7 @@ module.exports = function(app) {
 	app.post('/companyfeeds/addlikers', function(req, res) {
 		companyfeeds.addLikers(req, res);
 	});
+	app.post('/companyfeeds/addCommentLike', function(req, res) {
+		companyfeeds.addCommentLike(req, res);
+	});
 };

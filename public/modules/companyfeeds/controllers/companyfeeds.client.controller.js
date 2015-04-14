@@ -10,22 +10,21 @@ angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '
 		$scope.imgPath = 'https://s3.amazonaws.com/sumacrm/avatars/' + Authentication.user._id;
 		$scope.imgPathOwn = 'https://s3.amazonaws.com/sumacrm/avatars/';
 
-		$scope.create = function() {
+		$scope.create = function () {
 			Companyfeeds.savecompanyfeed({
 				name: this.name
 			}).success(function (data) {
 				$scope.companyfeeds = data;
-				find();
 				/*toastr.success('Successfully', 'Article inserted');
-				$scope.title = '';
-				$scope.content = '';*/
+				 $scope.title = '';
+				 $scope.content = '';*/
 			});
 
 		};
 
 		// Remove existing Companyfeed
-		$scope.remove = function(companyfeed) {
-			if ( companyfeed ) { 
+		$scope.remove = function (companyfeed) {
+			if (companyfeed) {
 				companyfeed.$remove();
 
 				for (var i in $scope.companyfeeds) {
@@ -34,7 +33,7 @@ angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '
 					}
 				}
 			} else {
-				$scope.companyfeed.$remove(function() {
+				$scope.companyfeed.$remove(function () {
 					$location.path('companyfeeds');
 				});
 			}
@@ -42,48 +41,58 @@ angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '
 
 		// Update existing Companyfeed
 		/*$scope.update = function() {
-			var companyfeed = $scope.companyfeed;
+		 var companyfeed = $scope.companyfeed;
 
-			companyfeed.$update(function() {
-				$location.path('companyfeeds/' + companyfeed._id);
-			}, function(errorResponse) {
-				$scope.error = errorResponse.data.message;
-			});
-		};
-*/
+		 companyfeed.$update(function() {
+		 $location.path('companyfeeds/' + companyfeed._id);
+		 }, function(errorResponse) {
+		 $scope.error = errorResponse.data.message;
+		 });
+		 };
+		 */
 		// Find a list of Companyfeeds
-		$scope.find = function() {
-			Companyfeeds.getcompanyfeeds().success(function(companyfeeds){
+		$scope.find = function () {
+			Companyfeeds.getcompanyfeeds().success(function (companyfeeds) {
 				$scope.companyfeeds = companyfeeds;
 			});
 		};
 		// Find existing Companyfeed
-		$scope.findOne = function() {
+		$scope.findOne = function () {
 			Companyfeeds.getcompanyfeedById({
 				companyfeedId: $stateParams.companyfeedId
 			}).success(function (companyfeed) {
 				$scope.companyfeed = companyfeed;
 			});
 		};
-		$scope.addComment = function(companyfeedId){
+		$scope.addComment = function (companyfeedId) {
 			Companyfeeds.addCommentService({
-				compnayfeedId : companyfeedId,
-				comment : {
+				compnayfeedId: companyfeedId,
+				comment: {
 					user_id: Authentication.user._id,
 					comment: this.comment
 				}
-			}).success(function(companyfeeds) {
+			}).success(function (companyfeeds) {
 				$scope.companyfeeds = companyfeeds;
 			});
 		};
-		$scope.addLiker = function(companyfeedId, likerCount) {
+		$scope.addLiker = function (companyfeedId, likerCount) {
 			Companyfeeds.addLiker({
-				compnayfeedId : companyfeedId,
+				compnayfeedId: companyfeedId,
 				user_id: Authentication.user._id,
 				likerCount: likerCount
-			}).success(function(companyfeeds){
+			}).success(function (companyfeeds) {
 				$scope.companyfeeds = companyfeeds;
 
+			});
+		};
+
+		$scope.addCommentLike = function (companyFeedId, commentId) {
+			Companyfeeds.addCommentLike({
+				compnayfeedId: companyFeedId,
+				user_id: Authentication.user._id,
+				commentId: commentId
+			}).success(function (companyfeeds) {
+				$scope.companyfeeds = companyfeeds;
 			});
 		};
 	}

@@ -39,6 +39,9 @@ angular.module('companyfeeds').factory('Companyfeeds', ['$http',
 		serviceFactory.addLiker = function(req,res){
 			return $http.post('/companyfeeds/addlikers',req);
 		};
+		serviceFactory.addCommentLike = function(req,res){
+			return $http.post('/companyfeeds/addCommentLike',req);
+		};
 		return serviceFactory;
 
 	}

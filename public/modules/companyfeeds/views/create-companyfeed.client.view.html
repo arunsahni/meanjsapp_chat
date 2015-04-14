@@ -60,8 +60,12 @@
                         <img ng-hide="authentication.user.isImage" ng-src="../imgs/default-avatar.jpg"  height="30" width="30" class="img-thumbnail">
                         <img ng-show="authentication.user.isImage" ng-src="{{imgPathOwn+comment.user_id}}" height="30" width="30">
                     </div>
-                    <div class="col-md-10" ng-bind="comment.comment" style="margin-left: -40px">
+                    <div class="col-md-5" ng-bind="comment.comment" style="margin-left: -40px">
                     </div>
+                    <div  class="col-md-1">
+                        <button class="glyphicon glyphicon-thumbs-up" ng-click="addCommentLike(companyfeed._id, comment._id)" ng-bind="comment.commentLiker.length"></button>
+                    </div>
+
                 </div>
             </div>
             <br>
