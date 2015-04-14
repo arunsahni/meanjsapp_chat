@@ -21,12 +21,18 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
 			toastr.success('I don\'t need a title to live');
 		};
 		$scope.toasterCheckAll = function() {
-			toastr.success('Message with Title', 'Successfully');
-			toastr.info('Message', 'Information');
-			toastr.error('Message', 'Error');
-			toastr.warning('Message', 'Warning');
-			toastr.success('I don\'t need a title to live');
-		};
+            toastr.success('Message with Title', 'Successfully');
+            toastr.info('Message', 'Information');
+            toastr.error('Message', 'Error');
+            toastr.warning('Message', 'Warning');
+            toastr.success('I don\'t need a title to live');
+        };
+        $scope.autoCompleteData = {
+                EntityName: ['User'],
+                Projection: ['firstName', '_id', 'isImage'],
+                MatchField: 'firstName'
+        };
+
 		$scope.create = function() {
 			$scope.title = this.title;
 			$scope.content = this.content;

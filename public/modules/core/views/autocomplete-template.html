@@ -1,0 +1,31 @@
+<section>
+    <div class="tags-wrapper">
+        <div id="tagsList" class="tags-cloud">
+            <div ng-repeat="selectedTag in selectedTags" class="tag">
+                <img ng-if="!selectedTag.isImage" ng-src="../imgs/default-avatar.jpg"  height="10" width="20" class="img-thumbnail">
+                <img ng-if="selectedTag.isImage" ng-src="https://s3.amazonaws.com/sumacrm/avatars/{{selectedTag._id}}" height="10" width="20" class="img-thumbnail">
+                <span class="tagName">{{selectedTag.firstName}}</span>
+                <span> &nbsp;
+                    <a ng-click="removeTag($index)" class="close">&times;</a>
+                </span>
+                </span>
+            </div>
+                <input type="text"
+                       placeholder="Type to search users"
+                       id="searchInput"
+                       ng-keydown="checkKeyDown($event)"
+                       class="form-control"
+                       ng-model="searchText"
+                       ng-change="search()"/>
+        </div>
+
+            <ul id="suggestions" class="suggestions-list">
+                <li ng-repeat="suggestion in suggestions" class="blockSpan" ng-click="addToSelectedTags($index)" ng-mouseover="$parent.selectedIndex=$index" ng-class="{active : selectedIndex===$index}">
+                    <img ng-if="!suggestion.isImage" ng-src="../imgs/default-avatar.jpg"  height="20" width="40" class="img-thumbnail">
+                    <img ng-if="suggestion.isImage" ng-src="https://s3.amazonaws.com/sumacrm/avatars/{{suggestion._id}}" height="20" width="40" class="img-thumbnail">
+                    {{suggestion.firstName}}
+                </li>
+            </ul>
+    </div>
+</section>
+
