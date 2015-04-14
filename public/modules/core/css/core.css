@@ -28,3 +28,11 @@
 	margin-top: 10px;
 
 }
+
+.article-left-pull {
+	margin-left: -20px;
+}
+.text-color{
+	color: #265a88;
+	font-size: large;
+}
