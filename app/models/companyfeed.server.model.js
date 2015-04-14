@@ -24,10 +24,6 @@ var CompanyfeedSchema = new Schema({
 		type: Schema.ObjectId,
 		ref: 'User'
 	},
-	likes: {
-		type: Number,
-		default: 0
-	},
 	likers:{
 		type: Array
 	},

@@ -135,7 +135,7 @@ exports.addComment = function(req,res){
 };
 
 exports.addLikers = function(req, res){
-	Companyfeed.findOneAndUpdate({_id: mongoose.Types.ObjectId(req.body.compnayfeedId)},{$set : {likes:req.body.likerCount+1}}, {$push : {likers:req.body.user_id}}).exec(function(err,data) {
+	Companyfeed.findOneAndUpdate({_id: mongoose.Types.ObjectId(req.body.compnayfeedId)}, {$push : {likers:req.body.user_id}}).exec(function(err,data) {
 		if (err) {
 			return res.status(500).json({
 				error: 'Cannot add the bid'

@@ -47,7 +47,7 @@
             </div>
             <div class="row">
                 <div class = "col-md-8 col-md-offset-1">
-                    <button class="glyphicon glyphicon-thumbs-up" ng-click="addLiker(companyfeed._id, companyfeed.likes)" ng-bind="companyfeed.likes"></button>
+                    <button class="glyphicon glyphicon-thumbs-up" ng-click="addLiker(companyfeed._id, companyfeed.likes)" ng-bind="companyfeed.likers.length"></button>
                 </div>
             </div>
         </div>
@@ -65,7 +65,6 @@
                     <div  class="col-md-1">
                         <button class="glyphicon glyphicon-thumbs-up" ng-click="addCommentLike(companyfeed._id, comment._id)" ng-bind="comment.commentLiker.length"></button>
                     </div>
-
                 </div>
             </div>
             <br>
