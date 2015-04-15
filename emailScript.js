@@ -56,7 +56,7 @@ var mongoose = require('mongoose'),
                         from: 'sumacrm025@gmail.com',
                         to:  userList[i].email,
                         subject: 'Project Deployment Mail',
-                        html: data
+                        html:  'Hey   '+userList[i].firstName + data
                     };
                     transporter.sendMail(mailOptions, function(error, info){
                         if(error) {
