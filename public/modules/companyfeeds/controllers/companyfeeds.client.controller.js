@@ -47,7 +47,7 @@ angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '
 		};
 
 		// Find a list of Companyfeeds
-		$scope.find = function () {
+		$scope.init = function () {
 			Companyfeeds.getcompanyfeeds().success(function (companyfeeds) {
 				$scope.companyfeeds = companyfeeds;
 			});
@@ -113,6 +113,9 @@ angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '
                     return user._id;
                 });
                 getCompanyFeedById(userIds);
+            }
+            if ($scope.data && $scope.data.tags.length === 0) {
+                $scope.init();
             }
         });
 	}
