@@ -11,4 +11,3 @@ option_settings:
     value: /public
     - option_name: NODE_ENV
     value: production
-
