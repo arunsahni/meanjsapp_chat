@@ -1,4 +1,0 @@
-container_commands:
-  bower-instally:
-    command: node_modules/bower/bin/bower install --config.interactive=false
-    leader_only: true
