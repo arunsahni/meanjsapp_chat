@@ -105,7 +105,7 @@ angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '
             Companyfeeds.getcompanyfeedByUserId({userIds: userIds}).success(function (companyFeeds) {
                 $scope.companyfeeds = companyFeeds;
             });
-        };
+        }
 
         $scope.$watchCollection('data.tags',function(val){
             if ($scope.data && $scope.data.tags.length) {
@@ -118,5 +118,23 @@ angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '
                 $scope.init();
             }
         });
+		$scope.show_name = 'show More';
+		$scope.showChilds = function($index){
+			$scope.activePosition = $scope.activePosition === $index ? -1 : $index;
+		};
+
+
+		var pagesShown = 1;
+		var pageSize = 3;
+
+		$scope.paginationLimit = function(data) {
+			return pageSize * pagesShown;
+		};
+		$scope.hasMoreItemsToShow = function($index) {
+			return pagesShown < ($scope.companyfeeds[$index].comment.length / pageSize);
+		};
+		$scope.showMoreItems = function($index) {
+			pagesShown = pagesShown + 1;
+		};
 	}
 ]);

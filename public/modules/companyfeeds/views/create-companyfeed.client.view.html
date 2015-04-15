@@ -65,25 +65,26 @@
             </div>
             <br>
         </div>
-        <div class="row" ng-repeat="comment in companyfeed.comment">
-            <div class="col-md-1">
-            </div>
-            <div class="col-md-10">
-                <div class="row">
-                    <div class="col-md-1">
-                        <img ng-hide="authentication.user.isImage" ng-src="../imgs/default-avatar.jpg"  height="30" width="30" class="img-thumbnail">
-                        <img ng-show="authentication.user.isImage" ng-src="{{imgPathOwn+comment.user_id}}" height="30" width="30">
-                    </div>
-                    <div class="col-md-5" ng-bind="comment.comment" style="margin-left: -40px">
-                    </div>
-                    <div  class="col-md-1">
-                        <button ng-if="comment.commentLiker.length > 0" class="btn-primary glyphicon glyphicon-thumbs-up" ng-click="addCommentLike(companyfeed._id, comment._id)" ng-bind="comment.commentLiker.length" ng-mouseover ="likersNmae(comment.commentLiker)"  title="{{LikerName}}" data-toggle="tooltip"></button>
-                        <button ng-if="comment.commentLiker.length === 0" class="glyphicon glyphicon-thumbs-up" ng-click="addCommentLike(companyfeed._id, comment._id)"></button>
+        <div>
+            <div class="row" ng-repeat="comment in companyfeed.comment | limitTo: paginationLimit()">
+                <div class="col-md-10 col-xs-12 col-md-offset-1">
+                    <div class="row" >
+                        <div class="col-md-1 col-xs-1">
+                            <img ng-hide="authentication.user.isImage" ng-src="../imgs/default-avatar.jpg"  height="30" width="30" class="img-thumbnail">
+                            <img ng-show="authentication.user.isImage" ng-src="{{imgPathOwn+comment.user_id}}" height="30" width="30">
+                        </div>
+                        <div class="col-md-5 col-xs-5" ng-bind="comment.comment" style="margin-left: -40px" >
+                        </div>
+                        <div  class="col-md-1 col-xs-1">
+                            <button ng-if="comment.commentLiker.length > 0" class="btn-primary glyphicon glyphicon-thumbs-up" ng-click="addCommentLike(companyfeed._id, comment._id)" ng-bind="comment.commentLiker.length" ng-mouseover ="likersNmae(comment.commentLiker)"  title="{{LikerName}}" data-toggle="tooltip"></button>
+                            <button ng-if="comment.commentLiker.length === 0" class="glyphicon glyphicon-thumbs-up" ng-click="addCommentLike(companyfeed._id, comment._id)"></button>
+                        </div>
                     </div>
                 </div>
+                <br>
+                <br>
             </div>
-            <br>
-            <br>
+            <span ng-show="hasMoreItemsToShow($index)" ng-click="showMoreItems($index)">{{show_name}}</span>
         </div>
         <div class="row" >
             <div class="col-md-1 col-md-offset-1">
