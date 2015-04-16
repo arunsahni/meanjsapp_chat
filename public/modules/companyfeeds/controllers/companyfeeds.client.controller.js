@@ -119,22 +119,17 @@ angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '
             }
         });
 		$scope.show_name = 'show More';
-		$scope.showChilds = function($index){
-			$scope.activePosition = $scope.activePosition === $index ? -1 : $index;
-		};
 
-
-		var pagesShown = 1;
-		var pageSize = 3;
-
-		$scope.paginationLimit = function(data) {
-			return pageSize * pagesShown;
+		$scope.paginationLimit = function(index) {
+			$scope.companyfeeds[index].pagesShown =
+				$scope.companyfeeds[index].pagesShown ? $scope.companyfeeds[index].pagesShown : 1;
+			return 3 * $scope.companyfeeds[index].pagesShown;
 		};
-		$scope.hasMoreItemsToShow = function($index) {
-			return pagesShown < ($scope.companyfeeds[$index].comment.length / pageSize);
+		$scope.hasMoreItemsToShow = function(index) {
+			return $scope.companyfeeds[index].pagesShown < ($scope.companyfeeds[index].comment.length / 3);
 		};
-		$scope.showMoreItems = function($index) {
-			pagesShown = pagesShown + 1;
+		$scope.showMoreItems = function(index) {
+			$scope.companyfeeds[index].pagesShown = $scope.companyfeeds[index].pagesShown + 1;
 		};
 	}
 ]);
