@@ -62,10 +62,10 @@
                        data-toggle="tooltip"
                        tooltipPlacement="bottom"
                        class="red-tooltip"
-                       ng-mouseover ="likersNmae(companyfeed.likers)"
+                       ng-mouseover ="likersName(companyfeed.likers)"
                        data-toggle="tooltip"
                        tooltip="{{LikerName}}">Likes</a>
-                    <a ng-if="companyfeed.likers.length>0" ng-mouseover ="likersNmae(companyfeed.likers)" ng-click="showliker()">({{companyfeed.likers.length}})</a>
+                    <a ng-if="companyfeed.likers.length>0" ng-mouseover ="likersName(companyfeed.likers)" ng-click="showliker()">({{companyfeed.likers.length}})</a>
                      <button ng-if="companyfeed.likers.length === 0" class="glyphicon glyphicon-thumbs-up" ng-click="addLiker($index)"></button>
                 </div>
             </div>
@@ -82,16 +82,16 @@
                         <div class="col-md-5 col-xs-7" ng-bind="comment.comment" style="margin-left: 0px">
                         </div>
                         <div class="col-md-4 col-xs-8">
-                            <button ng-if="comment.commentLiker.length > 0" class="btn-primary glyphicon glyphicon-thumbs-up " ng-click="addCommentLike($parent.$index, $index)"></button>
+                            <button ng-if="comment.commentLiker.length > 0" class="btn-primary glyphicon glyphicon-thumbs-up " ng-click="addCommentLike($parent.$parent.$index, $index)"></button>
                             <a ng-if="comment.commentLiker.length>0"
                                data-toggle="tooltip"
                                data-placement="bottom"
                                class="red-tooltip"
-                               ng-mouseover ="likersNmae(comment.commentLiker)"
+                               ng-mouseover ="likersName(comment.commentLiker)"
                                tooltip="{{LikerName}}"
                                data-liker="{{LikerName}}">Likes</a>
-                            <a ng-if="comment.commentLiker.length>0" ng-mouseover ="likersNmae(comment.commentLiker)" ng-click="showliker()">({{comment.commentLiker.length}})</a>
-                            <button ng-if="comment.commentLiker.length === 0" class="glyphicon glyphicon-thumbs-up" ng-click="addCommentLike($parent.$index, $index)"></button>
+                            <a ng-if="comment.commentLiker.length>0" ng-mouseover ="likersName(comment.commentLiker)" ng-click="showliker(comment.commentLiker)">({{comment.commentLiker.length}})</a>
+                            <button ng-if="comment.commentLiker.length === 0" class="glyphicon glyphicon-thumbs-up" ng-click="addCommentLike($parent.$parent.$index, $index)"></button>
                         </div>
                     </div>
                 </div>
