@@ -134,7 +134,7 @@ angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '
 		$scope.showMoreItems = function(index) {
 			$scope.companyfeeds[index].pagesShown = $scope.companyfeeds[index].pagesShown + 1;
 		};
-		$scope.showliker = function(){
+		$scope.showliker = function() {
 			modalInstance = $modal.open({
 				templateUrl: 'modules/companyfeeds/views/show-liker.client.view.html',
 				scope: $scope,
