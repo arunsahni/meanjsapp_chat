@@ -14,7 +14,7 @@ angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '
 			Companyfeeds.savecompanyfeed({
 				name: this.name
 			}).success(function (data) {
-				$scope.name="";
+				delete $scope.name;
 				$scope.companyfeeds = data;
 			});
 		};
@@ -77,31 +77,63 @@ angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '
 				$scope.companyfeeds = companyfeeds;
 			});
 		};
+        function isLiked(likers) {
+            var i, len;
+            for (i = 0, len = likers.length; i < len; i += 1) {
+                if (likers[i].user_id === Authentication.user._id) {
+                    return true;
+                }
+            }
+        };
+		$scope.addLiker = function (index) {
+            if (!$scope.companyfeeds[index].likers.length || !isLiked($scope.companyfeeds[index].likers)) {
+                Companyfeeds.addLiker({
+                    compnayfeedId: $scope.companyfeeds[index]._id,
+                    liker : {
+                        user_id: Authentication.user._id,
+                        user_name:Authentication.user.displayName
+                    }
+                }).success(function (companyfeeds) {
+                    $scope.companyfeeds = companyfeeds;
 
-		$scope.addLiker = function (companyfeedId) {
-			Companyfeeds.addLiker({
-				compnayfeedId: companyfeedId,
-				liker : {
-					user_id: Authentication.user._id,
-					user_name:Authentication.user.displayName
-				}
-			}).success(function (companyfeeds) {
-				$scope.companyfeeds = companyfeeds;
-
-			});
+                });
+            } else {
+                Companyfeeds.removeLiker({
+                    compnayfeedId: $scope.companyfeeds[index]._id,
+                    liker : {
+                        user_id: Authentication.user._id,
+                        user_name:Authentication.user.displayName
+                    }
+                }).success(function (companyfeeds) {
+                    $scope.companyfeeds = companyfeeds;
+                });
+            }
 		};
 
-		$scope.addCommentLike = function (companyFeedId, commentId) {
-			Companyfeeds.addCommentLike({
-				compnayfeedId: companyFeedId,
-				commentId: commentId,
-				commentLiker: {
-					user_id: Authentication.user._id,
-					user_name:Authentication.user.displayName
-				}
-			}).success(function (companyfeeds) {
-				$scope.companyfeeds = companyfeeds;
-			});
+		$scope.addCommentLike = function (feedIndex, commentIndex) {
+            if (!$scope.companyfeeds[feedIndex].comment.length || !isLiked($scope.companyfeeds[feedIndex].comment[commentIndex].commentLiker)) {
+                Companyfeeds.addCommentLike({
+                    compnayfeedId: $scope.companyfeeds[feedIndex]._id,
+                    commentId: $scope.companyfeeds[feedIndex].comment[commentIndex]._id,
+                    commentLiker: {
+                        user_id: Authentication.user._id,
+                        user_name: Authentication.user.displayName
+                    }
+                }).success(function (companyfeeds) {
+                    $scope.companyfeeds = companyfeeds;
+                });
+            } else {
+                Companyfeeds.removeCommentLike({
+                    compnayfeedId: $scope.companyfeeds[feedIndex]._id,
+                    commentId: $scope.companyfeeds[feedIndex].comment[commentIndex]._id,
+                    commentLiker: {
+                        user_id: Authentication.user._id,
+                        user_name: Authentication.user.displayName
+                    }
+                }).success(function (companyfeeds) {
+                    $scope.companyfeeds = companyfeeds;
+                });
+            }
 		};
 
         function getCompanyFeedById (userIds) {

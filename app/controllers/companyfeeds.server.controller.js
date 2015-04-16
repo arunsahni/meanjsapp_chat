@@ -154,8 +154,48 @@ exports.addLikers = function(req, res){
 	});
 };
 
+exports.removeLiker = function(req, res){
+    Companyfeed.findOneAndUpdate({_id: mongoose.Types.ObjectId(req.body.compnayfeedId)}, {$pop: {likers: req.body.liker}}).exec(function(err, data) {
+        if (err) {
+            return res.status(500).json({
+                error: 'Cannot add the bid'
+            });
+        } else {
+            Companyfeed.find().sort('-created').populate('user', 'displayName').exec(function(err, companyfeeds) {
+                if (err) {
+                    return res.status(400).send({
+                        message: errorHandler.getErrorMessage(err)
+                    });
+                } else {
+                    res.jsonp(companyfeeds);
+                }
+            });
+        }
+    });
+};
+
 exports.addCommentLike = function(req, res) {
 	Companyfeed.findOneAndUpdate(({_id: mongoose.Types.ObjectId(req.body.compnayfeedId)},{'comment._id' : mongoose.Types.ObjectId(req.body.commentId)}), {$push : {'comment.$.commentLiker':req.body.commentLiker}}).exec(function (err, data) {
+		if (err) {
+			return res.status(500).json({
+				error: 'Cannot add the bid'
+			});
+		} else {
+			Companyfeed.find().sort('-created').populate('user', 'displayName').exec(function(err, companyfeeds) {
+				if (err) {
+					return res.status(400).send({
+						message: errorHandler.getErrorMessage(err)
+					});
+				} else {
+					res.jsonp(companyfeeds);
+				}
+			});
+		}
+	});
+};
+
+exports.removeCommentLike = function(req, res) {
+	Companyfeed.findOneAndUpdate(({_id: mongoose.Types.ObjectId(req.body.compnayfeedId)}, {'comment._id' : mongoose.Types.ObjectId(req.body.commentId)}), {$pop : {'comment.$.commentLiker': req.body.commentLiker}}).exec(function (err, data) {
 		if (err) {
 			return res.status(500).json({
 				error: 'Cannot add the bid'

@@ -37,8 +37,14 @@ module.exports = function(app) {
 	app.post('/companyfeeds/addlikers', function(req, res) {
 		companyfeeds.addLikers(req, res);
 	});
+    app.post('/companyfeeds/removeLiker', function(req, res) {
+		companyfeeds.removeLiker(req, res);
+	});
 	app.post('/companyfeeds/addCommentLike', function(req, res) {
 		companyfeeds.addCommentLike(req, res);
+	});
+    app.post('/companyfeeds/removeCommentLike', function(req, res) {
+		companyfeeds.removeCommentLike(req, res);
 	});
     app.post('/companyfeeds/getcompanyfeedByUserId', function(req, res) {
         companyfeeds.getcompanyfeedByUserId(req, res);
