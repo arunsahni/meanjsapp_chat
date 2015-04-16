@@ -20,6 +20,16 @@ exports.userByID = function(req, res, next, id) {
 		next();
 	});
 };
+exports.userList = function(req, res) {
+	User.find({roles: { $in: ['user']}}).exec(function(err, users) {
+		if (err) {
+			return res.status(400).send({
+			});
+		} else {
+			res.json(users);
+		}
+	});
+};
 
 /**
  * Require login routing middleware

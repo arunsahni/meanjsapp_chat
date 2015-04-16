@@ -1,0 +1,25 @@
+<section data-ng-controller="SettingsController" data-ng-init="find()">
+    <br>
+
+    <h1>Users List</h1>
+    <div class="list-group">
+        <a data-ng-repeat="users in userList" class="list-group-item">
+            <div class="container row">
+                <div class="col-xs-3 col-md-1 text-center article-left-pull">
+                    <img ng-show="!users.isImage" class="img-rounded center-block table-bordered" ng-src="../imgs/default-avatar.jpg" height="55" width="55">
+                    <img ng-show="users.isImage" class="img-rounded center-block table-bordered" ng-src="https://s3.amazonaws.com/sumacrm/avatars/{{users._id}}" height="55" width="55">
+                </div>
+                <div class="col-xs-9 col-md-11 article-left-pull">
+                    <small class="col-xs-12 col-md-12 list-group-item-text">
+                        <div class="text-color" data-ng-bind="users.displayName"></div>
+                    </small>
+                    <div class="col-xs-12 col-md-12">
+                        <p class="list-group-item-text text-justify" data-ng-bind="users.email"></p>
+                    </div>
+
+                </div>
+            </div>
+        </a>
+    </div>
+</section>
+

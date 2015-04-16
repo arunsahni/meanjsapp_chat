@@ -4,6 +4,14 @@ angular.module('core').controller('HeaderController', ['$scope', 'Authentication
 	function($scope, Authentication, Menus, toastr, PusherService, $translate, $location, $stateParams) {
 
 		$scope.authentication = Authentication;
+		$scope.showUser = false;
+
+		$scope.$on('$stateChangeSuccess', function() {
+			if($scope.authentication.user.roles == 'admin'){
+				$scope.showUser = true;
+			}
+		});
+
 		$scope.isCollapsed = false;
 		$scope.menu = Menus.getMenu('topbar');
 		$scope.imgPath = Authentication.user._id + '.png';
