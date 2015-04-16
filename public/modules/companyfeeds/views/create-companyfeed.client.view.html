@@ -90,7 +90,7 @@
                                ng-mouseover ="likersNmae(comment.commentLiker)"
                                tooltip="{{LikerName}}"
                                data-liker="{{LikerName}}">Likes</a>
-                            <a ng-if="comment.commentLiker.length>0" ng-mouseover ="likersNmae(comment.commentLiker)" ng-click="showliker()">({{companyfeed.likers.length}})</a>
+                            <a ng-if="comment.commentLiker.length>0" ng-mouseover ="likersNmae(comment.commentLiker)" ng-click="showliker()">({{comment.commentLiker.length}})</a>
                             <button ng-if="comment.commentLiker.length === 0" class="glyphicon glyphicon-thumbs-up" ng-click="addCommentLike(companyfeed._id, comment._id)"></button>
                         </div>
                     </div>
