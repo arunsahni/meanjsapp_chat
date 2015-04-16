@@ -74,7 +74,7 @@
             <br>
         </div>
         <div>
-            <div class="row" ng-repeat="comment in companyfeed.comment | limitTo: paginationLimit()">
+            <div class="row" ng-repeat="comment in companyfeed.comment | limitTo: paginationLimit($index)">
                 <div class="col-md-10 col-xs-12 col-md-offset-1">
                     <div class="row" >
                         <div class="col-md-1 col-xs-1">
