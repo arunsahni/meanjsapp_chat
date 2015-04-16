@@ -23,7 +23,6 @@ angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '
             Projection: ['firstName', '_id', 'isImage'],
             MatchField: 'firstName'
         };
-
 		$scope.likersName = function(likerArray) {
             var i, len;
 			$scope.LikerNameArray = likerArray;
@@ -84,7 +83,7 @@ angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '
                     return true;
                 }
             }
-        };
+        }
 		$scope.addLiker = function (index) {
             if (!$scope.companyfeeds[index].likers.length || !isLiked($scope.companyfeeds[index].likers)) {
                 Companyfeeds.addLiker({

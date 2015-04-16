@@ -1,21 +1,22 @@
 <section data-ng-controller="CompanyfeedsController">
-    <div class="page-header col-md-10 col-xs- col-md-offset-2">
-        <h1>Liker Name</h1>
+    <div class="modal-header ">
+        <h4 class="text-primary">Liker Name</h4>
     </div>
-
     <div class="row">
+        <br><br>
         <div class="col-md-12 col-xs- col-md-offset-2" ng-repeat="likername in LikerNameArray">
-            <div class="col-md-1 col-xs-3">
+            <div class="col-md-1 col-xs-6">
                 <img ng-hide="authentication.user.isImage" ng-src="../imgs/default-avatar.jpg"  height="30" width="30" class="img-thumbnail">
                 <img ng-show="authentication.user.isImage" ng-src="{{imgPathOwn+likername.user_id}}" height="30" width="30">
             </div>
-            <div class="col-md-11 col-xs-">
+            <div class="col-md-9 col-sm- col-sm-offset-1 col-lg-offset-1">
                 <b><span class="text-primary" data-ng-bind="likername.user_name"></span></b>
             </div>
-            <br>
-            <br>
-            <br>
+            <br><br><br>
         </div>
     </div>
-
+    <div class="modal-footer">
+        <button class="btn btn-primary ng-click-active" ng-click="$dismiss()">OK</button>
+    </div>
+</div>
 </section>
