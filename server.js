@@ -33,5 +33,4 @@ app.listen(config.port);
 exports = module.exports = app;
 
 // Logging initialization
-console.log('AWS');
 console.log('MEAN.JS application started on port ' + config.port);
