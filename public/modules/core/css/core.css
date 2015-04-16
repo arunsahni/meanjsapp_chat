@@ -109,5 +109,9 @@
 .red-tooltip + .tooltip .tooltip-arrow {
     border-bottom-color:#265a88 ;
 }
+.post-text-area
+{
+    border: solid 2px;
+}
 
 
