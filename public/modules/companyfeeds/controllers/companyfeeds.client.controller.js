@@ -24,10 +24,13 @@ angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '
         };
 
 		$scope.likersNmae = function(likerArray) {
-			$scope.LikerName = [];
-			for(var i = 0;i<likerArray.length;i++) {
-				$scope.LikerName.push(likerArray[i].user_name);
+			//$scope.LikerName=[];
+			$scope.LikerName  =likerArray[0].user_name;
+			for(var i = 1;i<likerArray.length;i++) {
+				//$scope.LikerName.push(likerArray[i].user_name);
+				$scope.LikerName=$scope.LikerName+'\n'+likerArray[i].user_name;
 			}
+			//console.log($scope.LikerName);
 		};
 		// Remove existing Companyfeed
 		$scope.remove = function (companyfeed) {

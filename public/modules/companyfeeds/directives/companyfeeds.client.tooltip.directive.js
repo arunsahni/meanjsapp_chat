@@ -3,16 +3,21 @@
  */
 'use strict';
 
-angular.module('companyfeeds').directive('toggle', function(){
+angular.module('companyfeeds').directive('toggle', function($tooltip){
     return {
-        restrict: 'A',
-        link: function(scope, element, attrs,$){
+        restrict: 'EA',
+        link: function (scope, element, attrs) {
+           /* for(var i=0;i < attrs.liker.length;i++){
+                attrs.tooltip =attrs.tooltip+'\n'+attrs.tooltip[i];
             if (attrs.toggle === 'tooltip'){
-                $(element).tooltip();
-            }
-            /*if (attrs.toggle === 'popover'){
-                $(element).popover();
+            $(element).tooltip();
             }*/
+            console.log(element.toString('likerName'));
+            attrs.tooltipPlacement = attrs.tooltipPlacement || 'bottom';
+            attrs.tooltipAnimation = attrs.tooltipAnimation || true;
+            attrs.tooltipPopupDelay = attrs.tooltipPopupDelay || 0;
+            attrs.tooltipTrigger = attrs.tooltipTrigger || 'mouseenter';
+            attrs.tooltipAppendToBody = attrs.tooltipAppendToBody || false;
         }
     };
 });
