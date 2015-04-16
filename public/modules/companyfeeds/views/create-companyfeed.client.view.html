@@ -3,15 +3,15 @@
         <h1></h1>
     </div>
     <div class="col-md-12">
-        <form class="form-horizontal" data-ng-submit="create()" novalidate>
+        <form class="form-horizontal" novalidate>
             <fieldset>
                 <div class="form-group">
                     <div class="controls">
-                        <input type="text" data-ng-model="name" id="name" class="form-control" placeholder="Post Your Feed" autofocus="autofocus" required>
+                       <textarea  data-ng-model="name" id="name" class="form-control" cols="30" rows="4" placeholder = "Post Your Feed" autofocus="autofocus"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
-                    <button  class="btn-primary" type="submit">Post</button>
+                    <button  class="btn-primary" ng-click="create()">Post</button>
                 </div>
 				<div data-ng-show="error" class="text-danger">
 					<strong data-ng-bind="error"></strong>
@@ -42,16 +42,19 @@
                 <b><span class="text-primary" data-ng-bind="companyfeed.user.displayName"></span></b>
             </div>
             <div>
-                <small class="list-group-item-text" style="margin-left: 15px;">
-                    Posted on
-                    <span data-ng-bind="companyfeed.created | date:'medium'"></span>
-                    by
-                    <span data-ng-bind="companyfeed.user.displayName"></span>
-                </small>
+
             </div>
             <div class="row">
                 <div class="col-sm-5 col-xs- col-xs-offset-1 text-justify">
                     <p data-ng-bind="companyfeed.name"></p>
+                    <small class="list-group-item-text" >
+                        Posted
+                        <!-- <span data-ng-bind="companyfeed.created | date:'medium'"></span>-->
+                        <span ng-if="FindDays(companyfeed.created) > 0" data-ng-bind="FindDays(companyfeed.created)+ ' day before'"></span>
+                        <span ng-if="FindDays(companyfeed.created) == 0" data-ng-bind="'today'"></span>
+                        by
+                        <span data-ng-bind="companyfeed.user.displayName"></span>
+                    </small>
                 </div>
             </div>
             <div class="row">
@@ -91,7 +94,6 @@
                                class="red-tooltip"
                                ng-mouseover ="likersNmae(companyfeed.likers)"
                                tooltip="{{LikerName}}"
-                               title="{{LikerName}}"
                                data-liker="{{LikerName}}">({{comment.commentLiker.length}})</a>
                             <button ng-if="comment.commentLiker.length === 0" class="glyphicon glyphicon-thumbs-up" ng-click="addCommentLike(companyfeed._id, comment._id)"></button>
                         </div>

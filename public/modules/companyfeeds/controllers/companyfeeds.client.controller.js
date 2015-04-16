@@ -14,6 +14,7 @@ angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '
 			Companyfeeds.savecompanyfeed({
 				name: this.name
 			}).success(function (data) {
+				$scope.name="";
 				$scope.companyfeeds = data;
 			});
 		};
@@ -30,7 +31,6 @@ angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '
 				//$scope.LikerName.push(likerArray[i].user_name);
 				$scope.LikerName=$scope.LikerName+'\n'+likerArray[i].user_name;
 			}
-			//console.log($scope.LikerName);
 		};
 		// Remove existing Companyfeed
 		$scope.remove = function (companyfeed) {
@@ -133,6 +133,10 @@ angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '
 		};
 		$scope.showMoreItems = function(index) {
 			$scope.companyfeeds[index].pagesShown = $scope.companyfeeds[index].pagesShown + 1;
+		};
+		$scope.FindDays = function(postDate) {
+			var diff = Math.floor((new Date().getTime() / 86400000) - (new Date(postDate).getTime() / 86400000));
+			return diff;
 		};
 	}
 ]);
