@@ -48,7 +48,7 @@
                 </small>
             </div>
             <div class="row">
-                <div class="col-sm-5 col-xs- text-justify">
+                <div class="col-md-5 col-xs-6 text-justify" style="margin-left: 15px;">
                     <p data-ng-bind="companyfeed.name"></p>
                 </div>
             </div>
@@ -90,7 +90,7 @@
                                ng-mouseover ="likersNmae(comment.commentLiker)"
                                tooltip="{{LikerName}}"
                                data-liker="{{LikerName}}">Likes</a>
-                            <a ng-if="comment.commentLiker.length>0" ng-mouseover ="likersNmae(comment.commentLiker)" ng-click="showliker()">({{companyfeed.likers.length}})</a>
+                            <a ng-if="comment.commentLiker.length>0" ng-mouseover ="likersNmae(comment.commentLiker)" ng-click="showliker()">({{comment.commentLiker.length}})</a>
                             <button ng-if="comment.commentLiker.length === 0" class="glyphicon glyphicon-thumbs-up" ng-click="addCommentLike(companyfeed._id, comment._id)"></button>
                         </div>
                     </div>
