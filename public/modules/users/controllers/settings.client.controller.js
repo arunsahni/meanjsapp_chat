@@ -187,15 +187,5 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$l
 				$scope.error = response.message;
 			});
 		};
-
-		// For User list
-		$scope.find = function(){
-			$http.get('/userlist').success(function(response) {
-				// If successful we assign the response to the global user model
-				$scope.userList = response;
-			}).error(function(response) {
-				$scope.error = response.message;
-			});
-		};
 	}
 ]);
