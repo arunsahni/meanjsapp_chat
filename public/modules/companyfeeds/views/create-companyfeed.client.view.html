@@ -77,6 +77,7 @@
                             <img ng-show="authentication.user.isImage" ng-src="{{imgPathOwn+comment.user_id}}" height="30" width="30">
                         </div>
                         <div class="col-md-9 col-xs-8" ng-bind="comment.comment"></div>
+                        <br>
                         <div class="pull-right">
                             <button ng-if="comment.commentLiker.length > 0" class="btn-primary glyphicon glyphicon-thumbs-up " ng-click="addCommentLike($parent.$parent.$index, $index)"></button>
                             <a ng-if="comment.commentLiker.length>0"
