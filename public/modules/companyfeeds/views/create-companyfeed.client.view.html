@@ -40,21 +40,16 @@
             </div>
             <div class="col-md-11 col-xs-">
                 <b><span class="text-primary" data-ng-bind="companyfeed.user.displayName"></span></b>
-            </div>
-            <div>
+                <small class="list-group-item-text" style="margin-left: 10px" >
+                    Posted on
+                     <span data-ng-bind="companyfeed.created | date:'medium'"></span>
 
+                   <!-- <span data-ng-bind="companyfeed.user.displayName"></span>-->
+                </small>
             </div>
             <div class="row">
                 <div class="col-sm-5 col-xs- col-xs-offset-1 text-justify">
                     <p data-ng-bind="companyfeed.name"></p>
-                    <small class="list-group-item-text" >
-                        Posted
-                        <!-- <span data-ng-bind="companyfeed.created | date:'medium'"></span>-->
-                        <span ng-if="FindDays(companyfeed.created) > 0" data-ng-bind="FindDays(companyfeed.created)+ ' day before'"></span>
-                        <span ng-if="FindDays(companyfeed.created) == 0" data-ng-bind="'today'"></span>
-                        by
-                        <span data-ng-bind="companyfeed.user.displayName"></span>
-                    </small>
                 </div>
             </div>
             <div class="row">
@@ -62,16 +57,16 @@
                     <button ng-if="companyfeed.likers.length>0"
                             class="btn-primary glyphicon glyphicon-thumbs-up"
                             ng-click="addLiker(companyfeed._id)">
-                    </button>
-                    <a ng-if="companyfeed.likers.length>0"
+                     </button>
+                     <a ng-if="companyfeed.likers.length>0"
                        data-toggle="tooltip"
                        tooltipPlacement="bottom"
                        class="red-tooltip"
                        ng-mouseover ="likersNmae(companyfeed.likers)"
                        data-toggle="tooltip"
-                       tooltip="{{LikerName}}"
-                       >Likes({{companyfeed.likers.length}})</a>
-                    <button ng-if="companyfeed.likers.length === 0" class="glyphicon glyphicon-thumbs-up" ng-click="addLiker(companyfeed._id)"></button>
+                       tooltip="{{LikerName}}">Likes</a>
+                    <a ng-if="companyfeed.likers.length>0" ng-mouseover ="likersNmae(companyfeed.likers)" ng-click="showliker()">({{companyfeed.likers.length}})</a>
+                     <button ng-if="companyfeed.likers.length === 0" class="glyphicon glyphicon-thumbs-up" ng-click="addLiker(companyfeed._id)"></button>
                 </div>
             </div>
             <br>
@@ -92,9 +87,11 @@
                                data-toggle="tooltip"
                                data-placement="bottom"
                                class="red-tooltip"
-                               ng-mouseover ="likersNmae(companyfeed.likers)"
+                               ng-mouseover ="likersNmae(comment.commentLiker)"
                                tooltip="{{LikerName}}"
-                               data-liker="{{LikerName}}">({{comment.commentLiker.length}})</a>
+                               data-liker="{{LikerName}}"
+                               ng-click="showliker()">({{comment.commentLiker.length}})</a>
+                            <a ng-if="comment.commentLiker.length>0" ng-mouseover ="likersNmae(comment.commentLiker)" ng-click="showliker()">({{companyfeed.likers.length}})</a>
                             <button ng-if="comment.commentLiker.length === 0" class="glyphicon glyphicon-thumbs-up" ng-click="addCommentLike(companyfeed._id, comment._id)"></button>
                         </div>
                     </div>
@@ -114,9 +111,10 @@
             </div>
             <div class="col-md-4 col-xs-6">
                 <form ng-submit="addComment(companyfeed._id)">
-                    <input data-ng-model="comment"  class="form-control" placeholder="Comment">
+                    <input data-ng-model="comment"  class="form-control" placeholder="Comment" required>
                 </form>
             </div>
         </div>
+        <br>
     </div>
 </section>

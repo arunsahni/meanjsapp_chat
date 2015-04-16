@@ -1,10 +1,10 @@
 'use strict';
 
 // Companyfeeds controller
-angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Companyfeeds',
-	function($scope, $stateParams, $location, Authentication, Companyfeeds) {
+angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Companyfeeds','$modal',
+	function($scope, $stateParams, $location, Authentication, Companyfeeds, $modal) {
 		$scope.authentication = Authentication;
-
+		var modalInstance;
 		// Create new Companyfeed
 		$scope.imgPath = Authentication.user._id + '.png';
 		$scope.imgPath = 'https://s3.amazonaws.com/sumacrm/avatars/' + Authentication.user._id;
@@ -25,10 +25,10 @@ angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '
         };
 
 		$scope.likersNmae = function(likerArray) {
-			//$scope.LikerName=[];
+			$scope.LikerNameArray=[];
 			$scope.LikerName  =likerArray[0].user_name;
-			for(var i = 1;i<likerArray.length;i++) {
-				//$scope.LikerName.push(likerArray[i].user_name);
+			for(var i = 0;i<likerArray.length;i++) {
+				$scope.LikerNameArray.push(likerArray[i]);
 				$scope.LikerName=$scope.LikerName+'\n'+likerArray[i].user_name;
 			}
 		};
@@ -134,9 +134,20 @@ angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '
 		$scope.showMoreItems = function(index) {
 			$scope.companyfeeds[index].pagesShown = $scope.companyfeeds[index].pagesShown + 1;
 		};
-		$scope.FindDays = function(postDate) {
-			var diff = Math.floor((new Date().getTime() / 86400000) - (new Date(postDate).getTime() / 86400000));
-			return diff;
+		$scope.showliker = function(){
+			modalInstance = $modal.open({
+				templateUrl: 'modules/companyfeeds/views/show-liker.client.view.html',
+				scope: $scope,
+				resolve: {
+					LikerNameArray: function () {
+						return $scope.LikerNameArray;
+					}
+				}
+			});
+			modalInstance.result.then(function () {
+			}, function () {
+				//console.log('Modal dismissed at: ' + new Date());
+			});
 		};
 	}
 ]);
