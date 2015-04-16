@@ -11,7 +11,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <button  class="btn-primary" ng-submit="create()">Post</button>
+                    <button  class="btn-primary" type="submit">Post</button>
                 </div>
 				<div data-ng-show="error" class="text-danger">
 					<strong data-ng-bind="error"></strong>
@@ -32,13 +32,13 @@
     <div class="page-header">
         <h1></h1>
     </div>
-    <div data-ng-repeat="companyfeed in companyfeeds">
+    <div data-ng-repeat="companyfeed in companyfeeds" class="panel panel-default">
         <div class="row">
-            <div class="col-md-1">
+            <div class="col-md-1 col-xs-">
                 <img ng-hide="authentication.user.isImage" ng-src="../imgs/default-avatar.jpg"  height="70" width="80" class="img-thumbnail">
                 <img ng-show="authentication.user.isImage" ng-src="{{imgPathOwn + companyfeed.user._id}}" height="70" width="80">
             </div>
-            <div class="col-md-11">
+            <div class="col-md-11 col-xs-">
                 <b><span class="text-primary" data-ng-bind="companyfeed.user.displayName"></span></b>
             </div>
             <div>
@@ -50,12 +50,12 @@
                 </small>
             </div>
             <div class="row">
-                <div class="col-xs-7 col-sm-5 text-justify">
+                <div class="col-sm-5 col-xs- col-xs-offset-1 text-justify">
                     <p data-ng-bind="companyfeed.name"></p>
                 </div>
             </div>
             <div class="row">
-                <div class = "col-md-8 col-md-offset-1">
+                <div class = "col-md-8 col-xs- col-xs-offset-1 col-md-offset-1">
                     <button ng-if="companyfeed.likers.length>0"
                             class="btn-primary glyphicon glyphicon-thumbs-up"
                             ng-click="addLiker(companyfeed._id)">
@@ -73,17 +73,17 @@
             </div>
             <br>
         </div>
-        <div>
-            <div class="row" ng-repeat="comment in companyfeed.comment | limitTo: paginationLimit($index)">
-                <div class="col-md-10 col-xs-12 col-md-offset-1">
+        <div class="row">
+            <div ng-repeat="comment in companyfeed.comment | limitTo: paginationLimit($index)">
+                <div class="col-md-12 col-xs-12 col-md-offset-1">
                     <div class="row" >
-                        <div class="col-md-1 col-xs-1">
+                        <div class="col-md-1 col-xs-3">
                             <img ng-hide="authentication.user.isImage" ng-src="../imgs/default-avatar.jpg"  height="30" width="30" class="img-thumbnail">
                             <img ng-show="authentication.user.isImage" ng-src="{{imgPathOwn+comment.user_id}}" height="30" width="30">
                         </div>
-                        <div class="col-md-5 col-xs-5" ng-bind="comment.comment" style="margin-left: -40px">
+                        <div class="col-md-5 col-xs-7" ng-bind="comment.comment" style="margin-left: 0px">
                         </div>
-                        <div class="col-md-4 col-xs-1">
+                        <div class="col-md-4 col-xs-8">
                             <button ng-if="comment.commentLiker.length > 0" class="btn-primary glyphicon glyphicon-thumbs-up " ng-click="addCommentLike(companyfeed._id, comment._id)"></button>
                             <a ng-if="comment.commentLiker.length>0"
                                data-toggle="tooltip"
@@ -100,17 +100,19 @@
                 <br>
                 <br>
             </div>
-            <span ng-show="hasMoreItemsToShow($index)" ng-click="showMoreItems($index)">{{show_name}}</span>
+            <div class="row">
+                <span  class="row col-md-2 col-xs-8 col-xs-offset-1 col-md-offset-1" ng-show="hasMoreItemsToShow($index)" ng-click="showMoreItems($index)">{{show_name}}</span>
+            </div>
+
         </div>
         <div class="row" >
-            <div class="col-md-1 col-md-offset-1">
+            <div class="col-md-1 col-xs-3 col-md-offset-1">
                 <img ng-hide="authentication.user.isImage" ng-src="../imgs/default-avatar.jpg"  height="30" width="30" class="img-thumbnail">
                 <img ng-show="authentication.user.isImage" ng-src="{{imgPath}}" height="30" width="30">
             </div>
-            <div class="col-md-4" style="margin-left: -55px">
+            <div class="col-md-4 col-xs-6">
                 <form ng-submit="addComment(companyfeed._id)">
                     <input data-ng-model="comment"  class="form-control" placeholder="Comment">
-                    <!--<button class="btn-primary"  ng-click="addComment(companyfeed._id)"> Post</button>-->
                 </form>
             </div>
         </div>
