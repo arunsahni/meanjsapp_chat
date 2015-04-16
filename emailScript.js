@@ -6,13 +6,13 @@ var mongoose = require('mongoose'),
     nodemailer = require('nodemailer'),
     exports = module.exports = {};
 
-    exports.getHtml = function(){
+    exports.getHtml = function() {
         var templatePath = "./app/views/templates/emailTemplate.html";
         var hello = fs.readFileSync(templatePath).toString();
         return hello;
     };
 
-    if(process.env.NODE_ENV == 'production'){
+    if (process.env.NODE_ENV == 'production') {
         mongoose.connect('mongodb://suma:sumapass@ds061671.mongolab.com:61671/meanjsapp-dev')
     } else {
         mongoose.connect('mongodb://localhost/meanjsapp-dev');
@@ -50,19 +50,19 @@ var mongoose = require('mongoose'),
             if (err) {
                 return err;
             } else {
-                for(var i = 0; i< userList.length; i++){
+                for(var i = 0; i < userList.length; i++) {
                     var data = exports.getHtml();
                     var mailOptions = {
                         from: 'sumacrm025@gmail.com',
                         to:  userList[i].email,
-                        subject: 'Project Deployment Mail',
-                        html:  'Hey   '+userList[i].firstName + data
+                        subject: 'Suma CRM v1.0 Deployed !!!',
+                        html:  'Hey   '+userList[i].firstName + ',' + data
                     };
-                    transporter.sendMail(mailOptions, function(error, info){
+                    transporter.sendMail(mailOptions, function(error, info) {
                         if(error) {
                             console.log(error);
                         } else {
-                            console.log('Message sent' + info.response);
+                            console.log('Deployment Message sent to ' + info);
                         }
                    });
                 }
