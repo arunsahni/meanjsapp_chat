@@ -10,7 +10,7 @@ module.exports = function(app) {
 		.post(users.requiresLogin, admins.create);
 
 	app.route('/userlist')
-		.get(users.userList);
+		.get(admins.userList);
 
 	app.route('/admins/:adminId')
 		.get(admins.read)

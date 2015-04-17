@@ -35,7 +35,7 @@ exports.read = function(req, res) {
 };
 
 exports.userList = function(req, res) {
-	User.find({roles: { $in: ['user']}}).exec(function(err, users) {
+	User.find({roles: { $in: ['user']}}, {displayName: 1, email:1, roles:1, isImage:1}).exec(function(err, users) {
 		if (err) {
 			return res.status(400).send({
 			});
@@ -44,6 +44,8 @@ exports.userList = function(req, res) {
 		}
 	});
 };
+
+
 /**
  * Update a Admin
  */

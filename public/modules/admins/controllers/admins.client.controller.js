@@ -72,5 +72,9 @@ angular.module('admins').controller('AdminsController', ['$scope', '$stateParams
 				$scope.error = response.message;
 			});
 		};
+		$scope.isActive = true;
+		$scope.roleChange = function () { 
+			$scope.isActive = !$scope.isActive; 
+		};
 	}
 ]);

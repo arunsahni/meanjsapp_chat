@@ -69,6 +69,14 @@
                                 <input type="password" id="password" name="password" class="form-control" data-ng-model="credentials.password" placeholder="Password">
                             </div>
                         </div>
+                        <div class="form-group required">
+                            <label>Role</label>
+                            <div class="input-group">
+                                <input type="radio" name="looking_for" value="admin" ng-model="credentials.roles" data-role="none">&nbsp;&nbsp;Admin
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <input type="radio" name="looking_for" value="user" ng-model="credentials.roles" data-role="none">&nbsp;&nbsp;Empolyee
+                            </div>
+                        </div>
                         <div class="text-center form-group">
                             <button type="submit" class="btn btn-lg btn-primary btn-block">Sign up</button>
                         </div>
