@@ -73,7 +73,8 @@ angular.module('admins').controller('AdminsController', ['$scope', '$stateParams
 			});
 		};
 		$scope.isActive = true;
-		$scope.roleChange = function () { 
+		$scope.roleChange = function (role) { 
+			console.log(role)
 			$scope.isActive = !$scope.isActive; 
 		};
 	}
