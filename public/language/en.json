@@ -78,5 +78,13 @@
       "art": "Articles",
       "das": "Dashboard"
     }
+  },
+  "company": {
+    "post": "&nbsp; Post &nbsp;",
+    "cfed": "Comapny Feed",
+    "pyt": "Post Your Thoughts...",
+    "lik": "Likes",
+    "acb": "Search feed user",
+    "comment": "Comment"
   }
 }
