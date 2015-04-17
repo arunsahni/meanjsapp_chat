@@ -1,14 +1,14 @@
 <section data-ng-controller="AdminsController" data-ng-init="findUserList()">
     <br>
-
     <h1>Users List</h1>
     <div class="list-group">
         <a data-ng-repeat="users in userList" class="list-group-item">
             <div class="container row">
-                <div class="col-xs-3 col-md-1 text-center article-left-pull">
+                <div  class="col-xs-3 col-md-1 text-center article-left-pull">
                     <img ng-show="!users.isImage" class="img-rounded center-block table-bordered" ng-src="../imgs/default-avatar.jpg" height="55" width="55">
                     <img ng-show="users.isImage" class="img-rounded center-block table-bordered" ng-src="https://s3.amazonaws.com/sumacrm/avatars/{{users._id}}" height="55" width="55">
                 </div>
+
                 <div class="col-xs-6 col-md-6 article-left-pull">
                     <small class="col-xs-12 col-md-12 list-group-item-text">
                         <div class="text-color" data-ng-bind="users.displayName"></div>
@@ -19,12 +19,23 @@
 
                 </div>
                 <div class="col-xs-3 col-md-3 btn-group btn-toggle">
+                    <div ng-if="users.roles[0] === 'user'">
                     <div class="btn-group btn-toggle">
-                        <button ng-class="{false: 'btn btn-sm btn-default', true: 'btn btn-sm btn-primary active'}[isActive]" ng-model="users.roles"  ng-click="roleChange(users.roles)">User</button>
-                        <button ng-class="{true: 'btn btn-sm btn-default', false: 'btn btn-sm btn-primary active'}[isActive]" ng-model="users.roles" ng-click="roleChange(user.roles)">Admin</button>
+                        <button ng-class="{false: 'btn btn-sm btn-default', true: 'btn btn-sm btn-primary active'}[isActive]" ng-model="users.roles"  ng-click="roleChange(users.roles,$index)" ng-show="active !== $index">User</button>
+                        <button ng-class="{true: 'btn btn-sm btn-default', false: 'btn btn-sm btn-primary active'}[isActive]" ng-model="users.roles" ng-click="roleChange(user.roles,$index)" ng-show="active === $index">Admin</button>
 
                         <!--<input type="radio" ng-model="user.roles[0]" ng-checked="users.roles[0] == 'admin'"> admin-->
                         <!--<input type="radio" ng-model="user.roles[0]" ng-checked="users.roles[0] == 'user'"> user-->
+                    </div>
+                    </div>
+                    <div ng-if="users.roles[0] === 'admin'">
+                    <div class="btn-group btn-toggle">
+                        <button ng-class="{true: 'btn btn-sm btn-default', false: 'btn btn-sm btn-primary active'}[isActive]" ng-model="users.roles"  ng-click="roleChange(users.roles,$index)" ng-show="active === $index">User</button>
+                        <button ng-class="{false: 'btn btn-sm btn-default', true: 'btn btn-sm btn-primary active'}[isActive]" ng-model="users.roles" ng-click="roleChange(user.roles,$index)" ng-show="active !== $index">Admin</button>
+
+                        <!--<input type="radio" ng-model="user.roles[0]" ng-checked="users.roles[0] == 'admin'"> admin-->
+                        <!--<input type="radio" ng-model="user.roles[0]" ng-checked="users.roles[0] == 'user'"> user-->
+                    </div>
                     </div>
                 </div>
             </div>

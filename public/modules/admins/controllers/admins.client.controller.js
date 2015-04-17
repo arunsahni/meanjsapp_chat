@@ -64,8 +64,9 @@ angular.module('admins').controller('AdminsController', ['$scope', '$stateParams
 		};
 
 		// For User list
-		$scope.findUserList = function(){
-			$http.get('/userlist').success(function(response) {
+		$scope.findUserList = function() {
+			$http.get('/allUsers').success(function(response) {
+				console.log(response);
 				// If successful we assign the response to the global user model
 				$scope.userList = response;
 			}).error(function(response) {
@@ -73,9 +74,15 @@ angular.module('admins').controller('AdminsController', ['$scope', '$stateParams
 			});
 		};
 		$scope.isActive = true;
-		$scope.roleChange = function (role) { 
-			console.log(role)
-			$scope.isActive = !$scope.isActive; 
+		$scope.roleChange = function(role,$index,user_id) { 
+			//$scope.isActive = !$scope.isActive
+			$http.post('/changeRole' ,{
+				user_id: user_id,
+				role: role
+			}).success(function(response){
+				$scope.active = $scope.active === $index ? -1 : $index;
+				$scope.userList = response;
+			});
 		};
 	}
 ]);

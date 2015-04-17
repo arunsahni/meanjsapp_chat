@@ -81,17 +81,33 @@ exports.delete = function(req, res) {
 		}
 	});
 };
+/**
+ * List of all Admins
+ */
+
+exports.users = function(req, res) {
+	User.find().sort('-created').populate('user', 'displayName').exec(function(err, admins) {
+		if (err) {
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else {
+			res.jsonp(admins);
+		}
+	});
+};
 
 /**
  * List of Admins
  */
-exports.list = function(req, res) { 
+exports.list = function(req, res) {
 	Admin.find().sort('-created').populate('user', 'displayName').exec(function(err, admins) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
+			console.log(admins);
 			res.jsonp(admins);
 		}
 	});
@@ -117,4 +133,19 @@ exports.hasAuthorization = function(req, res, next) {
 		return res.status(403).send('User is not authorized');
 	}
 	next();
+};
+
+/**
+ * change Role
+ */
+
+exports.changeRole = function(req,res){
+	User.findOneAndUpdate({_id:mongoose.Types.ObjectId(req.body.user_id)}, {$set : { 'roles[0]': req.body.role}},function(err,data){
+		if(err) return err.status(400).send({
+			message: errorHandler.getErrorMessage(err)
+		});
+		else{
+			res.jsonp(data);
+		}
+	});
 };
