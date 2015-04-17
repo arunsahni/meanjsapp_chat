@@ -26,7 +26,7 @@ angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '
 		$scope.likersName = function(likerArray) {
             var i, len;
 			$scope.LikerNameArray = likerArray;
-            $scope.LikerName = "";
+            $scope.LikerName = '';
 			for(i = 0, len = likerArray.length; i < len; i++) {
 				$scope.LikerName = $scope.LikerName + '\n' + likerArray[i].user_name;
 			}

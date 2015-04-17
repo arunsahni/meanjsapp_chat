@@ -215,7 +215,7 @@ exports.removeCommentLike = function(req, res) {
 };
 
 exports.getcompanyfeedByUserId = function (req, res) {
-    Companyfeed.find({user: {$in: req.body.userIds}}).populate('user', 'displayName').exec(function(err, feeds) {
+    Companyfeed.find({user: {$in: req.body.userIds}}).sort('-created').populate('user', 'displayName').exec(function(err, feeds) {
         if (err) {
             return res.status(500).json({
                 error: 'Can not get the feeds of selected user.'

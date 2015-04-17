@@ -1,6 +1,6 @@
 <section data-ng-controller="CompanyfeedsController"  data-ng-init="init()">
     <div class="page-header">
-        <h1></h1>
+        <h3>Comapny Feed</h3>
     </div>
     <div class="col-md-12">
         <form class="form-horizontal" novalidate>
@@ -11,7 +11,9 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <button ng-disabled="!name" class="btn-primary" ng-click="create()">Post</button>
+                    <button ng-disabled="!name" class="btn btn-primary" ng-click="create()">
+                        &nbsp; Post &nbsp;
+                    </button>
                 </div>
                 <div data-ng-show="error" class="text-danger">
                     <strong data-ng-bind="error"></strong>
@@ -21,7 +23,7 @@
     </div>
     <div class="container">
         <div class="row">
-            <div class="panel panel-default col-xs-12 col-md-4 col-md-offset-4">
+            <div class="col-xs-12 col-md-4 col-md-offset-4">
                 <div class="panel-body">
                     <div class="top-buffer" auto-complete value="autoCompleteData" model="data.tags"></div>
                 </div>
@@ -58,7 +60,6 @@
                             ng-click="addLiker($index)">
                     </button>
                     <a ng-if="companyfeed.likers.length > 0"
-                       data-toggle="tooltip"
                        tooltipPlacement="bottom"
                        class="red-tooltip"
                        ng-mouseover ="likersName(companyfeed.likers)"
