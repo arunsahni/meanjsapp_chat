@@ -169,6 +169,7 @@ angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '
 			modalInstance = $modal.open({
 				templateUrl: 'modules/companyfeeds/views/show-liker.client.view.html',
 				scope: $scope,
+				size: 'sm',
 				resolve: {
 					LikerNameArray: function () {
 						return $scope.LikerNameArray;
