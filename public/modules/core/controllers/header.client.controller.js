@@ -14,7 +14,12 @@ angular.module('core').controller('HeaderController', ['$scope', 'Authentication
 		};
 		$scope.changeLanguage = function (langKey) {
 			$translate.use(langKey);
-			$scope.isActive = !$scope.isActive;
+			if(langKey === 'hi') {
+				$scope.isActive = false;
+			} else {
+				$scope.isActive = true;
+			}
+
 		};
 		// Collapsing the menu after navigation
 		$scope.$on('$stateChangeSuccess', function() {
