@@ -55,7 +55,7 @@ var mongoose = require('mongoose'),
                     var mailOptions = {
                         from: 'sumacrm025@gmail.com',
                         to:  userList[i].email,
-                        subject: 'Suma CRM v1.0 Deployed !!!',
+                        subject: 'Suma CRM v.1.0 Deployed !!!',
                         html:  'Hey   '+userList[i].firstName + ',' + data
                     };
                     transporter.sendMail(mailOptions, function(error, info) {

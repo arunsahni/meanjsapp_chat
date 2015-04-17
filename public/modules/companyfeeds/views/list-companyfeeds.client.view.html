@@ -1,0 +1,19 @@
+<section data-ng-controller="CompanyfeedsController" data-ng-init="find()">
+    <div class="page-header">
+        <h1>Companyfeeds</h1>
+    </div>
+    <div class="list-group">
+        <a data-ng-repeat="companyfeed in companyfeeds" data-ng-href="#!/companyfeeds/{{companyfeed._id}}" class="list-group-item">
+			<small class="list-group-item-text">
+				Posted on
+				<span data-ng-bind="companyfeed.created | date:'medium'"></span>
+				by
+				<span data-ng-bind="companyfeed.user.displayName"></span>
+			</small>
+			<h4 class="list-group-item-heading" data-ng-bind="companyfeed.name"></h4>
+        </a>
+    </div>
+    <div class="alert alert-warning text-center" data-ng-hide="!companyfeeds.$resolved || companyfeeds.length">
+    	No Companyfeeds yet, why don't you <a href="/#!/companyfeeds/create">create one</a>?
+    </div>
+</section>

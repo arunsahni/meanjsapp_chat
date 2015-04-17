@@ -103,5 +103,20 @@
     color: #265a88;
     background: #dddddd;
 }
+.red-tooltip + .tooltip .tooltip-inner {
+    background-color: #265a88 ;
+}
+.red-tooltip + .tooltip .tooltip-arrow {
+    border-bottom-color:#265a88 ;
+}
+.post-text-area
+{
+    border: solid 2px;
+}
+.title
+{
+    font-size: 20px;
+    color: #265a88;
+}
 
 

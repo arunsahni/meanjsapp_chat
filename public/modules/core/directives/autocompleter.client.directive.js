@@ -42,7 +42,7 @@ angular.module('core').directive('autoComplete', ['$http', 'AutoComplete', funct
             };
 
             scope.addToSelectedTags = function (index) {
-                if (scope.selectedTags.indexOf(scope.suggestions[index])===-1) {
+                if (index !==-1 && scope.selectedTags.indexOf(scope.suggestions[index])===-1) {
                     scope.selectedTags.push(scope.suggestions[index]);
                     scope.selectedTagsIds.push(scope.suggestions[index]._id);
                     scope.searchText = '';

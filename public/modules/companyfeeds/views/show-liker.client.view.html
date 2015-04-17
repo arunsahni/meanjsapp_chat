@@ -1,0 +1,52 @@
+<section data-ng-controller="CompanyfeedsController">
+    <div>
+        <div class="modal-header">
+            <div class="title" translate="company.lkr"></div>
+        </div>
+    </div>
+    <div class="modal-body">
+        <div class="row" ng-repeat="likername in LikerNameArray">
+            <div class="col-md-offset-2 col-xs-offset-2 pull-left">
+                <img ng-hide="authentication.user.isImage" ng-src="../imgs/default-avatar.jpg"  height="30" width="20" class="img-thumbnail">
+                <img ng-show="authentication.user.isImage" ng-src="{{imgPathOwn+likername.user_id}}" height="30" width="20">
+            </div>
+            <div class="col-md-offset-3 col-xs-offset-3">
+                <b><span class="text-primary" data-ng-bind="likername.user_name"></span></b>
+            </div>
+            <br>
+        </div>
+    </div>
+   <div class="modal-footer">
+        <button class="btn btn-primary ng-click-active" ng-click="$dismiss()">OK</button>
+    </div>
+
+
+
+
+
+
+
+
+    <!--<div class="row">-->
+        <!--<div class="modal-header ">-->
+            <!--<div class="title">Liker Name</div>-->
+        <!--</div>-->
+        <!--<div class="row">-->
+            <!--<br><br>-->
+            <!--<div class="col-md-12 col-xs-12 col-md-offset-2" ng-repeat="likername in LikerNameArray">-->
+                <!--<div class="col-md-1 col-xs-3">-->
+                    <!--<img ng-hide="authentication.user.isImage" ng-src="../imgs/default-avatar.jpg"  height="30" width="30" class="img-thumbnail">-->
+                    <!--<img ng-show="authentication.user.isImage" ng-src="{{imgPathOwn+likername.user_id}}" height="30" width="30">-->
+                <!--</div>-->
+                <!--<div class="col-md-8 col-sm-9 col-sm-offset-1">-->
+                    <!--<b><span class="text-primary" data-ng-bind="likername.user_name"></span></b>-->
+                <!--</div>-->
+                <!--<br><br><br>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="modal-footer">-->
+            <!--<button class="btn btn-primary ng-click-active" ng-click="$dismiss()">OK</button>-->
+        <!--</div>-->
+    <!--</div>-->
+
+</section>

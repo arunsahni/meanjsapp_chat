@@ -5,7 +5,7 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$http
 		$scope.authentication = Authentication;
 
 		// If user is signed in then redirect back home
-		if ($scope.authentication.user) $location.path('/dashboard');
+		if ($scope.authentication.user) $location.path('/companyfeeds/create');
 
 		$scope.signup = function() {
 			$http.post('/auth/signup', $scope.credentials).success(function(response) {
@@ -13,7 +13,7 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$http
 				$scope.authentication.user = response;
 				toastr.info('You have signed up', 'Successfully');
 				// And redirect to the index page
-				$location.path('/dashboard');
+				$location.path('/companyfeeds/create');
 			}).error(function(response) {
 				$scope.error = response.message;
 			});
@@ -25,7 +25,7 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$http
 				$scope.authentication.user = response;
 
 				// And redirect to the index page
-				$location.path('/dashboard');
+				$location.path('/companyfeeds/create');
                 toastr.success('You are successfully logged in.', 'done');
 			}).error(function(response) {
 				$scope.error = response.message;

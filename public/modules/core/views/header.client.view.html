@@ -7,7 +7,7 @@
 			<span class="icon-bar"></span>
 			<span class="icon-bar"></span>
 		</button>
-		<a href="/#!/dashboard" class="navbar-brand">
+		<a href="/#!/companyfeeds/create" class="navbar-brand">
 			<img ng-src="../imgs/SumaLogo.png"/>
 		</a>
 		<!--<a href="/#!/userlist" class="navbar-brand" ng-show="showUser">UserList</a>-->
@@ -30,16 +30,10 @@
 
 		<ul class="nav navbar-nav language-button">
 			<div class="btn-group btn-toggle">
-				<button ng-class="{false: 'btn btn-sm btn-default', true: 'btn btn-sm btn-primary active'}[isActive]"  ng-click="changeLanguage('hi')" translate="hi"></button>
-				<button ng-class="{true: 'btn btn-sm btn-default', false: 'btn btn-sm btn-primary active'}[isActive]" ng-click="changeLanguage('en')" translate="en"></button>
+				<button ng-class="{false: 'btn btn-sm btn-default', true: 'btn btn-sm btn-primary active'}[isActive]"  ng-click="changeLanguage('en')" translate="en"></button>
+				<button ng-class="{true: 'btn btn-sm btn-default', false: 'btn btn-sm btn-primary active'}[isActive]" ng-click="changeLanguage('hi')" translate="hi"></button>
 			</div>
 		</ul>
-			<!--<div class="btn-group btn-toggle">
-				<button ng-class="{false: 'btn btn-sm btn-default', true: 'btn btn-sm btn-primary active'}[isActive]"  ng-click="changeLanguage('hi')" translate="hi"></button>
-				<button ng-class="{true: 'btn btn-sm btn-default', false: 'btn btn-sm btn-primary active'}[isActive]" ng-click="changeLanguage('en')" translate="en"></button>
-			</div>-->
-
-
 		<ul class="nav navbar-nav navbar-right" data-ng-hide="authentication.user">
 			<li ui-route="/signup" ng-class="{active: $uiRoute}">
 				<a href="/#!/signup" translate="header.sigu"></a>
