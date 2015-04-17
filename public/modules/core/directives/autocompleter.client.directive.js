@@ -19,7 +19,7 @@ angular.module('core').directive('autoComplete', ['$http', 'AutoComplete', funct
             };
 
             scope.search = function () {
-                if (scope.searchText) {
+                if (!!scope.searchText) {
                     AutoComplete.getAutoCompleteData({
                         EntityName: scope.metaData.EntityName,
                         Projection: scope.metaData.Projection,
@@ -37,7 +37,7 @@ angular.module('core').directive('autoComplete', ['$http', 'AutoComplete', funct
                         scope.selectedIndex = -1;
                     });
                 } else {
-                    scope.suggestions = {};
+                    delete scope.suggestions;
                 }
             };
 
