@@ -87,7 +87,7 @@
                             <div class="row">
                                 <div class="col-md-11 col-xs-10">
                                     <button ng-class="!!isLiked(comment.commentLiker) ? 'btn-primary glyphicon glyphicon-thumbs-up' : 'glyphicon glyphicon-thumbs-up'"
-                                            ng-click="addCommentLike($parent.$parent.$index, $index)"
+                                            ng-click="addCommentLike($parent.$index, $index)"
                                             ng-disabled = "myFlag"></button>
                                     <a ng-if="comment.commentLiker.length>0"
                                        data-toggle="tooltip"
