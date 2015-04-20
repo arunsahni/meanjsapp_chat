@@ -34,18 +34,6 @@ exports.read = function(req, res) {
 	res.jsonp(req.admin);
 };
 
-exports.userList = function(req, res) {
-	User.find({roles: { $in: ['user']}}, {displayName: 1, email:1, roles:1, isImage:1}).exec(function(err, users) {
-		if (err) {
-			return res.status(400).send({
-			});
-		} else {
-			res.json(users);
-		}
-	});
-};
-
-
 /**
  * Update a Admin
  */
