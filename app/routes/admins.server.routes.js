@@ -13,7 +13,7 @@ module.exports = function(app) {
 		.get(admins.userList);
 
 	app.route('/changeRole')
-		.get(admins.changeRole);
+		.post(admins.changeRole);
 
 	app.route('/allUsers')
 		.get(admins.users);
