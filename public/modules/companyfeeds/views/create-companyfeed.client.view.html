@@ -96,7 +96,7 @@
                                        ng-mouseover ="likersName(comment.commentLiker)"
                                        tooltip="{{LikerName}}"
                                        data-liker="{{LikerName}}">{{'company.lik' | translate}}</a>
-                                    <a ng-if="comment.commentLiker.length>0" ng-mouseover ="likersName(comment.commentLiker)" ng-click="showliker()">{{comment.commentLiker.length}}</a>
+                                    <a ng-if="comment.commentLiker.length>0" ng-mouseover ="likersName(comment.commentLiker)" ng-click="showliker()">({{comment.commentLiker.length}})</a>
                                 </div>
                             </div>
                             <br>
