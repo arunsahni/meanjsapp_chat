@@ -54,9 +54,9 @@
             </div>
             <div class="row">
                 <div class = "col-md-11 col-xs-10">
-                    <button ng-if="companyfeed.likers.length > 0"
-                            class="btn-primary glyphicon glyphicon-thumbs-up"
-                            ng-click="addLiker($index)">
+                    <button ng-class="isLiked(companyfeed.likers) ? 'btn-primary glyphicon glyphicon-thumbs-up' : 'glyphicon glyphicon-thumbs-up'"
+                            ng-click="addLiker($index)"
+                            ng-disabled = "myFlag">
                     </button>
                     <a ng-if="companyfeed.likers.length > 0"
                        tooltipPlacement="bottom"
@@ -65,7 +65,6 @@
                        data-toggle="tooltip"
                        tooltip="{{LikerName}}">{{'company.lik' | translate}}</a>
                     <a ng-if="companyfeed.likers.length>0" ng-mouseover ="likersName(companyfeed.likers)" ng-click="showliker()">({{companyfeed.likers.length}})</a>
-                    <button ng-if="companyfeed.likers.length === 0" class="glyphicon glyphicon-thumbs-up" ng-click="addLiker($index)"></button>
                 </div>
             </div>
             <br>
@@ -79,7 +78,9 @@
                         <div class="col-md-9 col-xs-8" ng-bind="comment.comment"></div>
                         <br>
                         <div class="pull-right">
-                            <button ng-if="comment.commentLiker.length > 0" class="btn-primary glyphicon glyphicon-thumbs-up " ng-click="addCommentLike($parent.$parent.$index, $index)"></button>
+                            <button ng-class="!!isLiked(comment.commentLiker) ? 'btn-primary glyphicon glyphicon-thumbs-up' : 'glyphicon glyphicon-thumbs-up'"
+                                    ng-click="addCommentLike($parent.$parent.$index, $index)"
+                                    ng-disabled = "myFlag"></button>
                             <a ng-if="comment.commentLiker.length>0"
                                data-toggle="tooltip"
                                data-placement="bottom"
@@ -88,9 +89,9 @@
                                tooltip="{{LikerName}}"
                                data-liker="{{LikerName}}">{{'company.lik' | translate}}</a>
                             <a ng-if="comment.commentLiker.length>0" ng-mouseover ="likersName(comment.commentLiker)" ng-click="showliker()">({{comment.commentLiker.length}})</a>
-                            <button ng-if="comment.commentLiker.length === 0" class="glyphicon glyphicon-thumbs-up" ng-click="addCommentLike($parent.$parent.$index, $index)"></button>
                         </div>
                     </div>
+                    <br>
                 </div>
                 <div class="row">
                     <a  class="row col-md-2 col-xs-8 col-xs-offset-1 col-md-offset-1" ng-show="hasMoreItemsToShow($index)" ng-click="showMoreItems($index)">{{show_name}}</a>
