@@ -54,9 +54,9 @@
             </div>
             <div class="row">
                 <div class = "col-md-11 col-xs-10">
-                    <button ng-if="companyfeed.likers.length > 0"
-                            class="btn-primary glyphicon glyphicon-thumbs-up"
-                            ng-click="addLiker($index)">
+                    <button ng-class="isLiked(companyfeed.likers) ? 'btn-primary glyphicon glyphicon-thumbs-up' : 'glyphicon glyphicon-thumbs-up'"
+                            ng-click="addLiker($index)"
+                            ng-disabled = "myFlag">
                     </button>
                     <a ng-if="companyfeed.likers.length > 0"
                        tooltipPlacement="bottom"
@@ -65,7 +65,6 @@
                        data-toggle="tooltip"
                        tooltip="{{LikerName}}">{{'company.lik' | translate}}</a>
                     <a ng-if="companyfeed.likers.length>0" ng-mouseover ="likersName(companyfeed.likers)" ng-click="showliker()">({{companyfeed.likers.length}})</a>
-                    <button ng-if="companyfeed.likers.length === 0" class="glyphicon glyphicon-thumbs-up" ng-click="addLiker($index)"></button>
                 </div>
             </div>
             <br>
@@ -76,20 +75,20 @@
                             <img ng-hide="authentication.user.isImage" ng-src="../imgs/default-avatar.jpg"  height="30" width="30" class="img-thumbnail">
                             <img ng-show="authentication.user.isImage" ng-src="{{imgPathOwn+comment.user_id}}" height="30" width="30">
                         </div>
-                        <div class="col-md-7 col-xs-5" ng-bind="comment.comment"></div>
-                        <div class="pull-right col-md-4 col-xs-5">
-                            <div class="row">
-                                <button ng-if="comment.commentLiker.length > 0" class="btn-primary glyphicon glyphicon-thumbs-up" ng-click="addCommentLike($parent.$parent.$index, $index)"></button>
-                                <a ng-if="comment.commentLiker.length>0"
-                                   data-toggle="tooltip"
-                                   data-placement="bottom"
-                                   class="red-tooltip"
-                                   ng-mouseover ="likersName(comment.commentLiker)"
-                                   tooltip="{{LikerName}}"
-                                   data-liker="{{LikerName}}">{{'company.lik' | translate}}</a>
-                                <a ng-if="comment.commentLiker.length>0" ng-mouseover ="likersName(comment.commentLiker)" ng-click="showliker()">{{comment.commentLiker.length}}</a>
-                                <button ng-if="comment.commentLiker.length === 0" class="glyphicon glyphicon-thumbs-up" ng-click="addCommentLike($parent.$parent.$index, $index)"></button>
-                            </div>
+                        <div class="col-md-9 col-xs-8" ng-bind="comment.comment"></div>
+                        <br>
+                        <div class="pull-right">
+                            <button ng-class="!!isLiked(comment.commentLiker) ? 'btn-primary glyphicon glyphicon-thumbs-up' : 'glyphicon glyphicon-thumbs-up'"
+                                    ng-click="addCommentLike($parent.$parent.$index, $index)"
+                                    ng-disabled = "myFlag"></button>
+                            <a ng-if="comment.commentLiker.length>0"
+                               data-toggle="tooltip"
+                               data-placement="bottom"
+                               class="red-tooltip"
+                               ng-mouseover ="likersName(comment.commentLiker)"
+                               tooltip="{{LikerName}}"
+                               data-liker="{{LikerName}}">{{'company.lik' | translate}}</a>
+                            <a ng-if="comment.commentLiker.length>0" ng-mouseover ="likersName(comment.commentLiker)" ng-click="showliker()">({{comment.commentLiker.length}})</a>
                         </div>
                     </div>
                     <br>

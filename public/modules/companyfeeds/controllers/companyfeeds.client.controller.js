@@ -76,16 +76,19 @@ angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '
 				$scope.companyfeeds = companyfeeds;
 			});
 		};
-        function isLiked(likers) {
+        $scope.isLiked = function (likers) {
             var i, len;
             for (i = 0, len = likers.length; i < len; i += 1) {
                 if (likers[i].user_id === Authentication.user._id) {
                     return true;
                 }
             }
+            return false;
         }
+
 		$scope.addLiker = function (index) {
-            if (!$scope.companyfeeds[index].likers.length || !isLiked($scope.companyfeeds[index].likers)) {
+            $scope.myFlag = true;
+            if (!$scope.companyfeeds[index].likers.length || !$scope.isLiked($scope.companyfeeds[index].likers)) {
                 Companyfeeds.addLiker({
                     compnayfeedId: $scope.companyfeeds[index]._id,
                     liker : {
@@ -94,6 +97,7 @@ angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '
                     }
                 }).success(function (companyfeeds) {
                     $scope.companyfeeds = companyfeeds;
+                    $scope.myFlag = false;
 
                 });
             } else {
@@ -105,12 +109,14 @@ angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '
                     }
                 }).success(function (companyfeeds) {
                     $scope.companyfeeds = companyfeeds;
+                    $scope.myFlag = false;
                 });
             }
 		};
 
 		$scope.addCommentLike = function (feedIndex, commentIndex) {
-            if (!$scope.companyfeeds[feedIndex].comment.length || !isLiked($scope.companyfeeds[feedIndex].comment[commentIndex].commentLiker)) {
+            $scope.myFlag = true;
+            if (!$scope.companyfeeds[feedIndex].comment.length || !$scope.isLiked($scope.companyfeeds[feedIndex].comment[commentIndex].commentLiker)) {
                 Companyfeeds.addCommentLike({
                     compnayfeedId: $scope.companyfeeds[feedIndex]._id,
                     commentId: $scope.companyfeeds[feedIndex].comment[commentIndex]._id,
@@ -120,6 +126,7 @@ angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '
                     }
                 }).success(function (companyfeeds) {
                     $scope.companyfeeds = companyfeeds;
+                    $scope.myFlag = false;
                 });
             } else {
                 Companyfeeds.removeCommentLike({
@@ -131,6 +138,7 @@ angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '
                     }
                 }).success(function (companyfeeds) {
                     $scope.companyfeeds = companyfeeds;
+                    $scope.myFlag = false;
                 });
             }
 		};
