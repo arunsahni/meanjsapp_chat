@@ -139,13 +139,13 @@ exports.hasAuthorization = function(req, res, next) {
  * change Role
  */
 
-exports.changeRole = function(req,res){
-	User.findOneAndUpdate({_id:mongoose.Types.ObjectId(req.body.user_id)}, {$set : { 'roles[0]': req.body.role}},function(err,data){
+exports.changeRole = function(req, res){
+	User.findOneAndUpdate({_id: req.body.userId}, {$set : {roles: req.body.role}},function(err, user){
 		if(err) return err.status(400).send({
 			message: errorHandler.getErrorMessage(err)
 		});
 		else{
-			res.jsonp(data);
+			res.jsonp(user);
 		}
 	});
 };

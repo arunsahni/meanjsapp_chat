@@ -21,20 +21,14 @@
                 <div class="col-xs-3 col-md-3 btn-group btn-toggle">
                     <div ng-if="users.roles[0] === 'user'">
                     <div class="btn-group btn-toggle">
-                        <button ng-class="{false: 'btn btn-sm btn-default', true: 'btn btn-sm btn-primary active'}[isActive]" ng-model="users.roles"  ng-click="roleChange(users.roles,$index)" >User</button>
-                        <button ng-class="{true: 'btn btn-sm btn-default', false: 'btn btn-sm btn-primary active'}[isActive]" ng-model="users.roles" ng-click="roleChange(user.roles,$index)">Admin</button>
-
-                        <!--<input type="radio" ng-model="user.roles[0]" ng-checked="users.roles[0] == 'admin'"> admin-->
-                        <!--<input type="radio" ng-model="user.roles[0]" ng-checked="users.roles[0] == 'user'"> user-->
+                        <button ng-class="{false: 'btn btn-sm btn-default', true: 'btn btn-sm btn-primary active'}[isActive]" ng-model="users.roles"  ng-click="roleChange(users.roles,$index,users._id)" >User</button>
+                        <button ng-class="{true: 'btn btn-sm btn-default', false: 'btn btn-sm btn-primary active'}[isActive]" ng-model="users.roles" ng-click="roleChange('admin',$index,users._id)">Admin</button>
                     </div>
                     </div>
                     <div ng-if="users.roles[0] === 'admin'">
                     <div class="btn-group btn-toggle">
-                        <button ng-class="{true: 'btn btn-sm btn-default', false: 'btn btn-sm btn-primary active'}[isActive]" ng-model="users.roles"  ng-click="roleChange(users.roles,$index)" >User</button>
-                        <button ng-class="{false: 'btn btn-sm btn-default', true: 'btn btn-sm btn-primary active'}[isActive]" ng-model="users.roles" ng-click="roleChange(user.roles,$index)" >Admin</button>
-
-                        <!--<input type="radio" ng-model="user.roles[0]" ng-checked="users.roles[0] == 'admin'"> admin-->
-                        <!--<input type="radio" ng-model="user.roles[0]" ng-checked="users.roles[0] == 'user'"> user-->
+                        <button ng-class="{true: 'btn btn-sm btn-default', false: 'btn btn-sm btn-primary active'}[isActive]" ng-model="users.roles"  ng-click="roleChange('user',$index,users._id)" >User</button>
+                        <button ng-class="{false: 'btn btn-sm btn-default', true: 'btn btn-sm btn-primary active'}[isActive]" ng-model="users.roles" ng-click="roleChange(user.roles,$index,users._id)" >Admin</button>
                     </div>
                     </div>
                 </div>

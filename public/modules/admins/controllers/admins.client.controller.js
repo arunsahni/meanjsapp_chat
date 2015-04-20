@@ -1,87 +1,27 @@
 'use strict';
 
 // Admins controller
-angular.module('admins').controller('AdminsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Admins','$http',
-	function($scope, $stateParams, $location, Authentication, Admins, $http) {
+angular.module('admins').controller('AdminsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Admins',
+	function($scope, $stateParams, $location, Authentication, Admins) {
 		$scope.authentication = Authentication;
-
-		// Create new Admin
-		$scope.create = function() {
-			// Create new Admin object
-			var admin = new Admins ({
-				name: this.name
-			});
-
-			// Redirect after save
-			admin.$save(function(response) {
-				$location.path('admins/' + response._id);
-
-				// Clear form fields
-				$scope.name = '';
-			}, function(errorResponse) {
-				$scope.error = errorResponse.data.message;
-			});
-		};
-
-		// Remove existing Admin
-		$scope.remove = function(admin) {
-			if ( admin ) { 
-				admin.$remove();
-
-				for (var i in $scope.admins) {
-					if ($scope.admins [i] === admin) {
-						$scope.admins.splice(i, 1);
-					}
-				}
-			} else {
-				$scope.admin.$remove(function() {
-					$location.path('admins');
-				});
-			}
-		};
-
-		// Update existing Admin
-		$scope.update = function() {
-			var admin = $scope.admin;
-
-			admin.$update(function() {
-				$location.path('admins/' + admin._id);
-			}, function(errorResponse) {
-				$scope.error = errorResponse.data.message;
-			});
-		};
-
-		// Find a list of Admins
-		$scope.find = function() {
-			$scope.admins = Admins.query();
-		};
-
-		// Find existing Admin
-		$scope.findOne = function() {
-			$scope.admin = Admins.get({ 
-				adminId: $stateParams.adminId
-			});
-		};
+		$scope.isActive = true;
 
 		// For User list
 		$scope.findUserList = function() {
-			$http.get('/allUsers').success(function(response) {
-				console.log(response);
-				// If successful we assign the response to the global user model
+			Admins.userList().success(function(response) {
 				$scope.userList = response;
 			}).error(function(response) {
 				$scope.error = response.message;
 			});
 		};
-		$scope.isActive = true;
+
 		$scope.roleChange = function(role,$index,user_id) { 
-			//$scope.isActive = !$scope.isActive
-			$http.post('/changeRole' ,{
-				user_id: user_id,
+			var userRole = {
+				userId: user_id,
 				role: role
-			}).success(function(response){
-				$scope.active = $scope.active === $index ? -1 : $index;
-				$scope.userList = response;
+			};
+			Admins.updateUserRole(userRole).success(function(user){
+				$scope.userList[$index].roles[0] = user.roles[0];
 			});
 		};
 	}
