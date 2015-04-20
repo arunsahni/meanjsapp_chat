@@ -84,7 +84,7 @@ angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '
                 }
             }
             return false;
-        }
+        };
 
 		$scope.addLiker = function (index) {
             $scope.myFlag = true;
