@@ -4,12 +4,17 @@
 angular.module('admins').controller('AdminsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Admins',
 	function($scope, $stateParams, $location, Authentication, Admins) {
 		$scope.authentication = Authentication;
+		$scope.userList = [];
 		$scope.isActive = true;
 
 		// For User list
 		$scope.findUserList = function() {
 			Admins.userList().success(function(response) {
-				$scope.userList = response;
+				angular.forEach(response, function(val){
+					if($scope.authentication.user._id !== val._id){
+						$scope.userList.push(val);
+					}
+				});
 			}).error(function(response) {
 				$scope.error = response.message;
 			});
