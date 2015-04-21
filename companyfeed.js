@@ -147,16 +147,16 @@ db.once('open',function callback(){
                         commenteduser : userList[i].comment[j].user_id
                     };
                     companyfeed.findOneAndUpdate(({_id: userList[i]._id},{'comment._id' : userList[i].comment[j]._id}), {$pop : { 'comment' :commentObj}}).exec(function (err, data) {
-                        if(err) console.log("Error");
+                        if(err) console.log("Error in pop");
                         else{
                             console.log(data);
+                            companyfeed.findOneAndUpdate(({_id: userList[i]._id}), {$push : { 'comment' :commentObj}}).exec(function (err, data) {
+                                if(err) console.log("Error in push");
+                                else{
+                                    console.log(data);
+                                }
+                            });
                         }
-                    });
-                    companyfeed.findOneAndUpdate(({_id: userList[i]._id}), {$push : { 'comment' :commentObj}}).exec(function (err, data) {
-                       if(err) console.log("Error");
-                        else{
-                           console.log(data);
-                       }
                     });
                 }
             }
