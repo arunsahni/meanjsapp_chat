@@ -21,7 +21,7 @@ exports.create = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			Companyfeed.find().sort('-created').populate('user', 'displayName').exec(function(err, companyfeeds) {
+			Companyfeed.find().sort('-created').populate('user likers comment.commentLiker comment.commenteduser').exec(function(err, companyfeeds) {
 				if (err) {
 					return res.status(400).send({
 						message: errorHandler.getErrorMessage(err)
