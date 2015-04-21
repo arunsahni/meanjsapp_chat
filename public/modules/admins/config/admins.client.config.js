@@ -4,7 +4,8 @@
 angular.module('admins').run(['Menus', 'Authentication',
 	function(Menus, Authentication) {
 		// Set top bar menu items
-		Menus.addMenuItem('topbar', 'Admins', 'admins', 'dropdown', '/admins(/create)?', false, ['admin']);
-		Menus.addSubMenuItem('topbar', 'admins', 'Role Management', 'userlist','userlist', false, ['admin']);
+		Menus.addMenuItem('topbar', 'admin.admin', 'admins', 'dropdown', '/admins(/create)?', false, ['admin']);
+		Menus.addSubMenuItem('topbar', 'admins', 'admin.role', 'userlist','userlist', false, ['admin']);
+		Menus.addSubMenuItem('topbar', 'admins', 'admin.access', 'featuresAccess','featuresAccess', false, ['admin']);
 	}
 ]);

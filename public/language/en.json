@@ -88,5 +88,16 @@
     "comment": "Comment",
     "lkr" : "Liker Name",
     "ok": "OK"
-  }
+  },
+  "admin": {
+    "admin": "Admin",
+    "role": "Role Management",
+    "access":"Access Management"
+  },
+  "user": "Users List",
+  "feature": "Features List",
+  "Enabled": "Enabled",
+  "Disabled": "Disabled",
+  "user": "User"
 }
+

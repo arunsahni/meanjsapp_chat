@@ -28,6 +28,13 @@ angular.module('admins').config(['$stateProvider',
 			resolve: {
 				checkRole: checkRole
 			}
+			}).
+			state('featuresAccess', {
+				url: '/featuresAccess',
+				templateUrl: 'modules/admins/views/featuresAccess.html',
+				resolve: {
+					checkRole: checkRole
+				}
 			});
 	}
 ]);
