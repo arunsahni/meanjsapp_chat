@@ -6,16 +6,12 @@
     </div>
     <div class="modal-body">
         <div class="row" ng-repeat="likername in LikerNameArray">
-            <div class="col-md-offset-2 col-xs-offset-2 pull-left" ng-if="authentication.user.isImage">
-                <img ng-hide="authentication.user.isImage" ng-src="../imgs/default-avatar.jpg"  height="30" width="25" class="img-thumbnail">
-                <img ng-show="authentication.user.isImage" ng-src="{{imgPathOwn+likername.user_id}}" height="30" width="25">
-            </div>
-            <div class="col-md-offset-2 col-xs-offset-2 pull-left" ng-if="!authentication.user.isImage">
-                <img ng-if="!authentication.user.isImage && likername.user_id !== authentication.user._id" ng-src="{{imgPathOwn+likername.user_id}}"  height="30" width="20">
-                <img ng-if="!authentication.user.isImage && likername.user_id === authentication.user._id" ng-src="../imgs/default-avatar.jpg" height="30" width="20" class="img-thumbnail">
+            <div class="col-md-offset-2 col-xs-offset-2 pull-left">
+                <img ng-hide="likername.isImage" ng-src="../imgs/default-avatar.jpg"  height="30" width="20" class="img-thumbnail">
+                <img ng-show="likername.isImage" ng-src="{{imgPathOwn+likername._id}}" height="30" width="20">
             </div>
             <div class="col-md-offset-3 col-xs-offset-3">
-                <b><span class="text-primary" data-ng-bind="likername.user_name"></span></b>
+                <b><span class="text-primary" data-ng-bind="likername.displayName"></span></b>
             </div>
             <br>
         </div>

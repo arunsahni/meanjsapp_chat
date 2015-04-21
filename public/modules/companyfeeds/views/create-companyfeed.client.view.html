@@ -71,17 +71,9 @@
             <div class="row">
                 <div ng-repeat="comment in companyfeed.comment | limitTo: paginationLimit($index)" class="col-md-11 col-xs-10">
                     <div class="row">
-                        <div class="col-md-1 col-xs-2" ng-if="authentication.user.isImage">
-                            <img ng-hide="authentication.user.isImage" ng-src="../imgs/default-avatar.jpg"  height="30" width="30" class="img-thumbnail">
-                            <img ng-show="authentication.user.isImage" ng-src="{{imgPathOwn+comment.user_id}}" data-toggle="tooltip"
-                                 data-placement="bottom"
-                                 class="red-tooltip"
-                                 tooltip="{{comment.user_name}}"
-                                 height="30" width="30">
-                        </div>
-                        <div class="col-md-1 col-xs-2" ng-if="!authentication.user.isImage">
-                            <img ng-if="authentication.user.isImage === false && comment.user_id === authentication.user._id" ng-src="../imgs/default-avatar.jpg"  height="30" width="30" class="img-thumbnail">
-                            <img ng-if="authentication.user.isImage === false && comment.user_id !== authentication.user._id" ng-src="{{imgPathOwn+comment.user_id}}" data-toggle="tooltip"
+                        <div class="col-md-1 col-xs-2">
+                            <img ng-hide="comment.commenteduser.isImage" ng-src="../imgs/default-avatar.jpg"  height="30" width="30" class="img-thumbnail">
+                            <img ng-show="comment.commenteduser.isImage" ng-src="{{imgPathOwn+comment.commenteduser._id}}" data-toggle="tooltip"
                                  data-placement="bottom"
                                  class="red-tooltip"
                                  tooltip="{{comment.user_name}}"
