@@ -81,7 +81,7 @@ exports.delete = function(req, res) {
  * List of Companyfeeds
  */
 exports.list = function(req, res) { 
-	Companyfeed.find().sort('-created').populate('user', 'displayName').exec(function(err, companyfeeds) {
+	Companyfeed.find().sort('-created').populate('user').exec(function(err, companyfeeds) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
@@ -96,7 +96,7 @@ exports.list = function(req, res) {
  * Companyfeed middleware
  */
 exports.companyfeedByID = function(req, res, next, id) { 
-	Companyfeed.findById(id).populate('user', 'displayName').exec(function(err, companyfeed) {
+	Companyfeed.findById(id).populate('user').exec(function(err, companyfeed) {
 		if (err) return next(err);
 		if (! companyfeed) return next(new Error('Failed to load Companyfeed ' + id));
 		req.companyfeed = companyfeed ;
@@ -121,7 +121,7 @@ exports.addComment = function(req,res){
 				error: 'Cannot add the bid'
 			});
 		} else {
-			Companyfeed.find().sort('-created').populate('user', 'displayName').exec(function(err, companyfeeds) {
+			Companyfeed.find().sort('-created').populate('user').exec(function(err, companyfeeds) {
 				if (err) {
 					return res.status(400).send({
 						message: errorHandler.getErrorMessage(err)
@@ -141,7 +141,7 @@ exports.addLikers = function(req, res){
 				error: 'Cannot add the bid'
 			});
 		} else {
-			Companyfeed.find().sort('-created').populate('user', 'displayName').exec(function(err, companyfeeds) {
+			Companyfeed.find().sort('-created').populate('user').exec(function(err, companyfeeds) {
 				if (err) {
 					return res.status(400).send({
 						message: errorHandler.getErrorMessage(err)
@@ -161,7 +161,7 @@ exports.removeLiker = function(req, res){
                 error: 'Cannot add the bid'
             });
         } else {
-            Companyfeed.find().sort('-created').populate('user', 'displayName').exec(function(err, companyfeeds) {
+            Companyfeed.find().sort('-created').populate('user').exec(function(err, companyfeeds) {
                 if (err) {
                     return res.status(400).send({
                         message: errorHandler.getErrorMessage(err)
@@ -181,7 +181,7 @@ exports.addCommentLike = function(req, res) {
 				error: 'Cannot add the bid'
 			});
 		} else {
-			Companyfeed.find().sort('-created').populate('user', 'displayName').exec(function(err, companyfeeds) {
+			Companyfeed.find().sort('-created').populate('user').exec(function(err, companyfeeds) {
 				if (err) {
 					return res.status(400).send({
 						message: errorHandler.getErrorMessage(err)
@@ -201,7 +201,7 @@ exports.removeCommentLike = function(req, res) {
 				error: 'Cannot add the bid'
 			});
 		} else {
-			Companyfeed.find().sort('-created').populate('user', 'displayName').exec(function(err, companyfeeds) {
+			Companyfeed.find().sort('-created').populate('user').exec(function(err, companyfeeds) {
 				if (err) {
 					return res.status(400).send({
 						message: errorHandler.getErrorMessage(err)
@@ -215,7 +215,7 @@ exports.removeCommentLike = function(req, res) {
 };
 
 exports.getcompanyfeedByUserId = function (req, res) {
-    Companyfeed.find({user: {$in: req.body.userIds}}).sort('-created').populate('user', 'displayName').exec(function(err, feeds) {
+    Companyfeed.find({user: {$in: req.body.userIds}}).sort('-created').populate('user').exec(function(err, feeds) {
         if (err) {
             return res.status(500).json({
                 error: 'Can not get the feeds of selected user.'
