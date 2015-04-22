@@ -1,0 +1,38 @@
+<section data-ng-controller="GroupsController" data-ng-init="find()">
+    <div class="page-header">
+        <h1>Groups</h1>
+    </div>
+    <div class="list-group">
+
+        <a data-ng-repeat="group in groups" data-ng-href="#!/groups/{{group._id}}" class="list-group-item">
+            <div class="container row">
+                <div class="col-xs-9 col-md-11 article-left-pull">
+                    <small class="col-xs-12 col-md-12 list-group-item-text">
+                        <span translate="list.pon"></span>
+                        <span data-ng-bind="group.createdDate | date:'mediumDate'"></span>
+                        <span translate="list.by"></span>
+                        <span data-ng-bind="group.createdBy.displayName"></span>
+                        <div class="text-color" data-ng-bind="group.name"></div>
+                    </small>
+                    <div class="col-xs-12 col-md-12">
+                        <p class="list-group-item-text text-justify" data-ng-bind="group.createdDate"></p>
+                    </div>
+
+                </div>
+            </div>
+        </a>
+
+        <!--<a data-ng-repeat="group in groups" data-ng-href="#!/groups/{{group._id}}" class="list-group-item">-->
+			<!--<small class="list-group-item-text">-->
+				<!--Posted on-->
+				<!--<span data-ng-bind="group.created | date:'medium'"></span>-->
+				<!--by-->
+				<!--<span data-ng-bind="group.user.displayName"></span>-->
+			<!--</small>-->
+			<!--<h4 class="list-group-item-heading" data-ng-bind="group.name"></h4>-->
+        <!--</a>-->
+    </div>
+    <div class="alert alert-warning text-center" data-ng-hide="!groups.$resolved || groups.length">
+    	No Groups yet, why don't you <a href="/#!/groups/create">create one</a>?
+    </div>
+</section>

@@ -15,6 +15,7 @@ var mongoose = require('mongoose'),
 exports.create = function(req, res) {
 	var admin = new Admin(req.body);
 	admin.user = req.user;
+	admin.group = req.user.group;
 
 	admin.save(function(err) {
 		if (err) {
@@ -74,7 +75,7 @@ exports.delete = function(req, res) {
  */
 
 exports.users = function(req, res) {
-	User.find().sort('-created').populate('user', 'displayName').exec(function(err, admins) {
+	User.find({group: req.user.group}).sort('-created').populate('user', 'displayName').exec(function(err, admins) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
@@ -89,7 +90,7 @@ exports.users = function(req, res) {
  * List of Admins
  */
 exports.list = function(req, res) {
-	Admin.find().sort('-created').populate('user', 'displayName').exec(function(err, admins) {
+	Admin.find({group: req.user.group}).sort('-created').populate('user', 'displayName').exec(function(err, admins) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)

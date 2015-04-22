@@ -14,6 +14,7 @@ var mongoose = require('mongoose'),
 exports.create = function(req, res) {
 	var companyfeed = new Companyfeed(req.body);
 	companyfeed.user = req.user;
+	companyfeed.group = req.user.group;
 
 	companyfeed.save(function(err) {
 		if (err) {
@@ -21,7 +22,7 @@ exports.create = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			Companyfeed.find().sort('-created').populate('user', 'displayName').exec(function(err, companyfeeds) {
+			Companyfeed.find({group: req.user.group}).sort('-created').populate('user', 'displayName').exec(function(err, companyfeeds) {
 				if (err) {
 					return res.status(400).send({
 						message: errorHandler.getErrorMessage(err)
@@ -81,7 +82,7 @@ exports.delete = function(req, res) {
  * List of Companyfeeds
  */
 exports.list = function(req, res) { 
-	Companyfeed.find().sort('-created').populate('user', 'displayName').exec(function(err, companyfeeds) {
+	Companyfeed.find({group: req.user.group}).sort('-created').populate('user', 'displayName').exec(function(err, companyfeeds) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
@@ -215,7 +216,7 @@ exports.removeCommentLike = function(req, res) {
 };
 
 exports.getcompanyfeedByUserId = function (req, res) {
-    Companyfeed.find({user: {$in: req.body.userIds}}).sort('-created').populate('user', 'displayName').exec(function(err, feeds) {
+    Companyfeed.find({user: {$in: req.body.userIds}, group: req.user.group}).sort('-created').populate('user', 'displayName').exec(function(err, feeds) {
         if (err) {
             return res.status(500).json({
                 error: 'Can not get the feeds of selected user.'
