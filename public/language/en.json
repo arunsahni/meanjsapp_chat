@@ -88,5 +88,12 @@
     "comment": "Comment",
     "lkr" : "Liker Name",
     "ok": "OK"
+  },
+  "grp": {
+    "ngp": "New Group",
+    "nam": "Name",
+    "edt": "Edit Group",
+    "gps": "Groups",
+    "ngy": "No Groups yet, why don't you"
   }
 }
