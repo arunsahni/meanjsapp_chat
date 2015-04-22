@@ -21,14 +21,11 @@ var fs = require('fs'),
 	flash = require('connect-flash'),
 	config = require('./config'),
 	consolidate = require('consolidate'),
-	path = require('path'),
-	serveIndex = require('serve-index');
+	path = require('path');
 
 module.exports = function(db) {
 	// Initialize express app
 	var app = express();
-
-	app.use('/index', serveIndex('/index'));
 
 	// Globbing model files
 	config.getGlobbedFiles('./app/models/**/*.js').forEach(function(modelPath) {
