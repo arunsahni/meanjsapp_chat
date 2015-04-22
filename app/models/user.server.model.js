@@ -92,7 +92,12 @@ var UserSchema = new Schema({
 	},
 	resetPasswordExpires: {
 		type: Date
-	}
+	},
+    group: {
+        type: Schema.ObjectId,
+        ref: 'Group',
+        validate: [validateLocalStrategyProperty, 'Please fill in your first name']
+    }
 });
 
 /**

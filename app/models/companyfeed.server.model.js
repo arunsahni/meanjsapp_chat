@@ -36,7 +36,11 @@ var CompanyfeedSchema = new Schema({
 			user_id : { type: String },
 			user_name: { type: String }
 		}]
-	}]
+	}],
+    group: {
+        type: Schema.ObjectId,
+        ref: 'Group'
+    }
 });
 
 mongoose.model('Companyfeed', CompanyfeedSchema);

@@ -19,15 +19,14 @@ angular.module('admins').controller('AdminsController', ['$scope', '$stateParams
 				$scope.error = response.message;
 			});
 		};
-
-		$scope.roleChange = function(role,$index,user_id) { 
-			var userRole = {
-				userId: user_id,
-				role: role
-			};
-			Admins.updateUserRole(userRole).success(function(user){
-				$scope.userList[$index].roles[0] = user.roles[0];
-			});
-		};
+        $scope.roleChange = function(role, $index, user_id) {
+            var userRole = {
+                userId: user_id,
+                role: role
+            };
+            Admins.updateUserRole(userRole).success(function(user) {
+                $scope.userList[$index].roles[0] = user.roles[0];
+            });
+        };
 	}
 ]);
