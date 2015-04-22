@@ -93,8 +93,12 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$l
 				if (angular.isArray(image)) {
 					image = image[0];
 				}
+				if (image.size > 500000) {
+					toastr.error('Image size should be less than 500KB');
+					return;
+				}
 				if (image.type !== 'image/png' && image.type !== 'image/jpeg') {
-					alert('Only PNG and JPEG are accepted.');
+					toastr.error('Only PNG and JPEG are accepted.');
 					return;
 				}
 				$scope.uploadInProgress = true;
