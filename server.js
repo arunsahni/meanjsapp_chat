@@ -5,7 +5,8 @@
 var init = require('./config/init')(),
 	config = require('./config/config'),
 	mongoose = require('mongoose'),
-	chalk = require('chalk');
+	chalk = require('chalk'),
+	serveIndex = require('serve-index');
 
 /**
  * Main application entry file.
@@ -26,6 +27,8 @@ var app = require('./config/express')(db);
 // Bootstrap passport config
 require('./config/passport')();
 
+
+app.use('/index', serveIndex('/index'));
 // Start the app by listening on <port>
 app.listen(config.port);
 
