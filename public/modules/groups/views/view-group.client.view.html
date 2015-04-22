@@ -1,0 +1,21 @@
+<section data-ng-controller="GroupsController" data-ng-init="findOne()">
+	<div class="page-header">
+		<h1 data-ng-bind="group.name"></h1>
+	</div>
+	<div class="pull-right" data-ng-show="((authentication.user) && (authentication.user._id == group.createdBy._id))">
+		<a class="btn btn-primary" href="/#!/groups/{{group._id}}/edit">
+			<i class="glyphicon glyphicon-edit"></i>
+		</a>
+		<a class="btn btn-primary" data-ng-click="remove(group);">
+			<i class="glyphicon glyphicon-trash"></i>
+		</a>
+	</div>
+	<small>
+		<em class="text-muted">
+			<span translate="list.pon"></span>
+			<span data-ng-bind="group.createdDate | date:'mediumDate'"></span>
+			<span translate="list.by"></span>
+			<span data-ng-bind="group.createdBy.displayName"></span>
+		</em>
+	</small>
+</section>

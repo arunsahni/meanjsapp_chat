@@ -7,8 +7,9 @@ var mongoose = require('mongoose'),
     exports = module.exports = {};
 
     exports.getHtml = function() {
-        var templatePath = "./app/views/templates/emailTemplate.html";
+        var templatePath = "./app/views/templates/deploymentMails/emailTemplate.html";
         var hello = fs.readFileSync(templatePath).toString();
+        console.log(hello);
         return hello;
     };
 

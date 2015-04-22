@@ -15,6 +15,7 @@ var pusherService = require('../core/pusher');
 exports.create = function(req, res) {
 	var article = new Article(req.body);
 	article.user = req.user;
+	article.group = req.user.group;
 
 	/* Bulk Data Script - Should be remove in future commit*/
 	/*for(var i = 0;i <= 500; i++) {
@@ -109,7 +110,7 @@ exports.delete = function(req, res) {
  * List of Articles
  */
 exports.list = function(req, res) {
-	Article.find().sort('-created').populate('user').exec(function(err, articles) {
+	Article.find({group: req.user.group}).sort('-created').populate('user').exec(function(err, articles) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)

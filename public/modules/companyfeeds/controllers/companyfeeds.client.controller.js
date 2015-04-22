@@ -144,18 +144,29 @@ angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '
                 $scope.init();
             }
         });
-		$scope.show_name = 'show More';
 
+		$scope.show_name = 'show More';
+		$scope.show_name_less = 'show Less';
+		$scope.page_size = '';
 		$scope.paginationLimit = function(index) {
+			$scope.Buttonshow_size = $scope.companyfeeds[index].pagesShown;
 			$scope.companyfeeds[index].pagesShown =
 				$scope.companyfeeds[index].pagesShown ? $scope.companyfeeds[index].pagesShown : 1;
 			return 3 * $scope.companyfeeds[index].pagesShown;
 		};
 		$scope.hasMoreItemsToShow = function(index) {
-			return $scope.companyfeeds[index].pagesShown < ($scope.companyfeeds[index].comment.length / 3);
+			if($scope.page_size>1) {
+			} else {
+				return $scope.companyfeeds[index].pagesShown < ($scope.companyfeeds[index].comment.length / 3);
+			}
 		};
 		$scope.showMoreItems = function(index) {
 			$scope.companyfeeds[index].pagesShown = $scope.companyfeeds[index].pagesShown + 1;
+		};
+
+		$scope.showMoreItemsLess = function(index) {
+			$scope.companyfeeds[index].pagesShown = $scope.companyfeeds[index].pagesShown - 1;
+			$scope.page_size = $scope.companyfeeds[index].pagesShown;
 		};
 		$scope.showliker = function() {
 			modalInstance = $modal.open({

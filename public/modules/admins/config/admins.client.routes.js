@@ -11,7 +11,7 @@ angular.module('admins').config(['$stateProvider',
 			var deferred = $q.defer();
 			var authentication = Authentication.user.roles[0];
 			console.log(authentication);
-			if (authentication === 'admin')
+			if (authentication === 'admin' || authentication === 'superadmin')
 				$timeout(deferred.resolve);
 			else {
 					$timeout(deferred.reject);

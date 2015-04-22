@@ -12,13 +12,14 @@ exports.customQuery = function(req, res) {
         projection = {},
         i, len;
 
-        aggregateField[MatchField] = { $regex: req.body.SearchText, $options: 'i'} ;
+        aggregateField[MatchField] = {$regex: req.body.SearchText, $options: 'i'};
 
         for(i = 0, len = projectionArray.length; i < len; i += 1) {
             projection[projectionArray[i]] = 1;
         }
         EntityName.aggregate([
             {$match: aggregateField},
+            {$match: {group: req.user.group}},
             {$project: projection}
         ],function (err, articles) {
                 if (err) {
