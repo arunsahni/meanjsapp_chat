@@ -171,8 +171,7 @@ angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '
 			return 3 * $scope.companyfeeds[index].pagesShown;
 		};
 		$scope.hasMoreItemsToShow = function(index) {
-			if($scope.page_size>1) {
-			} else {
+			if($scope.page_size === 1 || $scope.page_size ==='') {
 				return $scope.companyfeeds[index].pagesShown < ($scope.companyfeeds[index].comment.length / 3);
 			}
 		};
