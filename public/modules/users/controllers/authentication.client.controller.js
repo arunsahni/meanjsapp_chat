@@ -3,7 +3,7 @@
 angular.module('users').controller('AuthenticationController', ['$scope', '$http', '$location', 'Authentication', 'toastr', 'Groups',
 	function($scope, $http, $location, Authentication, toastr, Groups) {
 		$scope.authentication = Authentication;
-
+        $scope.credentials = {};
 		// If user is signed in then redirect back home
 		if ($scope.authentication.user) $location.path('/companyfeeds/create');
 
@@ -17,12 +17,14 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$http
 				$location.path('/companyfeeds/create');
 			}).error(function(response) {
 				$scope.error = response.message;
+                $scope.credentials.group = $scope.groups[0];
 			});
 		};
 
         $scope.init = function() {
             Groups.getGroups().success(function(groups){
                 $scope.groups = groups;
+                $scope.credentials.group = $scope.groups[0];
             });
         };
         //$scope.defaultSelected = $scope.groups[0];

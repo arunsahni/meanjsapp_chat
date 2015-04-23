@@ -1,14 +1,14 @@
 <section data-ng-controller="GroupsController" data-ng-init="findOne()">
     <div class="page-header">
-        <h1>Edit Group</h1>
+        <h1 translate="grp.edt"></h1>
     </div>
     <div class="col-md-12">
         <form class="form-horizontal" data-ng-submit="update()" novalidate>
             <fieldset>
                 <div class="form-group">
-                    <label class="control-label" for="name">Name</label>
+                    <label class="control-label" for="name" translate="grp.nam"></label>
                     <div class="controls">
-                        <input type="text" data-ng-model="group.name" id="name" class="form-control" placeholder="Name" required>
+                        <input type="text" data-ng-model="group.name" id="name" class="form-control" placeholder="{{'grp.nam' | translate}}" required>
                     </div>
                 </div>
                 <div class="form-group">
