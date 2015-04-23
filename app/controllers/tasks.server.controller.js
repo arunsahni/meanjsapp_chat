@@ -37,18 +37,33 @@ exports.read = function(req, res) {
  * Update a Task
  */
 exports.update = function(req, res) {
-	var task = req.task ;
+	/*var task = req.task ;
 
-	task = _.extend(task , req.body);
+	 task = _.extend(task , req.body);
 
-	task.save(function(err) {
+	 task.save(function(err) {
+	 if (err) {
+	 return res.status(400).send({
+	 message: errorHandler.getErrorMessage(err)
+	 });
+	 } else {
+	 res.jsonp(task);
+	 }
+	 });
+	 };*/
+	var conditions = {_id: req.body._id},
+		update = {
+			name: req.body.name,
+			discriptions: req.body.discriptions,
+			priority: req.body.priority
+		};
+	Task.findOneAndUpdate(conditions, update, function (err, Task) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
-		} else {
-			res.jsonp(task);
 		}
+		res.json(Task);
 	});
 };
 
@@ -88,11 +103,21 @@ exports.list = function(req, res) {
  * Task middleware
  */
 exports.taskByID = function(req, res, next, id) { 
-	Task.findById(id).populate('user', 'displayName').exec(function(err, task) {
+	if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+		return res.status(400).send({
+			message: 'Task is invalid'
+		});
+	}
+
+	Task.findById(req.params.id).populate('createdBy', 'displayName').exec(function(err, task) {
 		if (err) return next(err);
-		if (! task) return next(new Error('Failed to load Task ' + id));
-		req.task = task ;
-		next();
+		if (!task) {
+			return res.status(404).send({
+				message: 'Task not found'
+			});
+		}
+		console.log(task)
+		res.json(task);
 	});
 };
 

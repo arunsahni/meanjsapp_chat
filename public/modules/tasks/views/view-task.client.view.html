@@ -1,21 +1,22 @@
 <section data-ng-controller="TasksController" data-ng-init="findOne()">
 	<div class="page-header">
-		<h1 data-ng-bind="task.name"></h1>
+		<div class="title" data-ng-bind="task.name"></div>
 	</div>
-	<div class="pull-right" data-ng-show="((authentication.user) && (authentication.user._id == task.user._id))">
+	{{task.description}}
+	<div class="pull-right" data-ng-show="((authentication.user) && (authentication.user._id == task.createdBy._id))">
 		<a class="btn btn-primary" href="/#!/tasks/{{task._id}}/edit">
 			<i class="glyphicon glyphicon-edit"></i>
 		</a>
 		<a class="btn btn-primary" data-ng-click="remove();">
 			<i class="glyphicon glyphicon-trash"></i>
 		</a>
-	</div>
+	</div><br>
 	<small>
 		<em class="text-muted">
 			Posted on
 			<span data-ng-bind="task.created | date:'mediumDate'"></span>
 			by
-			<span data-ng-bind="task.user.displayName"></span>
+			<span data-ng-bind="task.createdBy.displayName"></span>
 		</em>
 	</small>
 </section>

@@ -11,6 +11,13 @@ angular.module('tasks').factory('Tasks', ['$http',
 		serviceFactory.getTasks = function (req, res) {
 			return $http.get('/tasks', req);
 		};
+		serviceFactory.updateTask = function (req,res) {
+			return $http.post('/Task/update', req);
+		};
+		serviceFactory.getTaskById = function (req, res) {
+			return $http.get('/task/' + req.taskId);
+		};
+
 		return serviceFactory;
 	}
 ]);

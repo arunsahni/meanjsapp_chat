@@ -13,7 +13,12 @@ module.exports = function(app) {
 	app.get('/tasks', function(req, res) {
 		tasks.list(req, res);
 	});
-
+	app.post('/task/update', function(req, res) {
+		tasks.update(req, res);
+	});
+	app.get('/task/:id', function(req, res) {
+		tasks.taskByID(req, res);
+	});
 
 
 

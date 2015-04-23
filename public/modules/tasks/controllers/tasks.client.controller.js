@@ -5,7 +5,7 @@ angular.module('tasks').controller('TasksController', ['$scope', '$stateParams',
 	function($scope, $stateParams, $location, Authentication, Tasks, toastr) {
 		$scope.authentication = Authentication;
         $scope.task = {};
-
+		$scope.items = ['Urgent','High','Nomal','Low'];
 		// Create new Task
 		$scope.createTask = function() {
 			Tasks.saveTasks({
@@ -49,12 +49,17 @@ angular.module('tasks').controller('TasksController', ['$scope', '$stateParams',
 
 		// Update existing Task
 		$scope.update = function() {
-			var task = $scope.task;
+			/*var task = $scope.task;
 
 			task.$update(function() {
 				$location.path('tasks/' + task._id);
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
+			});*/
+			var task = $scope.task;
+			Tasks.updateTask(task).success(function(data) {
+				$location.path('tasks/' + data._id);
+				toastr.success('Successfully', 'task updated');
 			});
 		};
 
@@ -67,8 +72,11 @@ angular.module('tasks').controller('TasksController', ['$scope', '$stateParams',
 
 		// Find existing Task
 		$scope.findOne = function() {
-			$scope.task = Tasks.get({ 
+			Tasks.getTaskById({
 				taskId: $stateParams.taskId
+			}).success(function (task) {
+				console.log(task)
+				$scope.task = task;
 			});
 		};
 	}
