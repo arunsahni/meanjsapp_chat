@@ -94,6 +94,14 @@
     "nam": "Name",
     "edt": "Edit Group",
     "gps": "Groups",
-    "ngy": "No Groups yet, why don't you"
+    "ngy": "No Groups yet, why don't you",
+    "smor": "Show More",
+    "sles": "Show Less",
+    "sadm": "Super Admin",
+    "lgrp": "List Groups"
+  },
+  "admin": {
+    "adm": "Admins",
+    "rmgt": "Role Management"
   }
 }

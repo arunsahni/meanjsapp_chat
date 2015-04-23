@@ -118,8 +118,8 @@
                     </div>
                 </div>
                 <div class="row">
-                    <a  class="row col-md-2 col-xs-8 col-xs-offset-1 col-md-offset-1" ng-show="hasMoreItemsToShow($index)" ng-click="showMoreItems($index)">{{show_name}}</a>
-                    <a  class="row col-md-2 col-xs-8 col-xs-offset-1 col-md-offset-1" ng-if="!hasMoreItemsToShow($index) && Buttonshow_size > 1" ng-click="showMoreItemsLess($index)">{{show_name_less}}</a>
+                    <a  class="row col-md-2 col-xs-8 col-xs-offset-1 col-md-offset-1" ng-show="hasMoreItemsToShow($index)" ng-click="showMoreItems($index)" translate="{{show_name}}"></a>
+                    <a  class="row col-md-2 col-xs-8 col-xs-offset-1 col-md-offset-1" ng-if="!hasMoreItemsToShow($index) && Buttonshow_size > 1" ng-click="showMoreItemsLess($index)" translate="{{show_name_less}}"></a>
                 </div>
             </div>
             <br>

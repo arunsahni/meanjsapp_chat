@@ -145,8 +145,8 @@ angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '
             }
         });
 
-		$scope.show_name = 'show More';
-		$scope.show_name_less = 'show Less';
+		$scope.show_name = 'grp.smor';
+		$scope.show_name_less = 'grp.sles';
 		$scope.page_size = '';
 		$scope.paginationLimit = function(index) {
 			$scope.Buttonshow_size = $scope.companyfeeds[index].pagesShown;
