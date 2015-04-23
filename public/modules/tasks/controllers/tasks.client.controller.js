@@ -1,26 +1,18 @@
 'use strict';
 
 // Tasks controller
-angular.module('tasks').controller('TasksController', ['$scope', '$stateParams', '$location', 'Authentication', 'Tasks',
-	function($scope, $stateParams, $location, Authentication, Tasks) {
+angular.module('tasks').controller('TasksController', ['$scope', '$stateParams', '$location', 'Authentication', 'Tasks','toastr',
+	function($scope, $stateParams, $location, Authentication, Tasks, toastr) {
 		$scope.authentication = Authentication;
         $scope.task = {};
 
 		// Create new Task
 		$scope.createTask = function() {
-			// Create new Task object
-			var task = new Tasks ({
-				name: this.name
-			});
-
-			// Redirect after save
-			task.$save(function(response) {
-				$location.path('tasks/' + response._id);
-
-				// Clear form fields
-				$scope.name = '';
-			}, function(errorResponse) {
-				$scope.error = errorResponse.data.message;
+			Tasks.saveTasks({
+				data: $scope.task
+			}).success(function (data) {
+				toastr.success('Successfully', 'Task Inserted');
+				$scope.task = '';
 			});
 		};
 
@@ -68,7 +60,9 @@ angular.module('tasks').controller('TasksController', ['$scope', '$stateParams',
 
 		// Find a list of Tasks
 		$scope.find = function() {
-			$scope.tasks = Tasks.query();
+			Tasks.getTasks().success(function(tasks){
+				$scope.tasks = tasks;
+			});
 		};
 
 		// Find existing Task

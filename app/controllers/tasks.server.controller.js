@@ -12,10 +12,10 @@ var mongoose = require('mongoose'),
  * Create a Task
  */
 exports.create = function(req, res) {
-	var task = new Task(req.body);
+	var task = new Task(req.body.data);
 	task.createdBy = req.user;
 
-	task.save(function(err) {
+	task.save(function(err, data) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
@@ -73,7 +73,7 @@ exports.delete = function(req, res) {
  * List of Tasks
  */
 exports.list = function(req, res) { 
-	Task.find().sort('-createdDate').populate('user', 'displayName').exec(function(err, tasks) {
+	Task.find().sort('-createdDate').populate('createdBy', 'displayName').exec(function(err, tasks) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)

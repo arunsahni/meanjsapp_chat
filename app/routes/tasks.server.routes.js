@@ -5,15 +5,28 @@ module.exports = function(app) {
 	var tasks = require('../../app/controllers/tasks.server.controller');
 
 	// Tasks Routes
-	app.route('/tasks')
-		.get(tasks.list)
-		.post(users.requiresLogin, tasks.create);
 
-	app.route('/tasks/:taskId')
-		.get(tasks.read)
-		.put(users.requiresLogin, tasks.hasAuthorization, tasks.update)
-		.delete(users.requiresLogin, tasks.hasAuthorization, tasks.delete);
+	app.post('/tasks/create', function(req, res) {
+		tasks.create(req, res);
+	});
 
-	// Finish by binding the Task middleware
-	app.param('taskId', tasks.taskByID);
+	app.get('/tasks', function(req, res) {
+		tasks.list(req, res);
+	});
+
+
+
+
+
+	//app.route('/tasks')
+	//	.get(tasks.list)
+	//	.post(users.requiresLogin, tasks.create);
+    //
+	//app.route('/tasks/:taskId')
+	//	.get(tasks.read)
+	//	.put(users.requiresLogin, tasks.hasAuthorization, tasks.update)
+	//	.delete(users.requiresLogin, tasks.hasAuthorization, tasks.delete);
+    //
+	//// Finish by binding the Task middleware
+	//app.param('taskId', tasks.taskByID);
 };
