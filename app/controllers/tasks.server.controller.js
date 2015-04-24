@@ -110,14 +110,13 @@ exports.taskByID = function(req, res, next, id) {
 		});
 	}
 
-	Task.findById(req.params.id).populate('createdBy', 'displayName').exec(function(err, task) {
+	Task.findById(req.params.id).populate('createdBy assignees').exec(function(err, task) {
 		if (err) return next(err);
 		if (!task) {
 			return res.status(404).send({
 				message: 'Task not found'
 			});
 		}
-		console.log(task)
 		res.json(task);
 	});
 };
@@ -130,4 +129,27 @@ exports.hasAuthorization = function(req, res, next) {
 		return res.status(403).send('User is not authorized');
 	}
 	next();
+};
+/*
+*
+* Remove Assingnee
+*/
+
+exports.updateAssigneesList = function(req, res) {
+	//console.log(req.params);
+	/*var conditions = {_id: req.params.taskId},
+		update = {
+		name: req.body.name,
+		discriptions: req.body.discriptions,
+		priority: req.body.priority
+	};*/
+	Task.findOneAndUpdate({_id: req.params.taskId}, {$pop : { 'assignees' : {_id : req.params.assigneeId}}}, function (err, Task) {
+		if (err) {
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		}
+		else
+			res.json(Task);
+	});
 };

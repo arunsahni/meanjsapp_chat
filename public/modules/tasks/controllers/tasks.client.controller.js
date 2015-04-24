@@ -77,8 +77,16 @@ angular.module('tasks').controller('TasksController', ['$scope', '$stateParams',
 			Tasks.getTaskById({
 				taskId: $stateParams.taskId
 			}).success(function (task) {
-				console.log(task)
 				$scope.task = task;
+			});
+		};
+		$scope.removeAssignee = function(AssigneeId){
+			Tasks.updateAssigneesList({
+				taskId : $stateParams.taskId,
+				assigneeId : AssigneeId
+			}).success(function (task) {
+				console.log(task);
+				//$scope.task = task;
 			});
 		};
 	}
