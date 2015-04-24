@@ -89,7 +89,7 @@ exports.delete = function(req, res) {
  * List of Tasks
  */
 exports.list = function(req, res) { 
-	Task.find({group: req.user.group}).sort('-createdDate').populate('createdBy', 'displayName').exec(function(err, tasks) {
+	Task.find({group: req.user.group}).sort('-createdDate').populate('createdBy').exec(function(err, tasks) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
