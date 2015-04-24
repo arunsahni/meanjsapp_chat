@@ -8,22 +8,36 @@
         <li><a href="">Issues</a></li>
     </ul>
     <div class="tab-content responsive">
-        <div class="list-group">
-            <a data-ng-repeat="task in tasks" data-ng-href="#!/tasks/{{task._id}}" class="list-group-item">
-                <div class="col-xs-3 col-md-1 text-center article-left-pull">
-                    <img ng-show="!task.createdBy.isImage" class="img-rounded center-block table-bordered" ng-src="../imgs/default-avatar.jpg" height="55" width="55">
-                    <img ng-show="task.createdBy.isImage" class="img-rounded center-block table-bordered" ng-src="https://s3.amazonaws.com/sumacrm/avatars/{{task.createdBy._id}}" height="55" width="55">
-                </div>
-                <small class="list-group-item-text">
-                    Posted on
-                    <span data-ng-bind="task.createdDate | date:'medium'"></span>
-                    by
-                    <span data-ng-bind="task.createdBy.displayName"></span>
-                </small>
-                <h4 class="list-group-item-heading" data-ng-bind="task.name"></h4>
-                <br>
-            </a>
+        <div class="list-group row">
+            <div class="col-md-4 col-xs-4">
+                <h4>Title</h4>
+            </div>
+            <div class="col-md-2 col-xs-2">
+                <h4>Status</h4>
+            </div>
+            <div class="col-md-3 col-xs-3">
+                <h4>Assignee</h4>
+            </div>
+            <div class="col-md-3 col-xs-3">
+                <h4>Created By</h4>
+            </div>
         </div>
+        <a class="list-group row" data-ng-repeat="task in tasks" data-ng-href="#!/tasks/{{task._id}}">
+            <div ng-repeat="assign in task.assignees">
+                <div class="col-md-4 col-xs-4">
+                    <h5 class="list-group-item-heading" data-ng-bind="task.name"></h5>
+                </div>
+                <div class="col-md-2 col-xs-2">
+                    <h5 class="list-group-item-heading" data-ng-bind="task.priority"></h5>
+                </div>
+                <div class="col-md-3 col-xs-3">
+                    <h5 class="list-group-item-heading" data-ng-bind="assign.displayName"></h5>
+                </div>
+                <div class="col-md-3 col-xs-3">
+                    <h5 class="list-group-item-heading" data-ng-bind="task.createdBy.displayName"></h5>
+                </div>
+            </div>
+        </a>
         <div class="alert alert-warning text-center" data-ng-hide="!tasks.$resolved || tasks.length">
             No Tasks yet, why don't you <a href="/#!/tasks/create">create one</a>?
         </div>
