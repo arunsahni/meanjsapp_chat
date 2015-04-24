@@ -10,17 +10,17 @@ angular.module('admins').controller('FeaturesController', ['$scope', '$statePara
 
         $scope.featureFlags = [
             {
-                title: 'admin.admin',
+                title: 'admin.adm',
                 isEnable: true,
                 type: 'M'
             },
             {
-                title: 'admin.role',
+                title: 'admin.rmgt',
                 isEnable: true,
                 type: 'S'
             },
             {
-                title: 'admin.access',
+                title: 'admin.accmgt',
                 isEnable: true,
                 type: 'S'
             },
