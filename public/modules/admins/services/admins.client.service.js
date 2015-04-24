@@ -12,6 +12,12 @@ angular.module('admins').factory('Admins', ['$http',
 		adminFactory.updateUserRole = function (req,res) {
 			return $http.post('/changeRole', req);
 		};
+		adminFactory.pushAccess = function (req,res) {
+			return $http.post('/pushAccess', req);
+		};
+		adminFactory.popAccess = function (req,res) {
+			return $http.post('/popAccess', req);
+		};
 		return adminFactory;
 	}
 ]);

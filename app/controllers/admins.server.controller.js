@@ -124,12 +124,39 @@ exports.hasAuthorization = function(req, res, next) {
 	next();
 };
 
+
 /**
  * change Role
  */
 
 exports.changeRole = function(req, res){
 	User.findOneAndUpdate({_id: req.body.userId}, {$set : {roles: req.body.role}},function(err, user){
+		if(err) return err.status(400).send({
+			message: errorHandler.getErrorMessage(err)
+		});
+		else{
+			res.jsonp(user);
+		}
+	});
+};
+
+/**
+ * change Access
+ */
+
+exports.pushAccess = function(req, res){
+	User.findOneAndUpdate({_id: req.body.tags[0]._id}, {$push : {disbledfeatures: req.body.disbledfeatures}},function(err, user){
+		if(err) return err.status(400).send({
+			message: errorHandler.getErrorMessage(err)
+		});
+		else{
+			res.jsonp(user);
+		}
+	});
+};
+
+exports.popAccess = function(req, res){
+	User.findOneAndUpdate({ $and: [{_id: req.body.userId},{disbledfeatures: req.body.itemtoPop}]},{$pull: {disbledfeatures: req.body.itemtoPop } },function(err, user){
 		if(err) return err.status(400).send({
 			message: errorHandler.getErrorMessage(err)
 		});

@@ -1,4 +1,4 @@
-<div data-ng-controller="HeaderController" ng-show="authentication.user">
+<div data-ng-controller="HeaderController" data-ng-init="prepareMenu()" ng-show="authentication.user">
     <div class="navbar navbar-fixed-top navbar-inverse">
 		<div class="navbar-header">
 		<button class="navbar-toggle" type="button" data-ng-click="toggleCollapsibleMenu()">

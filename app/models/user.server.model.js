@@ -97,7 +97,11 @@ var UserSchema = new Schema({
         type: Schema.ObjectId,
         ref: 'Group',
         validate: [validateLocalStrategyProperty, 'Please fill in your first name']
-    }
+    },
+	disbledfeatures: {
+		type: Array,
+		default: []
+	}
 });
 
 /**
