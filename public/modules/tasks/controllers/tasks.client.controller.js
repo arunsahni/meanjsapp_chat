@@ -25,11 +25,21 @@ angular.module('tasks').controller('TasksController', ['$scope', '$stateParams',
         };
 
         $scope.$watchCollection('assignees',function(val){
+			/*if($scope.task.assignees && $scope.task.assignees[0].displayName) {
+				$scope.assignees = $scope.task.assignees.map(function(assigne) {
+					return {
+						_id: assigne._id,
+						firstName: assigne.firstName,
+						isImage: assigne.isImage
+					};
+				});
+			}*/
             if ($scope.assignees && $scope.assignees.length) {
                 var userIds = $scope.assignees.map(function (user) {
                     return user._id;
                 });
                 $scope.task.assignees = userIds;
+
             }
         });
 		// Remove existing Task
@@ -51,13 +61,11 @@ angular.module('tasks').controller('TasksController', ['$scope', '$stateParams',
 
 		// Update existing Task
 		$scope.update = function() {
-			/*var task = $scope.task;
+			console.log($scope.task.assignees);
+			for (var i = 0, len = $scope.assigneesList.length; i < len; i++) {
+				$scope.task.assignees.push($scope.assigneesList[i]._id);
+			}
 
-			task.$update(function() {
-				$location.path('tasks/' + task._id);
-			}, function(errorResponse) {
-				$scope.error = errorResponse.data.message;
-			});*/
 			var task = $scope.task;
 			Tasks.updateTask(task).success(function(data) {
 				$location.path('tasks/' + data._id);
@@ -69,6 +77,7 @@ angular.module('tasks').controller('TasksController', ['$scope', '$stateParams',
 		$scope.find = function() {
 			Tasks.getTasks().success(function(tasks){
 				$scope.tasks = tasks;
+
 			});
 		};
 
@@ -78,6 +87,8 @@ angular.module('tasks').controller('TasksController', ['$scope', '$stateParams',
 				taskId: $stateParams.taskId
 			}).success(function (task) {
 				$scope.task = task;
+				$scope.assigneesList = task.assignees;
+				$scope.task.assignees = [];
 			});
 		};
 		$scope.removeAssignee = function(AssigneeId){
@@ -86,7 +97,8 @@ angular.module('tasks').controller('TasksController', ['$scope', '$stateParams',
 				assigneeId : AssigneeId
 			}).success(function (task) {
 				console.log(task);
-				//$scope.task = task;
+				$scope.assigneesList = task.assignees;
+				$scope.task = task;
 			});
 		};
 	}

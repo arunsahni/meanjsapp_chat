@@ -38,25 +38,12 @@ exports.read = function(req, res) {
  * Update a Task
  */
 exports.update = function(req, res) {
-	/*var task = req.task ;
-
-	 task = _.extend(task , req.body);
-
-	 task.save(function(err) {
-	 if (err) {
-	 return res.status(400).send({
-	 message: errorHandler.getErrorMessage(err)
-	 });
-	 } else {
-	 res.jsonp(task);
-	 }
-	 });
-	 };*/
-	var conditions = {_id: req.body._id},
+		var conditions = {_id: req.body._id},
 		update = {
 			name: req.body.name,
 			discriptions: req.body.discriptions,
-			priority: req.body.priority
+			priority: req.body.priority,
+			assignees : req.body.assignees
 		};
 	Task.findOneAndUpdate(conditions, update, function (err, Task) {
 		if (err) {
@@ -136,20 +123,18 @@ exports.hasAuthorization = function(req, res, next) {
 */
 
 exports.updateAssigneesList = function(req, res) {
-	//console.log(req.params);
-	/*var conditions = {_id: req.params.taskId},
-		update = {
-		name: req.body.name,
-		discriptions: req.body.discriptions,
-		priority: req.body.priority
-	};*/
-	Task.findOneAndUpdate({_id: req.params.taskId}, {$pop : { 'assignees' : {_id : req.params.assigneeId}}}, function (err, Task) {
+	console.log(req.params.assigneeId);
+	Task.findOneAndUpdate({_id: mongoose.Types.ObjectId(req.params.taskId)}, {$pull : { 'assignees' : mongoose.Types.ObjectId(req.params.assigneeId)}}).populate('createdBy assignees').exec(function (err, Task) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		}
 		else
+			/*Task.findById(req.params.taskId).populate('createdBy assignees').exec(function(err, task) {
+				res.json(task);
+			});*/
 			res.json(Task);
+
 	});
 };

@@ -7,7 +7,9 @@
         <li><a href="/#!/tasks/create">Create Task</a></li>
         <li><a href="">Issues</a></li>
     </ul>
-	{{task.description}}
+	<div class="col-xs-3 col-md-1 text-center article-left-pull">
+		<h4 class="list-group-item-heading" data-ng-bind="task.name"></h4>
+	</div>
 	<div class="pull-right" data-ng-show="((authentication.user) && (authentication.user._id == task.createdBy._id))">
 		<a class="btn btn-primary" href="/#!/tasks/{{task._id}}/edit">
 			<i class="glyphicon glyphicon-edit"></i>

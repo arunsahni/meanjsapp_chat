@@ -29,10 +29,11 @@
                             <select id='priority' data-ng-model="task.priority" ng-options="item  for item in items" ></select>
                         </div>
                         <div class="form-group">
-                            <label class="control-label" for="name">Assignees</label>
-                            <div ng-repeat="assignee in task.assignees">
+                            <label class="control-label" for="name">Assignees</label><br>
+                            <span ng-repeat="assignee in assigneesList " track by>
                                 <button class="btn btn-default">{{assignee.displayName}} <a class="glyphicon glyphicon-remove" ng-click="removeAssignee(assignee._id)"></a></button>
-                            </div>
+
+                            </span>
                             <div class="panel-body">
                                 <div class="top-buffer" auto-complete value="autoCompleteData" model="assignees"></div>
                             </div>
