@@ -1,19 +1,26 @@
 <section data-ng-controller="TasksController" data-ng-init="find()">
     <div class="page-header">
-        <h1>Tasks</h1>
+        <div class="title"></div>
     </div>
-    <div class="list-group">
-        <a data-ng-repeat="task in tasks" data-ng-href="#!/tasks/{{task._id}}" class="list-group-item">
-			<small class="list-group-item-text">
-				Posted on
-				<span data-ng-bind="task.createdDate | date:'medium'"></span>
-				by
-				<span data-ng-bind="task.createdBy.displayName"></span>
-			</small>
-			<h4 class="list-group-item-heading" data-ng-bind="task.name"></h4>
-        </a>
-    </div>
-    <div class="alert alert-warning text-center" data-ng-hide="!tasks.$resolved || tasks.length">
-    	No Tasks yet, why don't you <a href="/#!/tasks/create">create one</a>?
+    <ul class="nav nav-tabs responsive" id="myTab">
+        <li class="active"><a href="/#!/tasks">Tasks</a></li>
+        <li><a href="/#!/tasks/create">Create Task</a></li>
+        <li><a href="">Issues</a></li>
+    </ul>
+    <div class="tab-content responsive">
+        <div class="list-group">
+            <a data-ng-repeat="task in tasks" data-ng-href="#!/tasks/{{task._id}}" class="list-group-item">
+                <small class="list-group-item-text">
+                    Posted on
+                    <span data-ng-bind="task.createdDate | date:'medium'"></span>
+                    by
+                    <span data-ng-bind="task.createdBy.displayName"></span>
+                </small>
+                <h4 class="list-group-item-heading" data-ng-bind="task.name"></h4>
+            </a>
+        </div>
+        <div class="alert alert-warning text-center" data-ng-hide="!tasks.$resolved || tasks.length">
+            No Tasks yet, why don't you <a href="/#!/tasks/create">create one</a>?
+        </div>
     </div>
 </section>

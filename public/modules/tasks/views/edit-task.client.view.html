@@ -1,39 +1,49 @@
 <section data-ng-controller="TasksController" data-ng-init="findOne()">
     <div class="page-header">
-        <div class="title" >Edit Task</div>
+        <div class="title"></div>
     </div>
-    <div class="col-md-12">
-        <form class="form-horizontal" data-ng-submit="update()" novalidate>
-            <fieldset>
-                <div class="form-group">
-                    <label class="control-label" for="name">Name</label>
-                    <div class="controls">
-                        <input type="text" data-ng-model="task.name" id="name" class="form-control" placeholder="Name" required>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label" for="name">Discription</label>
-                    <div class="controls">
-                        <textarea type="text" data-ng-model="task.description" id="description" class="form-control" placeholder="description" required></textarea>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label" for="name">Priority</label>
-                    <select id='priority' data-ng-model="task.priority" ng-options="item  for item in items" ></select>
-                </div>
-                <!--<div class="form-group">
-                    <label class="control-label" for="name">Assignees</label>
-                    <div class="controls">
-                        <input type="text" data-ng-model="task.name" id="assignees" class="form-control" placeholder="Name" required>
-                    </div>
-                </div>-->
-                <div class="form-group">
-                    <input type="submit" value="Update" class="btn btn-default">
-                </div>
-				<div data-ng-show="error" class="text-danger">
-					<strong data-ng-bind="error"></strong>
-				</div>
-            </fieldset>
-        </form>
+    <ul class="nav nav-tabs responsive" id="myTab">
+        <li class="active"><a href="/#!/tasks">Tasks</a></li>
+        <li><a href="/#!/tasks/create">Create Task</a></li>
+        <li><a href="">Issues</a></li>
+    </ul>
+    <div class="tab-content responsive">
+        <div class="tab-pane active">
+            <div class="col-md-12">
+                <form class="form-horizontal" data-ng-submit="update()" novalidate>
+                    <fieldset>
+                        <div class="form-group">
+                            <label class="control-label" for="name">Name</label>
+                            <div class="controls">
+                                <input type="text" data-ng-model="task.name" id="name" class="form-control" placeholder="Name" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="name">Discription</label>
+                            <div class="controls">
+                                <textarea type="text" data-ng-model="task.description" id="description" class="form-control" placeholder="description" required></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="name">Priority</label>
+                            <select id='priority' data-ng-model="task.priority" ng-options="item  for item in items" ></select>
+                        </div>
+                        <!--<div class="form-group">
+                            <label class="control-label" for="name">Assignees</label>
+                            <div class="controls">
+                                <input type="text" data-ng-model="task.name" id="assignees" class="form-control" placeholder="Name" required>
+                            </div>
+                        </div>-->
+                        <div class="form-group">
+                            <input type="submit" value="Update" class="btn btn-default">
+                        </div>
+                        <div data-ng-show="error" class="text-danger">
+                            <strong data-ng-bind="error"></strong>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
     </div>
+
 </section>

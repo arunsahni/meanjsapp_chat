@@ -1,7 +1,12 @@
 <section data-ng-controller="TasksController" data-ng-init="findOne()">
-	<div class="page-header">
-		<div class="title" data-ng-bind="task.name"></div>
-	</div>
+    <div class="page-header">
+        <div class="title"></div>
+    </div>
+    <ul class="nav nav-tabs responsive" id="myTab">
+        <li class="active"><a href="/#!/tasks">Tasks</a></li>
+        <li><a href="/#!/tasks/create">Create Task</a></li>
+        <li><a href="">Issues</a></li>
+    </ul>
 	{{task.description}}
 	<div class="pull-right" data-ng-show="((authentication.user) && (authentication.user._id == task.createdBy._id))">
 		<a class="btn btn-primary" href="/#!/tasks/{{task._id}}/edit">

@@ -6,13 +6,15 @@ angular.module('tasks').controller('TasksController', ['$scope', '$stateParams',
 		$scope.authentication = Authentication;
         $scope.task = {};
 		$scope.items = ['Urgent','High','Nomal','Low'];
+        $scope.task.priority = $scope.items[0];
 		// Create new Task
 		$scope.createTask = function() {
 			Tasks.saveTasks({
 				data: $scope.task
 			}).success(function (data) {
 				toastr.success('Successfully', 'Task Inserted');
-				$scope.task = '';
+				delete $scope.task;
+				delete $scope.assignees;
 			});
 		};
 

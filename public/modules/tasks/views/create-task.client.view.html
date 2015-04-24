@@ -1,51 +1,58 @@
 <section data-ng-controller="TasksController">
     <div class="page-header">
-        <h1>New Task</h1>
+        <div class="title"></div>
     </div>
-    <div class="col-md-6 col-xs-12">
-        <form class="form-horizontal" data-ng-submit="createTask()" novalidate>
-            <fieldset>
-                <div class="form-group">
-                    <label class="control-label" for="name">Name</label>
-                    <div class="controls">
-                        <input type="text" data-ng-model="task.name" id="name" class="form-control" placeholder="Name" required>
+    <ul class="nav nav-tabs responsive" id="myTab">
+        <li><a href="/#!/tasks">Tasks</a></li>
+        <li class="active"><a href="/#!/tasks/create">Create Task</a></li>
+        <li><a href="">Issues</a></li>
+    </ul>
+    <div class="tab-content responsive">
+        <div class="tab-pane active col-md-6 col-xs-12">
+            <form class="form-horizontal" data-ng-submit="createTask()" novalidate>
+                <fieldset>
+                    <div class="form-group">
+                        <label class="control-label" for="name">Name</label>
+                        <div class="controls">
+                            <input type="text" data-ng-model="task.name" id="name" class="form-control" placeholder="Name" required>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label" for="description">Description</label>
-                    <div class="controls">
-                        <textarea type="text" rows="3" data-ng-model="task.description" id="description" class="form-control" placeholder="description" required></textarea>
+                    <div class="form-group">
+                        <label class="control-label" for="description">Description</label>
+                        <div class="controls">
+                            <textarea type="text" rows="3" data-ng-model="task.description" id="description" class="form-control" placeholder="description" required></textarea>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label" for="priority">Priority</label>
-                    <div class="controls">
-                        <input type="text" data-ng-model="task.priority" id="priority" class="form-control" placeholder="priority" required>
+                    <div class="form-group">
+                        <label class="control-label" for="priority">Priority</label>
+                        <select id='priority' data-ng-model="task.priority" ng-options="item  for item in items" ></select>
                     </div>
-                </div>
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xs-12 col-md-4">
-                            <div class="panel-body">
-                                <div class="top-buffer" auto-complete value="autoCompleteData" model="assignees"></div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xs-12 col-md-4">
+                                <div class="panel-body">
+                                    <div class="top-buffer" auto-complete value="autoCompleteData" model="assignees"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="form-group ">
-                    <label class="control-label" for="deadline">Deadline Date</label>
-                    <div class="controls">
-                        <input type="date" data-ng-model="task.deadline" id="deadline" class="form-control" required>
+                    <div class="form-group ">
+                        <label class="control-label" for="deadline">Deadline Date</label>
+                        <div class="controls">
+                            <input type="date" data-ng-model="task.deadline" id="deadline" class="form-control" required>
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <input type="submit" class="btn btn-primary">
-                </div>
-				<div data-ng-show="error" class="text-danger">
-					<strong data-ng-bind="error"></strong>
-				</div>
-            </fieldset>
-        </form>
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-primary">
+                    </div>
+                    <div data-ng-show="error" class="text-danger">
+                        <strong data-ng-bind="error"></strong>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+
     </div>
+
 </section>
