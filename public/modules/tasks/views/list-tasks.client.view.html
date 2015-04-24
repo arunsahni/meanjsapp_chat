@@ -10,31 +10,31 @@
     <div class="tab-content responsive">
         <div class="list-group row">
             <div class="col-md-4 col-xs-4">
-                <h4>Title</h4>
+                <h4 class="title">Title</h4>
             </div>
             <div class="col-md-2 col-xs-2">
-                <h4>Status</h4>
+                <h4 class="title">Status</h4>
             </div>
             <div class="col-md-3 col-xs-3">
-                <h4>Assignee</h4>
+                <h4 class="title">Assignee</h4>
             </div>
             <div class="col-md-3 col-xs-3">
-                <h4>Created By</h4>
+                <h4 class="title">Created By</h4>
             </div>
         </div>
         <a class="list-group row" data-ng-repeat="task in tasks" data-ng-href="#!/tasks/{{task._id}}">
-            <div ng-repeat="assign in task.assignees">
+            <div class="list-group row">
                 <div class="col-md-4 col-xs-4">
-                    <h5 class="list-group-item-heading" data-ng-bind="task.name"></h5>
+                    <h5 class="list-group-item-heading" style="color: black" data-ng-bind="task.name"></h5>
                 </div>
                 <div class="col-md-2 col-xs-2">
-                    <h5 class="list-group-item-heading" data-ng-bind="task.priority"></h5>
+                    <h5 class="list-group-item-heading" style="color: black" data-ng-bind="task.priority"></h5>
                 </div>
                 <div class="col-md-3 col-xs-3">
-                    <h5 class="list-group-item-heading" data-ng-bind="assign.displayName"></h5>
+                    <h5 class="list-group-item-heading" style="color: black" ng-repeat="assign in task.assignees" data-ng-bind="assign.displayName"></h5>
                 </div>
                 <div class="col-md-3 col-xs-3">
-                    <h5 class="list-group-item-heading" data-ng-bind="task.createdBy.displayName"></h5>
+                    <h5 class="list-group-item-heading" style="color: black" data-ng-bind="task.createdBy.displayName"></h5>
                 </div>
             </div>
         </a>
