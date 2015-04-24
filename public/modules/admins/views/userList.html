@@ -22,13 +22,13 @@
                     <div ng-if="users.roles[0] === 'user'">
                     <div class="btn-group btn-toggle">
                         <button ng-class="{false: 'btn btn-sm btn-default', true: 'btn btn-sm btn-primary active'}[isActive]" ng-model="users.roles"  ng-click="roleChange(users.roles,$index,users._id)" translate="user"></button>
-                        <button ng-class="{true: 'btn btn-sm btn-default', false: 'btn btn-sm btn-primary active'}[isActive]" ng-model="users.roles" ng-click="roleChange('admin',$index,users._id)" translate="admin.admin"></button>
+                        <button ng-class="{true: 'btn btn-sm btn-default', false: 'btn btn-sm btn-primary active'}[isActive]" ng-model="users.roles" ng-click="roleChange('admin',$index,users._id)" translate="admin.adm"></button>
                     </div>
                     </div>
                     <div ng-if="users.roles[0] === 'admin'">
                     <div class="btn-group btn-toggle">
                         <button ng-class="{true: 'btn btn-sm btn-default', false: 'btn btn-sm btn-primary active'}[isActive]" ng-model="users.roles"  ng-click="roleChange('user',$index,users._id)" translate="user"></button>
-                        <button ng-class="{false: 'btn btn-sm btn-default', true: 'btn btn-sm btn-primary active'}[isActive]" ng-model="users.roles" ng-click="roleChange(user.roles,$index,users._id)" translate="admin.admin"></button>
+                        <button ng-class="{false: 'btn btn-sm btn-default', true: 'btn btn-sm btn-primary active'}[isActive]" ng-model="users.roles" ng-click="roleChange(user.roles,$index,users._id)" translate="admin.adm"></button>
                     </div>
                     </div>
                 </div>
