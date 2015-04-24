@@ -7,7 +7,6 @@ angular.module('groups').config(['$stateProvider',
 			// Initialize a new promise
 			var deferred = $q.defer();
 			var authentication = Authentication.user.roles[0];
-			console.log(authentication);
 			if (authentication === 'superadmin')
 				$timeout(deferred.resolve);
 			else {

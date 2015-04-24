@@ -22,7 +22,8 @@ exports.create = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			Companyfeed.find({group: req.user.group}).sort('-created').populate('user', 'displayName').exec(function(err, companyfeeds) {
+			Companyfeed.find({group: req.user.group}).sort('-created').populate('user likers comment.commentLiker comment.commenteduser').exec(function(err, companyfeeds) {
+
 				if (err) {
 					return res.status(400).send({
 						message: errorHandler.getErrorMessage(err)
@@ -82,7 +83,7 @@ exports.delete = function(req, res) {
  * List of Companyfeeds
  */
 exports.list = function(req, res) { 
-	Companyfeed.find({group: req.user.group}).sort('-created').populate('user', 'displayName').exec(function(err, companyfeeds) {
+	Companyfeed.find({group: req.user.group}).sort('-created').populate('user likers comment.commentLiker comment.commenteduser').exec(function(err, companyfeeds) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
@@ -97,7 +98,7 @@ exports.list = function(req, res) {
  * Companyfeed middleware
  */
 exports.companyfeedByID = function(req, res, next, id) { 
-	Companyfeed.findById(id).populate('user', 'displayName').exec(function(err, companyfeed) {
+	Companyfeed.findById(id).populate('user likers comment.commentLiker comment.commenteduser').exec(function(err, companyfeed) {
 		if (err) return next(err);
 		if (! companyfeed) return next(new Error('Failed to load Companyfeed ' + id));
 		req.companyfeed = companyfeed ;
@@ -116,13 +117,14 @@ exports.hasAuthorization = function(req, res, next) {
 };
 
 exports.addComment = function(req,res){
+	console.log(req.body.comment);
 	Companyfeed.findOneAndUpdate({_id: mongoose.Types.ObjectId(req.body.compnayfeedId)},{$push:{ comment : req.body.comment}}).exec(function(err,data) {
 		if (err) {
 			return res.status(500).json({
 				error: 'Cannot add the bid'
 			});
 		} else {
-			Companyfeed.find().sort('-created').populate('user', 'displayName').exec(function(err, companyfeeds) {
+			Companyfeed.find().sort('-created').populate('user likers comment.commentLiker comment.commenteduser').exec(function(err, companyfeeds) {
 				if (err) {
 					return res.status(400).send({
 						message: errorHandler.getErrorMessage(err)
@@ -136,13 +138,13 @@ exports.addComment = function(req,res){
 };
 
 exports.addLikers = function(req, res){
-	Companyfeed.findOneAndUpdate({_id: mongoose.Types.ObjectId(req.body.compnayfeedId)}, {$push : {likers:req.body.liker}}).exec(function(err,data) {
+	Companyfeed.findOneAndUpdate({_id: mongoose.Types.ObjectId(req.body.compnayfeedId)}, {$push : {likers: req.user}}).exec(function(err,data) {
 		if (err) {
 			return res.status(500).json({
 				error: 'Cannot add the bid'
 			});
 		} else {
-			Companyfeed.find().sort('-created').populate('user', 'displayName').exec(function(err, companyfeeds) {
+			Companyfeed.find().sort('-created').populate('user likers comment.commentLiker comment.commenteduser').exec(function(err, companyfeeds) {
 				if (err) {
 					return res.status(400).send({
 						message: errorHandler.getErrorMessage(err)
@@ -156,13 +158,13 @@ exports.addLikers = function(req, res){
 };
 
 exports.removeLiker = function(req, res){
-    Companyfeed.findOneAndUpdate({_id: mongoose.Types.ObjectId(req.body.compnayfeedId)}, {$pop: {likers: req.body.liker}}).exec(function(err, data) {
+    Companyfeed.findOneAndUpdate({_id: mongoose.Types.ObjectId(req.body.compnayfeedId)}, {$pop: {likers: req.user}}).exec(function(err, data) {
         if (err) {
             return res.status(500).json({
                 error: 'Cannot add the bid'
             });
         } else {
-            Companyfeed.find().sort('-created').populate('user', 'displayName').exec(function(err, companyfeeds) {
+            Companyfeed.find().sort('-created').populate('user likers comment.commentLiker comment.commenteduser').exec(function(err, companyfeeds) {
                 if (err) {
                     return res.status(400).send({
                         message: errorHandler.getErrorMessage(err)
@@ -176,13 +178,13 @@ exports.removeLiker = function(req, res){
 };
 
 exports.addCommentLike = function(req, res) {
-	Companyfeed.findOneAndUpdate(({_id: mongoose.Types.ObjectId(req.body.compnayfeedId)},{'comment._id' : mongoose.Types.ObjectId(req.body.commentId)}), {$push : {'comment.$.commentLiker':req.body.commentLiker}}).exec(function (err, data) {
+	Companyfeed.findOneAndUpdate(({_id: mongoose.Types.ObjectId(req.body.compnayfeedId)},{'comment._id' : mongoose.Types.ObjectId(req.body.commentId)}), {$push : {'comment.$.commentLiker': req.user}}).exec(function (err, data) {
 		if (err) {
 			return res.status(500).json({
 				error: 'Cannot add the bid'
 			});
 		} else {
-			Companyfeed.find().sort('-created').populate('user', 'displayName').exec(function(err, companyfeeds) {
+			Companyfeed.find().sort('-created').populate('user likers comment.commentLiker comment.commenteduser').exec(function(err, companyfeeds) {
 				if (err) {
 					return res.status(400).send({
 						message: errorHandler.getErrorMessage(err)
@@ -202,7 +204,7 @@ exports.removeCommentLike = function(req, res) {
 				error: 'Cannot add the bid'
 			});
 		} else {
-			Companyfeed.find().sort('-created').populate('user', 'displayName').exec(function(err, companyfeeds) {
+			Companyfeed.find().sort('-created').populate('user likers comment.commentLiker comment.commenteduser').exec(function(err, companyfeeds) {
 				if (err) {
 					return res.status(400).send({
 						message: errorHandler.getErrorMessage(err)
@@ -216,7 +218,7 @@ exports.removeCommentLike = function(req, res) {
 };
 
 exports.getcompanyfeedByUserId = function (req, res) {
-    Companyfeed.find({user: {$in: req.body.userIds}, group: req.user.group}).sort('-created').populate('user', 'displayName').exec(function(err, feeds) {
+    Companyfeed.find({user: {$in: req.body.userIds}, group: req.user.group}).sort('-created').populate('user likers comment.commentLiker comment.commenteduser').exec(function(err, feeds) {
         if (err) {
             return res.status(500).json({
                 error: 'Can not get the feeds of selected user.'
