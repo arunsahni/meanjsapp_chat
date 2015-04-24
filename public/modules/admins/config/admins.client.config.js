@@ -7,6 +7,6 @@ angular.module('admins').run(['Menus', 'Authentication',
 
 		Menus.addMenuItem('topbar', 'admin.adm', 'admins', 'dropdown', '/admins(/create)?', false, ['admin', 'superadmin']);
 		Menus.addSubMenuItem('topbar', 'admins', 'admin.rmgt', 'userlist','userlist', false, ['admin', 'superadmin']);
-		Menus.addSubMenuItem('topbar', 'admins', 'admin.accmgt', 'featuresAccess','featuresAccess', false, ['admin']);
+		Menus.addSubMenuItem('topbar', 'admins', 'admin.accmgt', 'featuresAccess','featuresAccess', false, ['admin','superadmin']);
 	}
 ]);
