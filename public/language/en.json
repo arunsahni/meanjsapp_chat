@@ -89,6 +89,12 @@
     "lkr" : "Liker Name",
     "ok": "OK"
   },
+  "user": "Users List",
+  "feature": "Features List",
+  "Enabled": "Enabled",
+  "Disabled": "Disabled",
+  "user": "User",
+
   "grp": {
     "ngp": "New Group",
     "nam": "Name",
@@ -101,7 +107,9 @@
     "lgrp": "List Groups"
   },
   "admin": {
-    "adm": "Admins",
-    "rmgt": "Role Management"
+    "adm": "Admin",
+    "rmgt": "Role Management",
+    "accmgt":"Access Management"
   }
 }
+

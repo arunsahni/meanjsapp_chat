@@ -1,14 +1,16 @@
 'use strict';
 
 //Menu service used for managing  menus
-angular.module('core').service('Menus', [
+angular.module('core').service('Menus', ['Authentication',
 
-	function() {
+	function(Authentication) {
 		// Define a set of default roles
 		this.defaultRoles = ['*'];
 
 		// Define the menus object
 		this.menus = {};
+
+		this.Authentication = Authentication;
 
 		// A private function for rendering decision 
 		var shouldRender = function(user) {
@@ -80,6 +82,12 @@ angular.module('core').service('Menus', [
 
 		// Add menu item object
 		this.addMenuItem = function(menuId, menuItemTitle, menuItemURL, menuItemType, menuItemUIRoute, isPublic, roles, position) {
+			if (this.Authentication && this.Authentication.user && this.Authentication.user.disbledfeatures.length) {
+				if(this.Authentication.user.disbledfeatures.indexOf(menuItemTitle) !== -1) {
+					return null;
+				}
+			}
+
 			// Validate that the menu exists
 			this.validateMenuExistance(menuId);
 
@@ -103,6 +111,12 @@ angular.module('core').service('Menus', [
 
 		// Add submenu item object
 		this.addSubMenuItem = function(menuId, rootMenuItemURL, menuItemTitle, menuItemURL, menuItemUIRoute, isPublic, roles, position) {
+
+			if (this.Authentication && this.Authentication.user && this.Authentication.user.disbledfeatures.length) {
+				if(this.Authentication.user.disbledfeatures.indexOf(menuItemTitle) !== -1) {
+					return null;
+				}
+			}
 			// Validate that the menu exists
 			this.validateMenuExistance(menuId);
 
