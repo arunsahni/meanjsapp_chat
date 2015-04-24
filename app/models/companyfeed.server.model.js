@@ -25,16 +25,18 @@ var CompanyfeedSchema = new Schema({
 		ref: 'User'
 	},
 	likers:[{
-		user_id : {	type: String },
-		user_name:{ type: String }
+		type: Schema.ObjectId,
+		ref: 'User'
 	}],
 	comment:[{
-		user_id : {	type: String },
+		commenteduser: {
+			type: Schema.ObjectId,
+			ref: 'User'
+		},
 		comment: { type: String },
-		user_name:{ type: String },
 		commentLiker: [{
-			user_id : { type: String },
-			user_name: { type: String }
+			type: Schema.ObjectId,
+			ref: 'User'
 		}]
 	}],
     group: {

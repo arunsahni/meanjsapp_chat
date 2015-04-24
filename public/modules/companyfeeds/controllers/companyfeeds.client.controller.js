@@ -28,7 +28,7 @@ angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '
 			$scope.LikerNameArray = likerArray;
             $scope.LikerName = '';
 			for(i = 0, len = likerArray.length; i < len; i++) {
-				$scope.LikerName = $scope.LikerName + '\n' + likerArray[i].user_name;
+				$scope.LikerName = $scope.LikerName + '\n' + likerArray[i].displayName;
 			}
 		};
 		// Remove existing Companyfeed
@@ -68,8 +68,7 @@ angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '
 			Companyfeeds.addCommentService({
 				compnayfeedId: companyfeedId,
 				comment: {
-					user_id: Authentication.user._id,
-					user_name:Authentication.user.displayName,
+					commenteduser: Authentication.user._id,
 					comment: this.comment
 				}
 			}).success(function (companyfeeds) {
@@ -79,7 +78,7 @@ angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '
         $scope.isLiked = function (likers) {
             var i, len;
             for (i = 0, len = likers.length; i < len; i += 1) {
-                if (likers[i].user_id === Authentication.user._id) {
+                if (likers[i]._id === Authentication.user._id) {
                     return true;
                 }
             }
@@ -90,11 +89,7 @@ angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '
             $scope.myFlag = true;
             if (!$scope.companyfeeds[index].likers.length || !$scope.isLiked($scope.companyfeeds[index].likers)) {
                 Companyfeeds.addLiker({
-                    compnayfeedId: $scope.companyfeeds[index]._id,
-                    liker : {
-                        user_id: Authentication.user._id,
-                        user_name:Authentication.user.displayName
-                    }
+                    compnayfeedId: $scope.companyfeeds[index]._id
                 }).success(function (companyfeeds) {
                     $scope.companyfeeds = companyfeeds;
                     $scope.myFlag = false;
@@ -102,11 +97,7 @@ angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '
                 });
             } else {
                 Companyfeeds.removeLiker({
-                    compnayfeedId: $scope.companyfeeds[index]._id,
-                    liker : {
-                        user_id: Authentication.user._id,
-                        user_name:Authentication.user.displayName
-                    }
+                    compnayfeedId: $scope.companyfeeds[index]._id
                 }).success(function (companyfeeds) {
                     $scope.companyfeeds = companyfeeds;
                     $scope.myFlag = false;
@@ -119,11 +110,7 @@ angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '
             if (!$scope.companyfeeds[feedIndex].comment.length || !$scope.isLiked($scope.companyfeeds[feedIndex].comment[commentIndex].commentLiker)) {
                 Companyfeeds.addCommentLike({
                     compnayfeedId: $scope.companyfeeds[feedIndex]._id,
-                    commentId: $scope.companyfeeds[feedIndex].comment[commentIndex]._id,
-                    commentLiker: {
-                        user_id: Authentication.user._id,
-                        user_name: Authentication.user.displayName
-                    }
+                    commentId: $scope.companyfeeds[feedIndex].comment[commentIndex]._id
                 }).success(function (companyfeeds) {
                     $scope.companyfeeds = companyfeeds;
                     $scope.myFlag = false;
@@ -132,10 +119,7 @@ angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '
                 Companyfeeds.removeCommentLike({
                     compnayfeedId: $scope.companyfeeds[feedIndex]._id,
                     commentId: $scope.companyfeeds[feedIndex].comment[commentIndex]._id,
-                    commentLiker: {
-                        user_id: Authentication.user._id,
-                        user_name: Authentication.user.displayName
-                    }
+
                 }).success(function (companyfeeds) {
                     $scope.companyfeeds = companyfeeds;
                     $scope.myFlag = false;
