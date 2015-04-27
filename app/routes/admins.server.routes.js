@@ -7,6 +7,12 @@ module.exports = function(app) {
 	app.route('/changeRole')
 		.post(users.requiresLogin, admins.changeRole);
 
+	app.route('/pushAccess')
+		.post(users.requiresLogin, admins.pushAccess);
+
+	app.route('/popAccess')
+		.post(users.requiresLogin, admins.popAccess);
+
 	app.route('/allUsers')
 		.get(users.requiresLogin, admins.users);
 
