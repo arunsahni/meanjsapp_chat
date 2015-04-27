@@ -96,7 +96,7 @@ angular.module('tasks').controller('TasksController', ['$scope', '$stateParams',
 				$scope.task = task;
 				$scope.assigneesList = task.assignees;
 				$scope.task.assignees = [];
-				$scope.days = Math.floor( days);
+				$scope.days = Math.round(days);
 			});
 		};
 		$scope.removeAssignee = function(AssigneeId){
