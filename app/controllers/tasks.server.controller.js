@@ -39,11 +39,14 @@ exports.read = function(req, res) {
  */
 exports.update = function(req, res) {
 		var conditions = {_id: req.body._id},
+			assigneesList = req.body.assignees.filter(function(elem, pos) {
+				return req.body.assignees.indexOf(elem) === pos;
+			}),
 		update = {
 			name: req.body.name,
 			discriptions: req.body.discriptions,
 			priority: req.body.priority,
-			assignees : req.body.assignees
+			assignees : assigneesList
 		};
 	Task.findOneAndUpdate(conditions, update, function (err, Task) {
 		if (err) {
