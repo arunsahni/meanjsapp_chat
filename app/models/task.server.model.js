@@ -24,6 +24,10 @@ var TaskSchema = new Schema({
         type: String,
         default: ''
     },
+    status: {
+        type: String,
+        default: 'New'
+    },
     priority: {
         type: String,
         default: ''

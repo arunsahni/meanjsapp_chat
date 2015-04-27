@@ -25,6 +25,10 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label class="control-label" for="name">Status</label>
+                            <select id='status' data-ng-model="task.status" ng-options="status  for status in statusArray" ></select>
+                        </div>
+                        <div class="form-group">
                             <label class="control-label" for="name">Priority</label>
                             <select id='priority' data-ng-model="task.priority" ng-options="item  for item in items" ></select>
                         </div>

@@ -45,6 +45,7 @@ exports.update = function(req, res) {
 		update = {
 			name: req.body.name,
 			discriptions: req.body.discriptions,
+			status : req.body.status,
 			priority: req.body.priority,
 			assignees : assigneesList
 		};
