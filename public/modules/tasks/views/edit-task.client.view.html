@@ -30,9 +30,8 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label" for="name">Assignees</label><br>
-                            <span ng-repeat="assignee in assigneesList " track by>
+                            <span ng-if="assigneesList.length > 0" ng-repeat="assignee in assigneesList " track by>
                                 <button class="btn btn-default">{{assignee.displayName}} <a class="glyphicon glyphicon-remove" ng-click="removeAssignee(assignee._id)"></a></button>
-
                             </span>
                             <div class="panel-body">
                                 <div class="top-buffer" auto-complete value="autoCompleteData" model="assignees"></div>

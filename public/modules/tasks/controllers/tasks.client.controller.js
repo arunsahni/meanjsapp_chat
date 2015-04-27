@@ -61,7 +61,6 @@ angular.module('tasks').controller('TasksController', ['$scope', '$stateParams',
 
 		// Update existing Task
 		$scope.update = function() {
-			console.log($scope.task.assignees);
 			for (var i = 0, len = $scope.assigneesList.length; i < len; i++) {
 				$scope.task.assignees.push($scope.assigneesList[i]._id);
 			}
@@ -83,6 +82,7 @@ angular.module('tasks').controller('TasksController', ['$scope', '$stateParams',
 
 		// Find existing Task
 		$scope.findOne = function() {
+			$scope.assigneesList = [];
 			Tasks.getTaskById({
 				taskId: $stateParams.taskId
 			}).success(function (task) {
@@ -96,9 +96,9 @@ angular.module('tasks').controller('TasksController', ['$scope', '$stateParams',
 				taskId : $stateParams.taskId,
 				assigneeId : AssigneeId
 			}).success(function (task) {
-				console.log(task);
-				$scope.assigneesList = task.assignees;
 				$scope.task = task;
+				$scope.assigneesList = task.assignees;
+				$scope.task.assignees = [];
 			});
 		};
 	}
