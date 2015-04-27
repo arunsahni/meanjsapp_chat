@@ -110,6 +110,13 @@
     "adm": "Admin",
     "rmgt": "Role Management",
     "accmgt":"Access Management"
+  },
+  "task": {
+    "tsk": "Tasks",
+    "ctsk": "Create Task",
+    "issu": "Issues",
+    "cat": "created a task",
+    "dysa": "days ago..."
   }
 }
 
