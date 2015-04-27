@@ -9,22 +9,24 @@
     </ul>
 	<br>
 	<div class="row">
-		<div class="row article-left-pull">
-			<h4 class="col-xs-12 col-md-12 col-xs-offset-1 col-md-offset-1" data-ng-bind="task.name"></h4>
-		</div>
-		<div class="row article-left-pull">
-			<h5 class="col-xs-12 col-md-12 col-xs-offset-1 col-md-offset-1" data-ng-bind="task.description"></h5>
-		</div>
-		<div class="row article-left-pull">
-			<h5 class="col-xs-12 col-md-12 col-xs-offset-1 col-md-offset-1" data-ng-bind="task.priority"></h5>
-		</div>
-		<div class="row article-left-pull">
-			<small class="col-xs-12 col-md-12 col-xs-offset-1 col-md-offset-1">
-				<em class="text-muted">
-					<span data-ng-bind="task.createdBy.displayName"></span>
-					created an task <span data-ng-bind="days"></span> days ago...
-				</em>
-			</small>
+		<div class="col-xs-9 col-md-8">
+			<div class="row article-left-pull">
+				<h4 class="col-xs-12 col-md-12 col-xs-offset-1 col-md-offset-1" data-ng-bind="task.name"></h4>
+			</div>
+			<div class="row article-left-pull">
+				<h5 class="col-xs-12 col-md-12 col-xs-offset-1 col-md-offset-1" data-ng-bind="task.description"></h5>
+			</div>
+			<div class="row article-left-pull">
+				<h5 class="col-xs-12 col-md-12 col-xs-offset-1 col-md-offset-1" data-ng-bind="task.priority"></h5>
+			</div>
+			<div class="row article-left-pull">
+				<small class="col-xs-12 col-md-12 col-xs-offset-1 col-md-offset-1">
+					<em class="text-muted">
+						<span data-ng-bind="task.createdBy.displayName"></span>
+						created a task <span data-ng-bind="days"></span> days ago...
+					</em>
+				</small>
+			</div>
 		</div>
 	</div>
 
