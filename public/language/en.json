@@ -116,7 +116,14 @@
     "ctsk": "Create Task",
     "issu": "Issues",
     "cat": "created a task",
-    "dysa": "days ago..."
+    "dysa": "days ago...",
+    "stus": "Status",
+    "asig": "Assignee",
+    "cby": "Created By",
+    "desc": "Discription",
+    "pri": "Priority",
+    "assig": "Assignees",
+    "deddt": "Deadline Date"
   }
 }
 

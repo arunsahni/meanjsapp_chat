@@ -3,23 +3,23 @@
         <div class="title"></div>
     </div>
     <ul class="nav nav-tabs responsive" id="myTab">
-        <li class="active"><a href="/#!/tasks">Tasks</a></li>
-        <li><a href="/#!/tasks/create">Create Task</a></li>
-        <li><a href="">Issues</a></li>
+        <li class="active"><a href="/#!/tasks" translate="task.tsk"></a></li>
+        <li><a href="/#!/tasks/create" translate="task.ctsk"></a></li>
+        <li><a href="" translate="task.issu"></a></li>
     </ul>
     <div class="tab-content responsive">
         <div class="list-group row">
             <div class="col-md-4 col-xs-4">
-                <h4 class="title">Title</h4>
+                <h4 class="title" translate="Tit"></h4>
             </div>
             <div class="col-md-2 col-xs-2">
-                <h4 class="title">Status</h4>
+                <h4 class="title" translate="task.stus"></h4>
             </div>
             <div class="col-md-3 col-xs-3">
-                <h4 class="title">Assignee</h4>
+                <h4 class="title" translate="task.asig"></h4>
             </div>
             <div class="col-md-3 col-xs-3">
-                <h4 class="title">Created By</h4>
+                <h4 class="title" translate="task.cby"></h4>
             </div>
         </div>
         <a class="list-group row" data-ng-repeat="task in tasks" data-ng-href="#!/tasks/{{task._id}}">
