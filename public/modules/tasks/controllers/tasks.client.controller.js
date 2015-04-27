@@ -86,9 +86,17 @@ angular.module('tasks').controller('TasksController', ['$scope', '$stateParams',
 			Tasks.getTaskById({
 				taskId: $stateParams.taskId
 			}).success(function (task) {
+				var d1 = new Date();
+				var d2 = new Date(task.createdDate);
+				var miliseconds = d1-d2;
+				var seconds = miliseconds/1000;
+				var minutes = seconds/60;
+				var hours = minutes/60;
+				var days = hours/24;
 				$scope.task = task;
 				$scope.assigneesList = task.assignees;
 				$scope.task.assignees = [];
+				$scope.days = Math.floor( days);
 			});
 		};
 		$scope.removeAssignee = function(AssigneeId){
