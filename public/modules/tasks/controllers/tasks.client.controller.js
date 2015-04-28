@@ -24,6 +24,9 @@ angular.module('tasks').controller('TasksController', ['$scope', '$stateParams',
             Projection: ['firstName', '_id', 'isImage'],
             MatchField: 'firstName'
         };
+		$scope.Redirect = function(taskid) {
+			$location.path('/tasks/'+taskid);
+		};
 
         $scope.$watchCollection('assignees',function(val){
 			/*if($scope.task.assignees && $scope.task.assignees[0].displayName) {

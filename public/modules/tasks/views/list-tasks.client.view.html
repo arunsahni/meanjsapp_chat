@@ -8,7 +8,7 @@
         <li><a href="" translate="task.issu"></a></li>
     </ul>
     <div class="tab-content responsive">
-        <div class="list-group row">
+        <tr class="list-group row">
             <div class="col-md-4 col-xs-4">
                 <h4 class="title" translate="Tit"></h4>
             </div>
@@ -21,23 +21,25 @@
             <div class="col-md-3 col-xs-3">
                 <h4 class="title" translate="task.cby"></h4>
             </div>
-        </div>
-        <a class="list-group row" data-ng-repeat="task in tasks" data-ng-href="#!/tasks/{{task._id}}">
-            <div class="list-group row">
-                <div class="col-md-4 col-xs-4">
-                    <h5 class="list-group-item-heading" style="color: black" data-ng-bind="task.name"></h5>
-                </div>
-                <div class="col-md-2 col-xs-2">
-                    <h5 class="list-group-item-heading" style="color: black" data-ng-bind="task.priority"></h5>
-                </div>
-                <div class="col-md-3 col-xs-3">
-                    <h5 class="list-group-item-heading" style="color: black" ng-repeat="assign in task.assignees" data-ng-bind="assign.displayName"></h5>
-                </div>
-                <div class="col-md-3 col-xs-3">
-                    <h5 class="list-group-item-heading" style="color: black" data-ng-bind="task.createdBy.displayName"></h5>
-                </div>
-            </div>
-        </a>
+        </tr>
+        <table class="table table-hover">
+            <tr ng-class="task.priority === 'Urgent' ? 'danger' : task.priority === 'Low' ? 'warning' : task.priority === 'High' ? 'success' : 'info'" data-ng-repeat="task in tasks" ng-click="Redirect(task._id)">
+                <a class="list-group row">
+                    <td class="col-md-4 col-xs-4">
+                        <h5 class="list-group-item-heading" style="color: black" data-ng-bind="task.name"></h5>
+                    </td>
+                    <td class="col-md-2 col-xs-2">
+                        <h5 class="list-group-item-heading" style="color: black" data-ng-bind="task.priority"></h5>
+                    </td>
+                    <td class="col-md-3 col-xs-3">
+                        <h5 class="list-group-item-heading" style="color: black" ng-repeat="assign in task.assignees" data-ng-bind="assign.displayName"></h5>
+                    </td>
+                    <td class="col-md-3 col-xs-3">
+                        <h5 class="list-group-item-heading" style="color: black" data-ng-bind="task.createdBy.displayName"></h5>
+                    </td>
+                </a>
+            </tr>
+        </table>
         <div class="alert alert-warning text-center" data-ng-hide="!tasks.$resolved || tasks.length">
             No Tasks yet, why don't you <a href="/#!/tasks/create">create one</a>?
         </div>
