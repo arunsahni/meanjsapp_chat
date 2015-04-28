@@ -22,7 +22,7 @@
                 <h4 class="title" translate="task.cby"></h4>
             </div>
         </tr>
-        <table class="table table-hover">
+        <table class="table table-bordered table-hover">
             <tr ng-class="task.priority === 'Urgent' ? 'danger' : task.priority === 'Low' ? 'warning' : task.priority === 'High' ? 'success' : 'info'" data-ng-repeat="task in tasks" ng-click="Redirect(task._id)">
                 <a class="list-group row">
                     <td class="col-md-4 col-xs-4">
