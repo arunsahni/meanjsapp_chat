@@ -30,6 +30,7 @@ exports.create = function(req, res) {
 						message: errorHandler.getErrorMessage(err)
 					});
 				} else {
+					pusherService.pusherGenerate('Channel-Public', 'Post-AddEvent', {'message': req.user.displayName+' add new post on ' + companyfeed.name,'userData':req.user,'data': companyfeed});
 					res.jsonp(companyfeeds);
 				}
 			});
@@ -75,7 +76,6 @@ exports.delete = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			pusherService.pusherGenerate('Channel-Public', 'Post-AddEvent', {'message': req.user.displayName+' add new post on ' + companyfeed.name});
 			res.jsonp(companyfeed);
 		}
 	});
@@ -121,7 +121,7 @@ exports.hasAuthorization = function(req, res, next) {
 
 exports.addComment = function(req,res){
 	console.log(req.body.comment);
-	Companyfeed.findOneAndUpdate({_id: mongoose.Types.ObjectId(req.body.compnayfeedId)},{$push:{ comment : req.body.comment}}).exec(function(err,data) {
+	Companyfeed.findOneAndUpdate({_id: mongoose.Types.ObjectId(req.body.compnayfeedId)},{$push:{ comment : req.body.comment}}).populate('user likers comment.commentLiker comment.commenteduser').exec(function(err,data) {
 		if (err) {
 			return res.status(500).json({
 				error: 'Cannot add the bid'
@@ -142,7 +142,7 @@ exports.addComment = function(req,res){
 };
 
 exports.addLikers = function(req, res){
-	Companyfeed.findOneAndUpdate({_id: mongoose.Types.ObjectId(req.body.compnayfeedId)}, {$push : {likers: req.user}}).exec(function(err,data) {
+	Companyfeed.findOneAndUpdate({_id: mongoose.Types.ObjectId(req.body.compnayfeedId)}, {$push : {likers: req.user}}).populate('user likers comment.commentLiker comment.commenteduser').exec(function(err,data) {
 		if (err) {
 			return res.status(500).json({
 				error: 'Cannot add the bid'
@@ -163,7 +163,7 @@ exports.addLikers = function(req, res){
 };
 
 exports.removeLiker = function(req, res){
-    Companyfeed.findOneAndUpdate({_id: mongoose.Types.ObjectId(req.body.compnayfeedId)}, {$pop: {likers: req.user}}).exec(function(err, data) {
+    Companyfeed.findOneAndUpdate({_id: mongoose.Types.ObjectId(req.body.compnayfeedId)}, {$pop: {likers: req.user}}).populate('user likers comment.commentLiker comment.commenteduser').exec(function(err, data) {
         if (err) {
             return res.status(500).json({
                 error: 'Cannot add the bid'
@@ -184,7 +184,7 @@ exports.removeLiker = function(req, res){
 };
 
 exports.addCommentLike = function(req, res) {
-	Companyfeed.findOneAndUpdate(({_id: mongoose.Types.ObjectId(req.body.compnayfeedId)},{'comment._id' : mongoose.Types.ObjectId(req.body.commentId)}), {$push : {'comment.$.commentLiker': req.user}}).exec(function (err, data) {
+	Companyfeed.findOneAndUpdate(({_id: mongoose.Types.ObjectId(req.body.compnayfeedId)},{'comment._id' : mongoose.Types.ObjectId(req.body.commentId)}), {$push : {'comment.$.commentLiker': req.user}}).populate('user likers comment.commentLiker comment.commenteduser').exec(function (err, data) {
 		if (err) {
 			return res.status(500).json({
 				error: 'Cannot add the bid'
@@ -205,7 +205,7 @@ exports.addCommentLike = function(req, res) {
 };
 
 exports.removeCommentLike = function(req, res) {
-	Companyfeed.findOneAndUpdate(({_id: mongoose.Types.ObjectId(req.body.compnayfeedId)}, {'comment._id' : mongoose.Types.ObjectId(req.body.commentId)}), {$pop : {'comment.$.commentLiker': req.body.commentLiker}}).exec(function (err, data) {
+	Companyfeed.findOneAndUpdate(({_id: mongoose.Types.ObjectId(req.body.compnayfeedId)}, {'comment._id' : mongoose.Types.ObjectId(req.body.commentId)}), {$pop : {'comment.$.commentLiker': req.body.commentLiker}}).populate('user likers comment.commentLiker comment.commenteduser').exec(function (err, data) {
 		if (err) {
 			return res.status(500).json({
 				error: 'Cannot add the bid'

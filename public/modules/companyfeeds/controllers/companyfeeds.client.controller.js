@@ -10,35 +10,16 @@ angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '
 		$scope.imgPath = 'https://s3.amazonaws.com/sumacrm/avatars/' + Authentication.user._id;
 		$scope.imgPathOwn = 'https://s3.amazonaws.com/sumacrm/avatars/';
 
-		PusherService.listen('Channel-Public','Post-AddEvent', function(err, data) {
-			//toastr.success(data.message);
-			$scope.init();
-		});
-
-		PusherService.listen('Channel-Public','Commnet-AddEvent', function(err, data) {
-			//toastr.success(data.message);
-			$scope.init();
-		});
-
-		PusherService.listen('Channel-Public','Post-LikeEvent', function(err, data) {
-			//toastr.success(data.message);
-			$scope.init();
-		});
-
-		PusherService.listen('Channel-Public','Post-UnLikeEvent', function(err, data) {
-			//toastr.success(data.message);
-			$scope.init();
-		});
-
-		PusherService.listen('Channel-Public','Commnet-UnLikeEvent', function(err, data) {
-			//toastr.success(data.message);
-			$scope.init();
-		});
-
-		PusherService.listen('Channel-Public','Commnet-LikeEvent', function(err, data) {
-			//toastr.success(data.message);
-			$scope.init();
-		});
+		function getIndexOf(arr, val, prop) {
+			var l = arr.length,
+				k = 0;
+			for (k = 0; k < l; k = k + 1) {
+				if (arr[k][prop] === val) {
+					return k;
+				}
+			}
+			return false;
+		}
 
 		$scope.create = function () {
 			Companyfeeds.savecompanyfeed({
@@ -82,7 +63,6 @@ angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '
 		$scope.init = function () {
 			Companyfeeds.getcompanyfeeds().success(function (companyfeeds) {
 				$scope.companyfeeds = companyfeeds;
-				console.log($scope.bellNotifications);
 			});
 		};
 
@@ -214,5 +194,52 @@ angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '
 				//console.log('Modal dismissed at: ' + new Date());
 			});
 		};
+
+		PusherService.listen('Channel-Public','Post-AddEven', function(err, data) {
+			toastr.success(data.message);
+			$scope.companyfeeds.splice(0,0,data.data);
+		});
+
+		PusherService.listen('Channel-Public','Commnet-AddEvent', function(err, data) {
+			toastr.success(data.message);
+			var index = getIndexOf($scope.companyfeeds, data.data._id, '_id');
+			$scope.companyfeeds[index].comment = data.data.comment;
+		});
+
+		PusherService.listen('Channel-Public','Post-LikeEvent', function(err, data) {
+			toastr.success(data.message);
+			var index = getIndexOf($scope.companyfeeds, data.data._id, '_id');
+			$scope.companyfeeds[index].likers = data.data.likers;
+		});
+
+		PusherService.listen('Channel-Public','Post-UnLikeEvent', function(err, data) {
+			toastr.success(data.message);
+			var index = getIndexOf($scope.companyfeeds, data.data._id, '_id');
+			$scope.companyfeeds[index].likers = data.data.likers;
+		});
+
+		PusherService.listen('Channel-Public','Commnet-LikeEvent', function(err, data) {
+			toastr.success(data.message);
+			var index = getIndexOf($scope.companyfeeds, data.data._id, '_id');
+			for (var j in $scope.companyfeeds[index].comment) {
+				for(var k in data.data.comment){
+					if ($scope.companyfeeds[index].comment[j]._id === data.data.comment[k]._id) {
+						$scope.companyfeeds[index].comment[j].commentLiker = data.data.comment[k].commentLiker;
+					}
+				}
+			}
+		});
+
+		PusherService.listen('Channel-Public','Commnet-UnLikeEvent', function(err, data) {
+			toastr.success(data.message);
+			var index = getIndexOf($scope.companyfeeds, data.data._id, '_id');
+			for (var j in $scope.companyfeeds[index].comment) {
+				for(var k in data.data.comment){
+					if ($scope.companyfeeds[index].comment[j]._id === data.data.comment[k]._id) {
+						$scope.companyfeeds[index].comment[j].commentLiker = data.data.comment[k].commentLiker;
+					}
+				}
+			}
+		});
 	}
 ]);
