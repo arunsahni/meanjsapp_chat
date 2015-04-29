@@ -11,6 +11,37 @@ angular.module('core').controller('HeaderController', ['$scope', '$rootScope', '
 				$rootScope.menu = Menus.getMenu('topbar');
 			}
 		};
+		$scope.bellNotifications = [];
+		PusherService.listen('Channel-Public','Commnet-AddEvent', function(err, data) {
+			//toastr.success(data.message);
+			$scope.bellNotifications.push(data.message);
+			//$scope.init();
+		});
+
+		PusherService.listen('Channel-Public','Post-LikeEvent', function(err, data) {
+			//toastr.success(data.message);
+			$scope.bellNotifications.push(data.data);
+			//$scope.init();
+		});
+
+		PusherService.listen('Channel-Public','Post-UnLikeEvent', function(err, data) {
+			toastr.success(data.message);
+			$scope.bellNotifications.push(data.message);
+			//$scope.init();
+		});
+
+		PusherService.listen('Channel-Public','Commnet-UnLikeEvent', function(err, data) {
+			//toastr.success(data.message);
+			$scope.bellNotifications.push(data.message);
+			//$scope.init();
+		});
+
+		PusherService.listen('Channel-Public','Commnet-LikeEvent', function(err, data) {
+			//toastr.success(data.message);
+			$scope.bellNotifications.push(data.message);
+			//$scope.init();
+		});
+
 
 		$scope.imgPath = Authentication.user._id + '.png';
 		$scope.isActive = true;

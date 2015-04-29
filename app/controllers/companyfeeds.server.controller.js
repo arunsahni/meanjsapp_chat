@@ -7,6 +7,7 @@ var mongoose = require('mongoose'),
 	errorHandler = require('./errors.server.controller'),
 	Companyfeed = mongoose.model('Companyfeed'),
 	_ = require('lodash');
+var pusherService = require('../core/pusher');
 
 /**
  * Create a Companyfeed
@@ -130,6 +131,7 @@ exports.addComment = function(req,res){
 						message: errorHandler.getErrorMessage(err)
 					});
 				} else {
+					pusherService.pusherGenerate('Channel-Public', 'Commnet-AddEvent', {'message': req.user.displayName+' Commented on ' + data.name});
 					res.jsonp(companyfeeds);
 				}
 			});
@@ -150,6 +152,7 @@ exports.addLikers = function(req, res){
 						message: errorHandler.getErrorMessage(err)
 					});
 				} else {
+					pusherService.pusherGenerate('Channel-Public', 'Post-LikeEvent', {'message': req.user.displayName+' commented on your Post ' + data.name,'userData':req.user,'data': data});
 					res.jsonp(companyfeeds);
 				}
 			});
@@ -170,6 +173,7 @@ exports.removeLiker = function(req, res){
                         message: errorHandler.getErrorMessage(err)
                     });
                 } else {
+					pusherService.pusherGenerate('Channel-Public', 'Post-UnLikeEvent', {'message': req.user.displayName+' unliked your post ' + data.name,'userData':req.user,'data': data});
                     res.jsonp(companyfeeds);
                 }
             });
@@ -190,6 +194,7 @@ exports.addCommentLike = function(req, res) {
 						message: errorHandler.getErrorMessage(err)
 					});
 				} else {
+					pusherService.pusherGenerate('Channel-Public', 'Commnet-LikeEvent', { message: req.user.displayName +' Liked your comment ' + req.body.comment,'userData':req.user,'data': data});
 					res.jsonp(companyfeeds);
 				}
 			});
@@ -210,6 +215,7 @@ exports.removeCommentLike = function(req, res) {
 						message: errorHandler.getErrorMessage(err)
 					});
 				} else {
+					pusherService.pusherGenerate('Channel-Public', 'Commnet-UnLikeEvent',{message : req.user.displayName+ 'Unliked your Comment ' + req.body.comment,'userData':req.user,'data': data});
 					res.jsonp(companyfeeds);
 				}
 			});
