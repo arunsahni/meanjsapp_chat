@@ -20,6 +20,10 @@ angular.module('tasks').config(['$stateProvider',
 		state('editTask', {
 			url: '/tasks/:taskId/edit',
 			templateUrl: 'modules/tasks/views/edit-task.client.view.html'
+		}).
+		state('myTask', {
+			url: '/tasks/assign/me',
+			templateUrl: 'modules/tasks/views/my-tasks.client.view.html'
 		});
 	}
 ]);

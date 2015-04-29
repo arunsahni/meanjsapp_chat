@@ -20,7 +20,9 @@ angular.module('tasks').factory('Tasks', ['$http',
 		serviceFactory.updateAssigneesList = function (req, res) {
 			return $http.get('/task/deleteAssignee/' + req.taskId+'/' +req.assigneeId);
 		};
-
+        serviceFactory.getTaskByUserId = function (req, res) {
+            return $http.get('/tasks/myTask');
+        };
 
 		return serviceFactory;
 	}

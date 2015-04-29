@@ -112,6 +112,7 @@
     "accmgt":"Access Management"
   },
   "task": {
+    "mtk": "My Tasks",
     "tsk": "Tasks",
     "ctsk": "Create Task",
     "issu": "Issues",

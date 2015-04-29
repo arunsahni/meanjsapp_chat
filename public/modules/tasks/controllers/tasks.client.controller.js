@@ -76,6 +76,12 @@ angular.module('tasks').controller('TasksController', ['$scope', '$stateParams',
 			});
 		};
 
+        $scope.myTasks = function() {
+            Tasks.getTaskByUserId().success(function(tasks) {
+                $scope.tasks = tasks;
+            });
+        }
+
 		// Find a list of Tasks
 		$scope.find = function() {
 			Tasks.getTasks().success(function(tasks){

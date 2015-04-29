@@ -19,6 +19,9 @@ module.exports = function(app) {
 	app.get('/task/:id', function(req, res) {
 		tasks.taskByID(req, res);
 	});
+    app.get('/tasks/myTask', function(req, res) {
+		tasks.taskByUserId(req, res);
+	});
 	app.get('/task/deleteAssignee/:taskId/:assigneeId', function(req, res) {
 		tasks.updateAssigneesList(req, res);
 	});
