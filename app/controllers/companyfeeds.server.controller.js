@@ -75,6 +75,7 @@ exports.delete = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
+			pusherService.pusherGenerate('Channel-Public', 'Post-AddEvent', {'message': req.user.displayName+' add new post on ' + companyfeed.name});
 			res.jsonp(companyfeed);
 		}
 	});
@@ -90,6 +91,7 @@ exports.list = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
+
 			res.jsonp(companyfeeds);
 		}
 	});
@@ -131,7 +133,7 @@ exports.addComment = function(req,res){
 						message: errorHandler.getErrorMessage(err)
 					});
 				} else {
-					pusherService.pusherGenerate('Channel-Public', 'Commnet-AddEvent', {'message': req.user.displayName+' Commented on ' + data.name});
+					pusherService.pusherGenerate('Channel-Public', 'Commnet-AddEvent', {'message': req.user.displayName+' commented on your Post ' + data.name,'userData':req.user,'data': data});
 					res.jsonp(companyfeeds);
 				}
 			});
@@ -152,7 +154,7 @@ exports.addLikers = function(req, res){
 						message: errorHandler.getErrorMessage(err)
 					});
 				} else {
-					pusherService.pusherGenerate('Channel-Public', 'Post-LikeEvent', {'message': req.user.displayName+' commented on your Post ' + data.name,'userData':req.user,'data': data});
+					pusherService.pusherGenerate('Channel-Public', 'Post-LikeEvent', {'message': req.user.displayName+' like your post ' + data.name,'userData':req.user,'data': data});
 					res.jsonp(companyfeeds);
 				}
 			});

@@ -10,6 +10,11 @@ angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '
 		$scope.imgPath = 'https://s3.amazonaws.com/sumacrm/avatars/' + Authentication.user._id;
 		$scope.imgPathOwn = 'https://s3.amazonaws.com/sumacrm/avatars/';
 
+		PusherService.listen('Channel-Public','Post-AddEvent', function(err, data) {
+			//toastr.success(data.message);
+			$scope.init();
+		});
+
 		PusherService.listen('Channel-Public','Commnet-AddEvent', function(err, data) {
 			//toastr.success(data.message);
 			$scope.init();
