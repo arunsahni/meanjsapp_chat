@@ -61,8 +61,8 @@ angular.module('core').controller('HeaderController', ['$scope', '$rootScope', '
 		PusherService.listen('Pusher-channel','Pusher-event', function(err, data) {
 			toastr.success(data.message);
 		});
-		$scope.Redirect = function() {
-			$location.path('companyfeeds/create');
+		$scope.Redirect = function(feedid) {
+			$location.path('companyfeeds/'+feedid);
 		};
 	}
 ]);

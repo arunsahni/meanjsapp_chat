@@ -53,10 +53,10 @@
 						<div style="color: #888;  border-bottom: 2px solid #cccccc; text-align: center;">
 							<div class="text-primary">Notifications</div>
 						</div>
-						<div ng-click="Redirect()" ng-repeat="bellNotification in bellNotifications" class="panel panel-default row" style="margin-bottom :1px; margin-top :3px; margin-left: 0px;margin-right: 0px; border-color: rgb(76, 142, 244); border-top: 1px solid #efefef;">
-							<img ng-hide="bellNotification.userData" ng-src="../imgs/default-avatar.jpg"  height="20" width="30" class="img-thumbnail col-md-2 col-xs-2" style="margin-top: 5px; margin-bottom: 5px">
-							<img ng-show="bellNotification.userData" ng-src="{{'https://s3.amazonaws.com/sumacrm/avatars/'+bellNotification.userData._id}}" style="margin-top: 5px; margin-bottom: 5px" class="col-md-2 col-xs-2" height="30" width="40">
-							<span class="col-md-10 col-xs-10" data-ng-bind="bellNotification.message"></span>
+						<div  ng-repeat="bellNotification in bellNotifications" class="panel panel-default row" style="margin-bottom :1px; margin-top :3px; margin-left: 0px;margin-right: 0px; border-color: rgb(76, 142, 244); border-top: 1px solid #efefef;">
+							<img ng-hide="bellNotification.userData.isImage" ng-src="../imgs/default-avatar.jpg"  height="20" width="30" class="img-thumbnail col-md-2 col-xs-2" style="margin-top: 5px; margin-bottom: 5px">
+							<img ng-show="bellNotification.userData.isImage" ng-src="{{'https://s3.amazonaws.com/sumacrm/avatars/'+bellNotification.userData._id}}" style="margin-top: 5px; margin-bottom: 5px" class="col-md-2 col-xs-2" height="30" width="40">
+							<span class="col-md-10 col-xs-10" data-ng-bind="bellNotification.message" ng-click="Redirect(bellNotification.data._id)"></span>
 						</div>
 					</div>
 				</li>
