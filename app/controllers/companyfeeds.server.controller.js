@@ -6,6 +6,7 @@
 var mongoose = require('mongoose'),
 	errorHandler = require('./errors.server.controller'),
 	Companyfeed = mongoose.model('Companyfeed'),
+	User = mongoose.model('User'),
 	_ = require('lodash');
 var pusherService = require('../core/pusher');
 
@@ -16,7 +17,6 @@ exports.create = function(req, res) {
 	var companyfeed = new Companyfeed(req.body);
 	companyfeed.user = req.user;
 	companyfeed.group = req.user.group;
-
 	companyfeed.save(function(err) {
 		if (err) {
 			return res.status(400).send({
@@ -24,12 +24,26 @@ exports.create = function(req, res) {
 			});
 		} else {
 			Companyfeed.find({group: req.user.group}).sort('-created').populate('user likers comment.commentLiker comment.commenteduser').exec(function(err, companyfeeds) {
-
 				if (err) {
 					return res.status(400).send({
 						message: errorHandler.getErrorMessage(err)
 					});
 				} else {
+					var BellNotification = {
+						userData: req.user,
+						message: req.user.displayName+' add new post on ' + companyfeed.name,
+						notificationtype: 'Post',
+						companyfeedId : req.body.compnayfeedId
+					};
+					User.findOneAndUpdate({group: req.user.group},{$push : {bellnotification: BellNotification}}, {multi: true}).exec(function(err, data){
+						if(err) {
+							return res.status(500).json({
+								error: 'Cannot add the bid'
+							});
+						}else{
+							console.log('Here in Like');
+						}
+					});
 					pusherService.pusherGenerate('Channel-Public', 'Post-AddEvent', {'message': req.user.displayName+' add new post on ' + companyfeed.name,'userData':req.user,'data': companyfeed});
 					res.jsonp(companyfeeds);
 				}
@@ -120,13 +134,28 @@ exports.hasAuthorization = function(req, res, next) {
 };
 
 exports.addComment = function(req,res){
-	console.log(req.body.comment);
 	Companyfeed.findOneAndUpdate({_id: mongoose.Types.ObjectId(req.body.compnayfeedId)},{$push:{ comment : req.body.comment}}).populate('user likers comment.commentLiker comment.commenteduser').exec(function(err,data) {
 		if (err) {
 			return res.status(500).json({
 				error: 'Cannot add the bid'
 			});
 		} else {
+			var BellNotification = {
+				userData: req.user,
+				message: req.user.displayName+' commented on Post ' + data.name,
+				notificationtype: 'Comment',
+				companyfeedId : req.body.compnayfeedId
+			};
+			User.findOneAndUpdate({group: req.user.group},{$push : {bellnotification: BellNotification}}, {multi: true}).exec(function(err, data){
+				if(err) {
+					return res.status(500).json({
+						error: 'Cannot add the bid'
+					});
+				}else{
+					console.log('Here in Like');
+					//pusherService.pusherGenerate('Channel-Public', 'Post-LikeEvent', {'message': req.user.displayName+' like post ' + data.name,'userData':req.user,'data': data});
+				}
+			});
 			Companyfeed.find().sort('-created').populate('user likers comment.commentLiker comment.commenteduser').exec(function(err, companyfeeds) {
 				if (err) {
 					return res.status(400).send({
@@ -142,12 +171,29 @@ exports.addComment = function(req,res){
 };
 
 exports.addLikers = function(req, res){
+
 	Companyfeed.findOneAndUpdate({_id: mongoose.Types.ObjectId(req.body.compnayfeedId)}, {$push : {likers: req.user}}).populate('user likers comment.commentLiker comment.commenteduser').exec(function(err,data) {
 		if (err) {
 			return res.status(500).json({
 				error: 'Cannot add the bid'
 			});
 		} else {
+			var BellNotification = {
+				userData: req.user,
+				message: req.user.displayName+' like post ' + data.name,
+				notificationtype: 'like',
+				companyfeedId : req.body.compnayfeedId
+			};
+			User.findOneAndUpdate({group: req.user.group},{$push : {bellnotification: BellNotification}}, {multi: true}).exec(function(err, data){
+				if(err) {
+					return res.status(500).json({
+						error: 'Cannot add the bid'
+					});
+				}else{
+					console.log('Here in comment');
+
+				}
+			});
 			Companyfeed.find().sort('-created').populate('user likers comment.commentLiker comment.commenteduser').exec(function(err, companyfeeds) {
 				if (err) {
 					return res.status(400).send({
@@ -190,6 +236,22 @@ exports.addCommentLike = function(req, res) {
 				error: 'Cannot add the bid'
 			});
 		} else {
+			var BellNotification = {
+				userData: req.user,
+				message: req.user.displayName +' Liked comment ' + req.body.comment,
+				notificationtype: 'CommentLike',
+				companyfeedId : req.body.compnayfeedId
+			};
+			User.findOneAndUpdate({group: req.user.group},{$push : {bellnotification: BellNotification}}, {multi: true}).exec(function(err, data){
+				if(err) {
+					return res.status(500).json({
+						error: 'Cannot add the bid'
+					});
+				}else{
+					console.log('Here in commentLike');
+					//pusherService.pusherGenerate('Channel-Public', 'Post-LikeEvent', {'message': req.user.displayName+' like post ' + data.name,'userData':req.user,'data': data});
+				}
+			});
 			Companyfeed.find().sort('-created').populate('user likers comment.commentLiker comment.commenteduser').exec(function(err, companyfeeds) {
 				if (err) {
 					return res.status(400).send({

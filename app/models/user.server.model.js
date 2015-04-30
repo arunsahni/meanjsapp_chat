@@ -101,7 +101,14 @@ var UserSchema = new Schema({
 	disbledfeatures: {
 		type: Array,
 		default: []
-	}
+	},
+	bellnotification:[{
+		userData: {	type: Schema.ObjectId, ref: 'User'},
+		message: { type: String },
+		notificationtype: { type: String},
+		companyfeedId : { type: Schema.ObjectId, ref: 'Companyfeed'},
+		isSeen : { type: Boolean, defalt:false }
+	}]
 });
 
 /**
