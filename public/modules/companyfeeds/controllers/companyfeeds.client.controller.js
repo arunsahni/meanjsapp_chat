@@ -195,7 +195,7 @@ angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '
 			});
 		};
 
-		PusherService.listen('Channel-Public','Post-AddEven', function(err, data) {
+		PusherService.listen('Channel-Public','Post-AddEvent', function(err, data) {
 			toastr.success(data.message);
 			$scope.companyfeeds.splice(0,0,data.data);
 		});
