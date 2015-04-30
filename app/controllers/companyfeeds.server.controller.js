@@ -17,7 +17,7 @@ exports.create = function(req, res) {
 	var companyfeed = new Companyfeed(req.body);
 	companyfeed.user = req.user;
 	companyfeed.group = req.user.group;
-	companyfeed.save(function(err) {
+	companyfeed.save(function(err,data) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
@@ -33,7 +33,8 @@ exports.create = function(req, res) {
 						userData: req.user,
 						message: req.user.displayName+' add new post on ' + companyfeed.name,
 						notificationtype: 'Post',
-						companyfeedId : req.body.compnayfeedId
+						isSeen: false,
+						companyfeedId : data._id
 					};
 					User.findOneAndUpdate({group: req.user.group},{$push : {bellnotification: BellNotification}}, {multi: true}).exec(function(err, data){
 						if(err) {
@@ -144,6 +145,7 @@ exports.addComment = function(req,res){
 				userData: req.user,
 				message: req.user.displayName+' commented on Post ' + data.name,
 				notificationtype: 'Comment',
+				isSeen: false,
 				companyfeedId : req.body.compnayfeedId
 			};
 			User.findOneAndUpdate({group: req.user.group},{$push : {bellnotification: BellNotification}}, {multi: true}).exec(function(err, data){
@@ -182,6 +184,7 @@ exports.addLikers = function(req, res){
 				userData: req.user,
 				message: req.user.displayName+' like post ' + data.name,
 				notificationtype: 'like',
+				isSeen: false,
 				companyfeedId : req.body.compnayfeedId
 			};
 			User.findOneAndUpdate({group: req.user.group},{$push : {bellnotification: BellNotification}}, {multi: true}).exec(function(err, data){
@@ -240,6 +243,7 @@ exports.addCommentLike = function(req, res) {
 				userData: req.user,
 				message: req.user.displayName +' Liked comment ' + req.body.comment,
 				notificationtype: 'CommentLike',
+				isSeen: false,
 				companyfeedId : req.body.compnayfeedId
 			};
 			User.findOneAndUpdate({group: req.user.group},{$push : {bellnotification: BellNotification}}, {multi: true}).exec(function(err, data){
