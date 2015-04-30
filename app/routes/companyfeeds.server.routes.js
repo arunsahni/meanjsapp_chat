@@ -23,7 +23,7 @@ module.exports = function(app) {
 		companyfeeds.list(req, res);
 	});
 	app.get('/companyfeeds/:id', function(req, res) {
-		companyfeeds.articleByID(req, res);
+		companyfeeds.companyfeedByID(req, res);
 	});
 	app.post('/companyfeeds/update', function(req, res) {
 		companyfeeds.update(req, res);

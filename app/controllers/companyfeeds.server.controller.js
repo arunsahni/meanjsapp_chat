@@ -45,7 +45,9 @@ exports.create = function(req, res) {
 							console.log('Here in Like');
 						}
 					});
-					pusherService.pusherGenerate('Channel-Public', 'Post-AddEvent', {'message': req.user.displayName+' add new post on ' + companyfeed.name,'userData':req.user,'data': companyfeed});
+					companyfeed.populate('user likers comment.commentLiker comment.commenteduser',function(err, data){
+						pusherService.pusherGenerate('Channel-Public', 'Post-AddEvent', {'message': req.user.displayName+' add new post on ' + companyfeed.name,'userData':req.user,'data': data});
+					});
 					res.jsonp(companyfeeds);
 				}
 			});
@@ -115,12 +117,19 @@ exports.list = function(req, res) {
 /**
  * Companyfeed middleware
  */
-exports.companyfeedByID = function(req, res, next, id) { 
-	Companyfeed.findById(id).populate('user likers comment.commentLiker comment.commenteduser').exec(function(err, companyfeed) {
+exports.companyfeedByID = function(req, res, next) {
+	console.log(req.params.id);
+	Companyfeed.findById(req.params.id).populate('user likers comment.commentLiker comment.commenteduser').exec(function(err, companyfeed) {
 		if (err) return next(err);
-		if (! companyfeed) return next(new Error('Failed to load Companyfeed ' + id));
-		req.companyfeed = companyfeed ;
-		next();
+		if (!companyfeed) {
+			return res.status(404).send({
+				message: 'Companydeed not found'
+			});
+		}
+		console.log(companyfeed);
+		res.json(companyfeed);
+
+
 	});
 };
 
@@ -164,7 +173,7 @@ exports.addComment = function(req,res){
 						message: errorHandler.getErrorMessage(err)
 					});
 				} else {
-					pusherService.pusherGenerate('Channel-Public', 'Commnet-AddEvent', {'message': req.user.displayName+' commented on Post ' + data.name,'userData':req.user,'data': data});
+					pusherService.pusherGenerate('Channel-Public', 'Commnet-AddEvent', {'message': req.user.displayName+' commented on Post ' + data.name,'userData':req.user._id,'data': {_id: data._id , comment: data.comment } });
 					res.jsonp(companyfeeds);
 				}
 			});
@@ -203,7 +212,7 @@ exports.addLikers = function(req, res){
 						message: errorHandler.getErrorMessage(err)
 					});
 				} else {
-					pusherService.pusherGenerate('Channel-Public', 'Post-LikeEvent', {'message': req.user.displayName+' like post ' + data.name,'userData':req.user,'data': data});
+					pusherService.pusherGenerate('Channel-Public', 'Post-LikeEvent', {'message': req.user.displayName+' like post ' + data.name,'userData':req.user,'data': {_id: data._id , likers: data.likers }});
 					res.jsonp(companyfeeds);
 				}
 			});
@@ -224,7 +233,7 @@ exports.removeLiker = function(req, res){
                         message: errorHandler.getErrorMessage(err)
                     });
                 } else {
-					pusherService.pusherGenerate('Channel-Public', 'Post-UnLikeEvent', {'message': req.user.displayName+' unliked post ' + data.name,'userData':req.user,'data': data});
+					pusherService.pusherGenerate('Channel-Public', 'Post-UnLikeEvent', {'message': req.user.displayName+' unliked post ' + data.name,'userData':req.user,'data': {_id: data._id , likers: data.likers }});
                     res.jsonp(companyfeeds);
                 }
             });
@@ -262,7 +271,7 @@ exports.addCommentLike = function(req, res) {
 						message: errorHandler.getErrorMessage(err)
 					});
 				} else {
-					pusherService.pusherGenerate('Channel-Public', 'Commnet-LikeEvent', { message: req.user.displayName +' Liked comment ' + req.body.comment,'userData':req.user,'data': data});
+					pusherService.pusherGenerate('Channel-Public', 'Commnet-LikeEvent', { message: req.user.displayName +' Liked comment ' + req.body.comment,'userData':req.user,'data': {_id: data._id , comment: data.comment }});
 					res.jsonp(companyfeeds);
 				}
 			});
@@ -283,7 +292,7 @@ exports.removeCommentLike = function(req, res) {
 						message: errorHandler.getErrorMessage(err)
 					});
 				} else {
-					pusherService.pusherGenerate('Channel-Public', 'Commnet-UnLikeEvent',{message : req.user.displayName+ 'Unliked Comment ' + req.body.comment,'userData':req.user,'data': data});
+					pusherService.pusherGenerate('Channel-Public', 'Commnet-UnLikeEvent',{message : req.user.displayName+ 'Unliked Comment ' + req.body.comment,'userData':req.user,'data': {_id: data._id , comment: data.comment }});
 					res.jsonp(companyfeeds);
 				}
 			});
