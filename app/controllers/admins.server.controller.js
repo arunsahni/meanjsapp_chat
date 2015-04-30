@@ -75,7 +75,7 @@ exports.delete = function(req, res) {
  */
 
 exports.users = function(req, res) {
-	User.find({group: req.user.group}).sort('-created').populate('user', 'displayName').exec(function(err, admins) {
+	User.find({$and: [ {group: req.user.group},{ roles: { $in: [ 'admin', 'user' ] } } ]}).sort('-created').populate('user', 'displayName').exec(function(err, admins) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)

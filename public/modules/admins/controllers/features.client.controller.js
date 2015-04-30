@@ -7,7 +7,7 @@
 angular.module('admins').controller('FeaturesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Admins', 'Menus',
     function($scope, $stateParams, $location, Authentication, Admins, Menus) {
 
-
+        $scope.featuresList = [];
         $scope.featureFlags = [
             {
                 title: 'admin.adm',
@@ -45,17 +45,17 @@ angular.module('admins').controller('FeaturesController', ['$scope', '$statePara
                 type: 'S'
             },
             {
-                title: 'Supar Admin',
+                title: 'grp.sadm',
                 isEnable: true,
                 type: 'M'
             },
             {
-                title: 'List Groups',
+                title: 'grp.lgrp',
                 isEnable: true,
                 type: 'S'
             },
             {
-                title: 'New Group',
+                title: 'grp.ngp',
                 isEnable: true,
                 type: 'S'
             }
@@ -66,8 +66,21 @@ angular.module('admins').controller('FeaturesController', ['$scope', '$statePara
         $scope.isActive = true;
         $scope.showFeature = false;
 
-        $scope.featuresList = [];
+
         $scope.disbledfeatures = [];
+
+        //var checkrole = function() {
+        //    angular.forEach($scope.featureFlags, function(item){
+        //       if(item.role === 'superadmin'){
+        //           $scope.featuresList = $scope.featureFlags;
+        //       } else {
+        //           $scope.featuresList.push(item);
+        //       }
+        //    });
+        //    console.log("Actual",$scope.featuresList);
+        //}();
+        //
+
 
         // Intialize directive
         $scope.autoCompleteData = {

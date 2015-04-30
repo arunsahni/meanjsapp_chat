@@ -2,23 +2,19 @@
     <br>
     <h1 translate="user"></h1>
     <div class="list-group">
-        <a data-ng-repeat="users in userList" class="list-group-item">
+        <a data-ng-repeat="users in userList | offset: (currentPage-1)*itemsPerPage | limitTo: itemsPerPage " class="list-group-item">
             <div class="container row">
                 <div  class="col-xs-3 col-md-1 text-center article-left-pull">
                     <img ng-show="!users.isImage" class="img-rounded center-block table-bordered" ng-src="../imgs/default-avatar.jpg" height="55" width="55">
                     <img ng-show="users.isImage" class="img-rounded center-block table-bordered" ng-src="https://s3.amazonaws.com/sumacrm/avatars/{{users._id}}" height="55" width="55">
                 </div>
 
-                <div class="col-xs-6 col-md-6 article-left-pull">
+                <div class="col-xs-4 col-md-6 article-left-pull">
                     <small class="col-xs-12 col-md-12 list-group-item-text">
                         <div class="text-color" data-ng-bind="users.displayName"></div>
                     </small>
-                    <div class="col-xs-12 col-md-12">
-                        <p class="list-group-item-text text-justify" data-ng-bind="users.email"></p>
-                    </div>
-
                 </div>
-                <div class="col-xs-3 col-md-3 btn-group btn-toggle">
+                <div class="col-xs-5 col-md-3 btn-group btn-toggle">
                     <div ng-if="users.roles[0] === 'user'">
                     <div class="btn-group btn-toggle">
                         <button ng-class="{false: 'btn btn-sm btn-default', true: 'btn btn-sm btn-primary active'}[isActive]" ng-model="users.roles"  ng-click="roleChange(users.roles,$index,users._id)" translate="user"></button>
@@ -35,4 +31,6 @@
             </div>
         </a>
     </div>
+    <pagination boundary-links="true" total-items="totalItems" ng-model="currentPage" num-pages="numofPages" max-size="maxSize" items-per-page ="itemsPerPage" data-ng-hide="totalItems <= 10"></pagination>
+
 </section>
