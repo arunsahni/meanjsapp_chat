@@ -4,8 +4,8 @@
 angular.module('tasks').run(['Menus',
 	function(Menus) {
 		// Set top bar menu items
-		Menus.addMenuItem('topbar', 'Tasks', 'tasks', '/tasks');
-		//Menus.addSubMenuItem('topbar', 'tasks', 'List Tasks', 'tasks');
-		//Menus.addSubMenuItem('topbar', 'tasks', 'New Task', 'tasks/create');
+		Menus.addMenuItem('topbar', 'task.tsk', 'tasks', 'dropdown', '/tasks');
+		Menus.addSubMenuItem('topbar', 'tasks', 'task.tsk', 'tasks/assign/me');
+		Menus.addSubMenuItem('topbar', 'tasks', 'task.issu', 'issues');
 	}
 ]);
