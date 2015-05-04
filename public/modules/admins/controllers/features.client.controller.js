@@ -7,7 +7,14 @@
 angular.module('admins').controller('FeaturesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Admins', 'Menus',
     function($scope, $stateParams, $location, Authentication, Admins, Menus) {
 
-        $scope.featuresList = [];
+        $scope.authentication = Authentication;
+        $scope.isActive = true;
+        $scope.showFeature = false;
+
+        $scope.disbledfeatures = [];
+        $scope.featureList = [];
+
+        $scope.NotAccessblefeatures = ['grp.sadm','grp.lgrp','grp.ngp'];
         $scope.featureFlags = [
             {
                 title: 'admin.adm',
@@ -61,26 +68,17 @@ angular.module('admins').controller('FeaturesController', ['$scope', '$statePara
             }
         ];
 
-
-        $scope.authentication = Authentication;
-        $scope.isActive = true;
-        $scope.showFeature = false;
-
-
-        $scope.disbledfeatures = [];
-
-        //var checkrole = function() {
-        //    angular.forEach($scope.featureFlags, function(item){
-        //       if(item.role === 'superadmin'){
-        //           $scope.featuresList = $scope.featureFlags;
-        //       } else {
-        //           $scope.featuresList.push(item);
-        //       }
-        //    });
-        //    console.log("Actual",$scope.featuresList);
-        //}();
-        //
-
+        var checkAccess = function() {
+            if(Authentication.user.roles[0] !== 'superadmin') {
+                angular.forEach($scope.featureFlags, function(item){
+                    if($scope.NotAccessblefeatures.indexOf(item.title) === -1) {
+                        $scope.featureList.push(item);
+                    }
+                });
+            } else {
+                $scope.featureList = $scope.featureFlags;
+            }
+        };
 
         // Intialize directive
         $scope.autoCompleteData = {
@@ -104,6 +102,7 @@ angular.module('admins').controller('FeaturesController', ['$scope', '$statePara
             if ($scope.data && $scope.data.tags.length) {
                 $scope.showFeature = true;
                 getFeatureFlags($scope.data.tags[0].disbledfeatures);
+                checkAccess();
             } else {
                 $scope.showFeature = false;
             }
