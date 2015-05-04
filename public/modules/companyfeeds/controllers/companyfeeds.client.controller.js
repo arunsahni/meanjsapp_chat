@@ -67,7 +67,7 @@ angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '
 		};
 
 		// Find existing Companyfeed
-		$scope.findOne = function () {
+		$scope.initOne = function () {
 			Companyfeeds.getcompanyfeedById({
 				companyfeedId: $stateParams.companyfeedId
 			}).success(function (companyfeed) {
@@ -84,6 +84,7 @@ angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '
 				}
 			}).success(function (companyfeeds) {
 				$scope.companyfeeds = companyfeeds;
+				$scope.initOne();
 			});
 		};
         $scope.isLiked = function (likers) {
