@@ -126,10 +126,7 @@ exports.companyfeedByID = function(req, res, next) {
 				message: 'Companydeed not found'
 			});
 		}
-		console.log(companyfeed);
 		res.json(companyfeed);
-
-
 	});
 };
 

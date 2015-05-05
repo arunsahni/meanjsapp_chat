@@ -9,6 +9,7 @@ angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '
 		$scope.imgPath = Authentication.user._id + '.png';
 		$scope.imgPath = 'https://s3.amazonaws.com/sumacrm/avatars/' + Authentication.user._id;
 		$scope.imgPathOwn = 'https://s3.amazonaws.com/sumacrm/avatars/';
+		$scope.companyfeeds = [];
 
 		function getIndexOf(arr, val, prop) {
 			var l = arr.length,
@@ -71,7 +72,7 @@ angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '
 			Companyfeeds.getcompanyfeedById({
 				companyfeedId: $stateParams.companyfeedId
 			}).success(function (companyfeed) {
-				$scope.companyfeed = companyfeed;
+				$scope.companyfeeds.push(companyfeed);
 			});
 		};
 
