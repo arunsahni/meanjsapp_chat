@@ -7,8 +7,11 @@
 			<span class="icon-bar"></span>
 			<span class="icon-bar"></span>
 		</button>
-		<a href="/#!/companyfeeds/create" class="navbar-brand">
+		<a ng-hide="authentication.user.group.isImage" href="/#!/companyfeeds/create" class="navbar-brand">
 			<img ng-src="../imgs/SumaLogo.png"/>
+		</a>
+		<a ng-show="authentication.user.group.isImage" href="/#!/companyfeeds/create" class="navbar-groupImg">
+			<img ng-src="{{groupImage}}"/>
 		</a>
 		<!--<a href="/#!/userlist" class="navbar-brand" ng-show="showUser">UserList</a>-->
 	</div>
