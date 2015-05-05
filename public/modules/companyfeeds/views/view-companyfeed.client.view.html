@@ -26,7 +26,7 @@
 			<div class="row">
 				<div class = "col-md-11 col-xs-10">
 					<button ng-class="isLiked(0) ? 'btn-primary glyphicon glyphicon-thumbs-up' : 'glyphicon glyphicon-thumbs-up'"
-							ng-click="addLiker($index)"
+							ng-click="addLiker(0)"
 							ng-disabled = "myFlag">
 					</button>
 					<a ng-if="companyfeeds[0].likers.length > 0"
