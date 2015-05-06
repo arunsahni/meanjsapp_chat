@@ -40,7 +40,7 @@
 			</div>
 			<br>
 			<div class="row">
-				<div ng-repeat="comment in companyfeeds[0].comment " class="col-md-11 col-xs-10">
+				<div ng-repeat="comment in companyfeeds[0].comment | limitTo: paginationLimit(0)" class="col-md-11 col-xs-10">
 					<div class="row">
 						<div class="col-md-1 col-xs-2">
 							<img ng-hide="comment.commenteduser.isImage" ng-src="../imgs/default-avatar.jpg"  height="30" width="30" class="img-thumbnail">
