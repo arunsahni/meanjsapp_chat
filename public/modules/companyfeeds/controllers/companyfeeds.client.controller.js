@@ -85,6 +85,7 @@ angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '
 				}
 			}).success(function (companyfeeds) {
 				$scope.companyfeeds = companyfeeds;
+				delete $scope.comment;
 				$scope.initOne();
 			});
 		};
