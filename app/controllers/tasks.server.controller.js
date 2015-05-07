@@ -144,18 +144,15 @@ exports.hasAuthorization = function(req, res, next) {
 */
 
 exports.updateAssigneesList = function(req, res) {
-	console.log(req.params.assigneeId);
 	Task.findOneAndUpdate({_id: mongoose.Types.ObjectId(req.params.taskId)}, {$pull : { 'assignees' : mongoose.Types.ObjectId(req.params.assigneeId)}}).populate('createdBy assignees').exec(function (err, Task) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		}
-		else
-			/*Task.findById(req.params.taskId).populate('createdBy assignees').exec(function(err, task) {
-				res.json(task);
-			});*/
+		else {
 			res.json(Task);
+		}
 
 	});
 };
