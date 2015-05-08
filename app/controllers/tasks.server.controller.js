@@ -118,7 +118,7 @@ exports.taskByUserId = function(req, res, next, id) {
             message: 'User is invalid'
         });
     }
-    Task.find({createdBy: req.user.id ,group: req.user.group}).sort('-createdDate').populate('createdBy assignees').exec(function(err, tasks) {
+    Task.find({assignees: {$in:[req.user.id]} ,group: req.user.group}).sort('-createdDate').populate('createdBy assignees').exec(function(err, tasks) {
         if (err) {
             return res.status(400).send({
                 message: errorHandler.getErrorMessage(err)
