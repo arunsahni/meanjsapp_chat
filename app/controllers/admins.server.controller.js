@@ -74,7 +74,7 @@ exports.delete = function(req, res) {
  * List of all Admins
  */
 
-exports.users = function(req, res) {
+exports.userCount = function(req, res) {
 	User.find({$and: [ {group: req.user.group},{ roles: { $in: [ 'admin', 'user' ] } } ]}).count().exec(function(err, count) {
 		if (err) {
 			return res.status(400).send({
