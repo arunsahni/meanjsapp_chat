@@ -33,4 +33,12 @@ module.exports = function(app) {
 	app.get('/pusher',function(req,res){
 		articles.generatePusher(req,res);
 	});
+
+	app.post('/article/paypalcreate', function(req, res) {
+		articles.PayPalcreate(req, res);
+	});
+	
+	app.post('/article/excutePayment', function(req, res) {
+		articles.execute(req, res);
+	});
 };

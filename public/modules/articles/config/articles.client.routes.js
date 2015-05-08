@@ -20,6 +20,18 @@ angular.module('articles').config(['$stateProvider',
 		state('editArticle', {
 			url: '/articles/:articleId/edit',
 			templateUrl: 'modules/articles/views/edit-article.client.view.html'
+		}).
+		state('NewPayment', {
+			url: '/articles/views/newpayment/:redirectUrl',
+			templateUrl: 'modules/articles/views/newpayment.client.view.html'
+		}).
+		state('PayPalCreate', {
+			url: '/articles/views/paypalcreate',
+			templateUrl: 'modules/articles/views/paypal.client.view.html'
+		}).
+		state('PayPalexcute', {
+			url: '/paypalexcute',
+			templateUrl: 'modules/articles/views/excutepaypal.client.view.html'
 		});
 	}
 ]);
