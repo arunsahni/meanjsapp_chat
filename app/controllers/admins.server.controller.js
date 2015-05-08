@@ -75,13 +75,13 @@ exports.delete = function(req, res) {
  */
 
 exports.users = function(req, res) {
-	User.find({$and: [ {group: req.user.group},{ roles: { $in: [ 'admin', 'user' ] } } ]}).sort('-created').populate('user', 'displayName').exec(function(err, admins) {
+	User.find({$and: [ {group: req.user.group},{ roles: { $in: [ 'admin', 'user' ] } } ]}).count().exec(function(err, count) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.jsonp(admins);
+			res.jsonp(count);
 		}
 	});
 };

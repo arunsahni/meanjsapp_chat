@@ -2,7 +2,7 @@
     <br>
     <h1 translate="user"></h1>
     <div class="list-group">
-        <a data-ng-repeat="users in userList | offset: (currentPage-1)*itemsPerPage | limitTo: itemsPerPage " class="list-group-item">
+        <a data-ng-repeat="users in userList" class="list-group-item">
             <div class="container row">
                 <div  class="col-xs-2 col-md-1" style="margin-left: -25px;">
                     <img ng-show="!users.isImage" class="img-rounded center-block table-bordered" ng-src="../imgs/default-avatar.jpg" height="55" width="55">
@@ -31,5 +31,5 @@
             </div>
         </a>
     </div>
-    <pagination boundary-links="true" total-items="totalItems" ng-model="currentPage" num-pages="numofPages" max-size="maxSize" items-per-page ="itemsPerPage" data-ng-hide="totalItems <= 10"></pagination>
+    <pagination boundary-links="true" total-items="totalItems" ng-model="currentPage" num-pages="numofPages" max-size="maxSize" items-per-page ="itemsPerPage" data-ng-hide="totalItems < 10"></pagination>
 </section>
