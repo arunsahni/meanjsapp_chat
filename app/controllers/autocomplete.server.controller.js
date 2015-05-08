@@ -10,6 +10,8 @@ exports.customQuery = function(req, res) {
         MatchField =  req.body.MatchField,
         aggregateField = {},
         projection = {},
+        skip = req.body.skip || 0,
+        take = req.body.take || 10,
         i, len;
 
         aggregateField[MatchField] = {$regex: req.body.SearchText, $options: 'i'};
@@ -20,7 +22,9 @@ exports.customQuery = function(req, res) {
         EntityName.aggregate([
             {$match: aggregateField},
             {$match: {group: req.user.group}},
-            {$project: projection}
+            {$project: projection},
+            {$skip : skip },
+            {$limit : take },
         ],function (err, articles) {
                 if (err) {
                     return res.status(400).send({
