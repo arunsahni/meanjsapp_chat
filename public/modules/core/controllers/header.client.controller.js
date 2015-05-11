@@ -11,6 +11,16 @@ angular.module('core').controller('HeaderController', ['$scope', '$rootScope', '
 				$rootScope.menu = Menus.getMenu('topbar');
 			}
 		};
+		function getIndexOf(arr, val, prop) {
+			var l = arr.length,
+				k = 0;
+			for (k = 0; k < l; k = k + 1) {
+				if (arr[k][prop] === val) {
+					return k;
+				}
+			}
+			return false;
+		}
 		$scope.bellNotifications = [];
 		PusherService.listen('Channel-Public','Commnet-AddEvent', function(err, data) {
 			$scope.bellNotifications.push(data);
@@ -62,6 +72,8 @@ angular.module('core').controller('HeaderController', ['$scope', '$rootScope', '
 			toastr.success(data.message);
 		});
 		$scope.Redirect = function(feedid) {
+			var index = getIndexOf($scope.bellNotifications, feedid, '_id');
+			$scope.bellNotifications.splice(index, 1);
 			$location.path('companyfeeds/'+feedid);
 		};
 	}
