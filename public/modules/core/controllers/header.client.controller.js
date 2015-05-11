@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('core').controller('HeaderController', ['$scope', '$rootScope', 'Authentication', 'Menus','toastr', 'PusherService','$translate','$location','$stateParams',
-	function($scope, $rootScope, Authentication, Menus, toastr, PusherService, $translate, $location, $stateParams) {
+angular.module('core').controller('HeaderController', ['$scope', '$rootScope', 'Authentication', 'Menus','toastr', 'PusherService','$translate','$location','$stateParams','$http',
+	function($scope, $rootScope, Authentication, Menus, toastr, PusherService, $translate, $location, $stateParams, $http) {
 
 		$scope.authentication = Authentication;
 
@@ -22,6 +22,15 @@ angular.module('core').controller('HeaderController', ['$scope', '$rootScope', '
 			return false;
 		}
 		$scope.bellNotifications = [];
+		if (Authentication.user) {
+			for(var i = 0,len = Authentication.user.bellnotification.length;i < len ;i++) {
+				if(Authentication.user.bellnotification[i].isSeen === false ){
+					$scope.bellNotifications.push(Authentication.user.bellnotification[i]);
+				}
+			}
+		}
+
+
 		PusherService.listen('Channel-Public','Commnet-AddEvent', function(err, data) {
 			$scope.bellNotifications.push(data);
 		});
@@ -71,10 +80,13 @@ angular.module('core').controller('HeaderController', ['$scope', '$rootScope', '
 		PusherService.listen('Pusher-channel','Pusher-event', function(err, data) {
 			toastr.success(data.message);
 		});
-		$scope.Redirect = function(feedid) {
-			var index = getIndexOf($scope.bellNotifications, feedid, '_id');
+
+		$scope.Redirect = function(bellnotificationid, feedid) {
+			var index = getIndexOf($scope.bellNotifications, bellnotificationid, '_id');
 			$scope.bellNotifications.splice(index, 1);
-			$location.path('companyfeeds/'+feedid);
+			$http.put('/users/updatebellnotification', {feedId: bellnotificationid}).success(function(response) {
+				$location.path('companyfeeds/'+feedid);
+			});
 		};
 	}
 ]);
