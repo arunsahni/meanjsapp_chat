@@ -1,9 +1,14 @@
 'use strict';
 
 // Articles controller
-angular.module('articles').controller('ArticlesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Articles','toastr', '$modal',
-	function($scope, $stateParams, $location, Authentication, Articles, toastr, $modal) {
+angular.module('articles').controller('ArticlesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Articles','toastr', '$modal','$rootScope',
+	function($scope, $stateParams, $location, Authentication, Articles, toastr, $modal, $rootScope) {
 		$scope.authentication = Authentication;
+
+		if($stateParams && $stateParams.redirectUrl) {
+			$scope.redirectUrl = $stateParams.redirectUrl;
+		}
+
 		var modalInstance;
 		$scope.toasterCheckSuc = function() {
 			toastr.success('Message with Title', 'Successfully');
@@ -81,12 +86,16 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
 				$scope.article = article;
 			});
 		};
+
+		//Test Pusher
 		$scope.GeneratPusher = function(){
 			//window.alert("Generating pusher");
 			Articles.generatePusher().success(function(){
 				console.log('Pusher Generated');
 			});
 		};
+
+		// test window modal
 		$scope.open = function(){
 			modalInstance = $modal.open({
 				templateUrl: 'modules/articles/views/edit-article.client.view.html',
@@ -100,6 +109,40 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
 			modalInstance.result.then(function () {
 			}, function () {
 				//console.log('Modal dismissed at: ' + new Date());
+			});
+		};
+
+		// Implement PayPal
+		$scope.PayPal = function(){
+			$location.path('/articles/views/paypalcreate');
+		};
+
+		$scope.paypalcreate = function(){
+			Articles.paypalCreate({
+				method: 'paypal',
+				amount: this.amount,
+				currency: this.currency
+			}).success(function(payment){
+				$rootScope.payment = payment;
+				$scope.redirectUrl = '';
+				if(payment.payer.payment_method === 'paypal') {
+					for(var i=0; i < payment.links.length; i++) {
+						var link = payment.links[i];
+						if (link.method === 'REDIRECT') {
+							$scope.redirectUrl = link.href;
+						}
+					}
+				}
+				$scope.redirectUrl = $scope.redirectUrl.split('?');
+				$location.path('/articles/views/newpayment/' + $scope.redirectUrl[1]);
+			});
+		};
+
+		$scope.excutePayment = function(){
+			Articles.excutePayment({
+				PayerID: $location.search().PayerID
+			}).success(function(payment){
+				$scope.paymentDetail = payment;
 			});
 		};
 	}

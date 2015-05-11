@@ -1,0 +1,31 @@
+<section data-ng-controller="ArticlesController">
+    <div class="page-header">
+        <div class="title">PayPal REST API</div>
+    </div>
+    <div class="col-md-12">
+        <form name="paypalForm" class="form-horizontal" novalidate>
+            <fieldset>
+                <input name="method" type="hidden" data-ng-model="paypal" id="method" class="form-control">
+                <div class="form-group" ng-class="{ 'has-error': paypalForm.title.$dirty && paypalForm.title.$invalid }">
+                    <label class="control-label text-primary" for="amount" >Amount</label>
+                    <div class="controls">
+                        <input name="amount" type="text" data-ng-model="amount" id="amount" placeholder='Amount'class="form-control" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label text-primary" for="currency" >Currency</label>
+                    <div class="controls">
+                        <input name="currency" type="text" data-ng-model="currency" id="currency" placeholder='USD' class="form-control" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button ng-click="paypalcreate()"  class="btn btn-primary">Create Payment</button>
+                </div>
+                <div data-ng-show="error" class="text-danger">
+                    <strong data-ng-bind="error"></strong>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</section>
+
