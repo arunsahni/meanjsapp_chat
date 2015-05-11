@@ -6,17 +6,12 @@
 var mongoose = require('mongoose'),
 	errorHandler = require('./errors.server.controller'),
 	Article = mongoose.model('Article'),
-	_ = require('lodash');
-var pusherService = require('../core/pusher');
+	_ = require('lodash'),
+    pusherService = require('../core/pusher'),
+    APi = require('../core/apikeys'),
+    paypal = require('paypal-rest-sdk');
 
-var paypal = require('paypal-rest-sdk');
-var api = {
-	'host' : 'api.sandbox.paypal.com',
-	'port' : '',
-	'client_id' : 'Ady11VmaVVGsWcoioR1-LKasKJpmTsw76hXkthUYRF_NK1Ie2isqVyr0jHil86zKoftRdHXOpabuqJBT',
-	'client_secret' : 'EDlwPeSUZ-MPFaB2W-2HYSpgT2OivBVg3oG8yvJblJiLLbl4fnlqbWa7pOObQu9rnBTLqOWgJXPE_PE_'
-};
-paypal.configure(api);
+paypal.configure(APi.api);
 
 /**
  * Create a article
@@ -192,25 +187,26 @@ exports.PayPalcreate = function(req, res){
 	if (method === 'paypal') {
 		payment.payer.payment_method = 'paypal';
 		payment.redirect_urls = {
-			'return_url': 'http://localhost:3000/#!/paypalexcute',
-			'cancel_url': 'http://localhost:3000/#!/articles'
+			'return_url':  req.headers.origin+'/#!/paypalexcute',
+			'cancel_url': req.headers.origin+'/#!/articles'
 		};
 	} else if (method === 'credit_card') {
 		var funding_instruments = [
 			{
 				'credit_card': {
-					//'type': req.param('type').toLowerCase(),
-					//'number': req.param('number'),
-					//'expire_month': req.param('expire_month'),
-					//'expire_year': req.param('expire_year'),
-					//'first_name': req.param('first_name'),
-					//'last_name': req.param('last_name')
-					'type': 'visa',
-					'number': '4032039170553541',
-					'expire_month': '05',
-					'expire_year': '20',
-					'first_name': 'parag',
-					'last_name': 'waghela'
+					'type': req.param('type').toLowerCase(),
+					'number': req.param('number'),
+					'expire_month': req.param('expire_month'),
+					'expire_year': req.param('expire_year'),
+					'first_name': req.param('first_name'),
+					'last_name': req.param('last_name')
+					//'type': 'visa',
+					//'number': '4032039170553541',
+					//'expire_month': '05',
+					//'expire_year': '20',
+					//'first_name': 'parag',
+					//'last_name': 'waghela'
+
 				}
 			}
 		];
@@ -243,7 +239,6 @@ exports.execute = function(req, res){
 		if (error) {
 			console.log(error);
 		} else {
-			console.log(payment);
 			res.json(payment);
 		}
 	});

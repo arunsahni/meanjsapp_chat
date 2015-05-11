@@ -27,7 +27,7 @@
 		serviceFactory.generatePusher = function (req, res){
 			return $http.get('/pusher');
 		};
-		serviceFactory.paypalcreate = function (req, res){
+		serviceFactory.paypalCreate = function (req, res){
 			return $http.post('/article/paypalcreate', req);
 		};
 		serviceFactory.excutePayment = function (req, res){

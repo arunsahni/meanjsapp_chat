@@ -118,7 +118,7 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
 		};
 
 		$scope.paypalcreate = function(){
-			Articles.paypalcreate({
+			Articles.paypalCreate({
 				method: 'paypal',
 				amount: this.amount,
 				currency: this.currency
