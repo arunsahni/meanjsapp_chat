@@ -1,14 +1,14 @@
 <section data-ng-controller="ArticlesController" ng-init="excutePayment()">
     <div class="page-header">
-        <div class="title">Payment Sucessfull</div>
+        <div class="title" translate="paypal.pymtDnt"></div>
     </div>
     <div>Your payment Id :{{paymentDetail.id}}</div>
     <div>Create Time :{{paymentDetail.create_time}}</div>
     <div>State :{{paymentDetail.state}}</div>
-    <div class="title">Payer info</div>
+    <div class="title" translate="paypal.pyrinfo"></div>
     <div>Email-id :{{paymentDetail.payer.payer_info.email}}</div>
     <div>Payer Name :{{paymentDetail.payer.payer_info.first_name}} {{paymentDetail.payer.payer_info.last_name}}</div>
     <div>shipping_address :{{paymentDetail.payer.payer_info.shipping_address}}</div>
     <div>Transactions Amount :{{paymentDetail.transactions[0].amount.total}} {{paymentDetail.transactions[0].amount.currency}}</div>
-    <button><a href="#!/articles">Go Home</a></button>
+    <button><a href="#!/articles" translate="paypal.hom"></a></button>
 </section>
