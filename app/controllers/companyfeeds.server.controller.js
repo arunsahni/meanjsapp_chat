@@ -118,7 +118,6 @@ exports.list = function(req, res) {
  * Companyfeed middleware
  */
 exports.companyfeedByID = function(req, res, next) {
-	console.log(req.params.id);
 	Companyfeed.findById(req.params.id).populate('user likers comment.commentLiker comment.commenteduser').exec(function(err, companyfeed) {
 		if (err) return next(err);
 		if (!companyfeed) {
