@@ -27,7 +27,11 @@ var GroupSchema = new Schema({
     groupAdmin: [{
         type: Schema.ObjectId,
         ref: 'User'
-    }]
+    }],
+    isImage: {
+        type: Boolean,
+        default: false
+    }
 });
 
 mongoose.model('Group', GroupSchema);
