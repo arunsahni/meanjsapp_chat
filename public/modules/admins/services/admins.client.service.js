@@ -5,7 +5,7 @@ angular.module('admins').factory('Admins', ['$http',
 	function($http) {
 		var adminFactory = {};
 
-		adminFactory.userList = function (req,res) {
+		adminFactory.userCount = function (req,res) {
 			return $http.get('/allUsers', req);
 		};
 
