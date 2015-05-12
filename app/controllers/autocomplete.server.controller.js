@@ -7,14 +7,16 @@ var mongoose = require('mongoose'),
 exports.customQuery = function(req, res) {
     var EntityName = mongoose.model(req.body.EntityName[0]),
         projectionArray = req.body.Projection,
-        MatchField =  req.body.MatchField,
+        MatchField =  req.body.MatchField || null,
         aggregateField = {},
         projection = {},
         skip = req.body.skip || 0,
         take = req.body.take || 10,
         i, len;
 
-        aggregateField[MatchField] = {$regex: req.body.SearchText, $options: 'i'};
+        if (MatchField) {
+            aggregateField[MatchField] = {$regex: req.body.SearchText, $options: 'i'};
+        }
 
         for(i = 0, len = projectionArray.length; i < len; i += 1) {
             projection[projectionArray[i]] = 1;

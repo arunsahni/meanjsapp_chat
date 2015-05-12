@@ -6,8 +6,12 @@
 var mongoose = require('mongoose'),
 	errorHandler = require('./errors.server.controller'),
 	Article = mongoose.model('Article'),
-	_ = require('lodash');
-var pusherService = require('../core/pusher');
+	_ = require('lodash'),
+    pusherService = require('../core/pusher'),
+    APi = require('../core/apikeys'),
+    paypal = require('paypal-rest-sdk');
+
+paypal.configure(APi.api);
 
 /**
  * Create a article
@@ -155,9 +159,95 @@ exports.hasAuthorization = function(req, res, next) {
 	}
 	next();
 };
+
 /*
 * Pusher creating
 * */
 exports.generatePusher =function(req,res){
 	pusherService.pusherGenerate('Pusher-channel', 'Pusher-event', {'message': 'Pusher Genetrated By - ' + req.user.displayName});
 };
+
+/*
+*Pay Pal Implementation
+*/
+exports.PayPalcreate = function(req, res){
+	var method = req.param('method');
+	var payment = {
+		'intent': 'sale',
+		'payer': {
+		},
+		'transactions': [{
+			'amount': {
+				'currency': req.param('currency'),
+				'total': req.param('amount')
+			}
+		}]
+	};
+
+	if (method === 'paypal') {
+		payment.payer.payment_method = 'paypal';
+		payment.redirect_urls = {
+			'return_url':  req.headers.origin+'/#!/paypalexcute',
+			'cancel_url': req.headers.origin+'/#!/articles'
+		};
+	} else if (method === 'credit_card') {
+		var funding_instruments = [
+			{
+				'credit_card': {
+					'type': req.param('type').toLowerCase(),
+					'number': req.param('number'),
+					'expire_month': req.param('expire_month'),
+					'expire_year': req.param('expire_year'),
+					'first_name': req.param('first_name'),
+					'last_name': req.param('last_name')
+					//'type': 'visa',
+					//'number': '4032039170553541',
+					//'expire_month': '05',
+					//'expire_year': '20',
+					//'first_name': 'parag',
+					//'last_name': 'waghela'
+
+				}
+			}
+		];
+		payment.payer.payment_method = 'credit_card';
+		payment.payer.funding_instruments = funding_instruments;
+	}
+	paypal.payment.create(payment, function (error, payment) {
+		if (error) {
+			//console.log(error);
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(error)
+			});
+
+		} else {
+			req.session.paymentId = payment.id;
+			res.json(payment);
+		}
+	});
+
+};
+
+/*
+  Pay Pal Execution
+ */
+exports.execute = function(req, res){
+	var paymentId = req.session.paymentId;
+	var payerId = req.param('PayerID');
+	var details = { 'payer_id': payerId };
+	paypal.payment.execute(paymentId, details, function (error, payment) {
+		if (error) {
+			console.log(error);
+		} else {
+			res.json(payment);
+		}
+	});
+};
+
+/*
+ pay pal payment cancelation
+ */
+exports.cancel = function(req, res){
+	//res.render('cancel');
+};
+

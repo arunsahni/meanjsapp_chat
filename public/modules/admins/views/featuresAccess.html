@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-xs-12 col-md-4 col-md-offset-4">
             <div class="panel-body">
-                <div class="top-buffer" auto-complete value="autoCompleteData" model="data.tags"></div>
+                <div class="top-buffer" auto-complete value="autoCompleteData" model="data.tags" readonly="showFeature"></div>
             </div>
         </div>
     </div>
@@ -10,19 +10,29 @@
 
     <div class="list-group" data-ng-show="showFeature">
         <h1 translate="feature"></h1>
-        <div data-ng-repeat="features in featureFlags track by $index" class="list-group-item">
+        <!--<table class="table-striped">-->
+            <!--<tr data-ng-repeat="features in featureFlags track by $index">-->
+                <!--<td class="col-xs-5 col-md-6 text-color" ng-if="features.type==='M'"translate="{{features.title}}" ></td>-->
+                <!--<td class="col-xs-5 col-md-6"><li ng-if="features.type==='S'" translate="{{features.title}}" style="margin-left: 20px"></li></td>-->
+                <!--<td class="col-xs-7 col-md-3 btn-group btn-toggle">-->
+                    <!--<div class="btn-group btn-toggle">-->
+                        <!--<button ng-class="{false: 'btn btn-sm btn-default', true: 'btn btn-sm btn-primary active'}[features.isEnable]" ng-click="toggleFeature(!features.isEnable,features,$index)" translate="Enabled"></button>-->
+                        <!--<button ng-class="{true: 'btn btn-sm btn-default', false: 'btn btn-sm btn-primary active'}[features.isEnable]" ng-click="toggleFeature(!features.isEnable,features,$index)" translate="Disabled"></button>-->
+                    <!--</div>-->
+                <!--</td>-->
+            <!--</tr>-->
+        <!--</table>-->
+        <div data-ng-repeat="features in featureList track by $index" class="list-group-item">
             <div class="container row">
-                <div class="col-xs-6 col-md-6 article-left-pull">
+                <div class="col-xs-5 col-md-5" style="margin-left: -15px;">
                     <small class="col-xs-12 col-md-12 list-group-item-text">
-                        <div class="text-color" ng-if="features.type==='M'"translate="{{features.title}}"></div>
-                        <h5><li ng-if="features.type==='S'" translate="{{features.title}}" style="margin-left: 20px"></li></h5>
-
+                        <div class="text-color" style="margin-left: -15px;"  ng-if="features.type==='M'"translate="{{features.title}}" ></div>
+                        <h5><li style="margin-left: -15px;" ng-if="features.type==='S'" translate="{{features.title}}" style="margin-left: 20px"></li></h5>
                     </small>
-
                 </div>
-                <div class="col-xs-3 col-md-3 btn-group btn-toggle">
+                <div class="col-xs-7 col-md-7 btn-group btn-toggle" >
                     <div>
-                        <div class="btn-group btn-toggle">
+                        <div class="btn-group btn-toggle" style="margin-left: -14px;">
                             <button ng-class="{false: 'btn btn-sm btn-default', true: 'btn btn-sm btn-primary active'}[features.isEnable]" ng-click="toggleFeature(!features.isEnable,features,$index)" translate="Enabled"></button>
                             <button ng-class="{true: 'btn btn-sm btn-default', false: 'btn btn-sm btn-primary active'}[features.isEnable]" ng-click="toggleFeature(!features.isEnable,features,$index)" translate="Disabled"></button>
                         </div>

@@ -74,14 +74,14 @@ exports.delete = function(req, res) {
  * List of all Admins
  */
 
-exports.users = function(req, res) {
-	User.find({group: req.user.group}).sort('-created').populate('user', 'displayName').exec(function(err, admins) {
+exports.userCount = function(req, res) {
+	User.find({$and: [ {group: req.user.group},{ roles: { $in: [ 'admin', 'user' ] } } ]}).count().exec(function(err, count) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.jsonp(admins);
+			res.jsonp(count);
 		}
 	});
 };

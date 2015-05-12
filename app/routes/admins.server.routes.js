@@ -14,7 +14,7 @@ module.exports = function(app) {
 		.post(users.requiresLogin, admins.popAccess);
 
 	app.route('/allUsers')
-		.get(users.requiresLogin, admins.users);
+		.get(users.requiresLogin, admins.userCount);
 
 	// Finish by binding the Admin middleware
 	app.param('adminId', admins.adminByID);
