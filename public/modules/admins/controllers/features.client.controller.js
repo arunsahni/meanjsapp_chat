@@ -88,7 +88,7 @@ angular.module('admins').controller('FeaturesController', ['$scope', '$statePara
         };
 
         var getFeatureFlags = function(disbledfeatures) {
-            if (disbledfeatures.length) {
+            if (disbledfeatures && disbledfeatures.length) {
                 angular.forEach($scope.featureFlags, function(item){
                     if(disbledfeatures.indexOf(item.title) !== -1) {
                         item.isEnable = false;
