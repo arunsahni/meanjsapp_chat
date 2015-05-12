@@ -38,11 +38,17 @@ angular.module('tasks').controller('TasksController', ['$scope', '$stateParams',
 					};
 				});
 			}*/
+
             if ($scope.assignees && $scope.assignees.length) {
-                var userIds = $scope.assignees.map(function (user) {
-                    return user._id;
-                });
-                $scope.task.assignees = userIds;
+				var assigneeList = [];
+				$scope.assignees.forEach(function(a, index) {
+					assigneeList.push({
+						id: a._id,
+						milestone : 0
+					});
+				});
+                //});
+                $scope.task.assignees = assigneeList;
 
             }
         });
@@ -78,6 +84,12 @@ angular.module('tasks').controller('TasksController', ['$scope', '$stateParams',
 
         $scope.myTasks = function() {
             Tasks.getTaskByUserId().success(function(tasks) {
+				tasks.forEach(function(task) {
+					task.totalPercentage = 0;
+					task.assignees.forEach(function(assign) {
+						task.totalPercentage += assign.milestone;
+					});
+				});
                 $scope.tasks = tasks;
             });
         };
@@ -85,6 +97,12 @@ angular.module('tasks').controller('TasksController', ['$scope', '$stateParams',
 		// Find a list of Tasks
 		$scope.find = function() {
 			Tasks.getTasks().success(function(tasks){
+				tasks.forEach(function(task) {
+					task.totalPercentage = 0;
+					task.assignees.forEach(function(assign) {
+						task.totalPercentage += assign.milestone;
+					});
+				});
 				$scope.tasks = tasks;
 
 			});
@@ -105,6 +123,14 @@ angular.module('tasks').controller('TasksController', ['$scope', '$stateParams',
 				var days = hours/24;
 				$scope.task = task;
 				$scope.assigneesList = task.assignees;
+				var matchedAssignee = task.assignees.filter(function(a) {
+					if (a.id._id === $scope.authentication.user._id) {
+						return a;
+					}
+				});
+				$scope.assigneeList = {
+					milestone : matchedAssignee[0].milestone
+					};
 				$scope.task.assignees = [];
 				$scope.days = Math.round(days);
 			});
@@ -119,5 +145,22 @@ angular.module('tasks').controller('TasksController', ['$scope', '$stateParams',
 				$scope.task.assignees = [];
 			});
 		};
+
+		$scope.$watch('assigneeList.milestone', function(newVal, oldVal) {
+			if (newVal) {
+				var milestone = $scope.assigneesList.filter(function(a) {
+					if (a.id._id === $scope.authentication.user._id) {
+						return a._id;
+					}
+				});
+				Tasks.updateMilestone({
+					taskId: $scope.task._id,
+					milestoneId: milestone[0]._id,
+					updatedMilestoneValue: newVal
+				}).success(function(task) {
+					$scope.task = task;
+				});
+			}
+		});
 	}
 ]);

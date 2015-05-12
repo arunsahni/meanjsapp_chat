@@ -19,6 +19,9 @@
 			<div class="row article-left-pull">
 				<h5 class="col-xs-12 col-md-12 col-xs-offset-1 col-md-offset-1" data-ng-bind="task.priority"></h5>
 			</div>
+			<div class="row col-md-offset-1">
+				<div range-slider="" model='assigneeList.milestone' range-slider-options='{label: "Milestone", valueSuffix: "%"}'></div>
+			</div>
 			<div class="row article-left-pull">
 				<small class="col-xs-12 col-md-12 col-xs-offset-1 col-md-offset-1">
 					<em class="text-muted">
@@ -29,8 +32,7 @@
 			</div>
 		</div>
 	</div>
-
-	<div class="pull-right" data-ng-show="((authentication.user) && (authentication.user._id == task.createdBy._id))">
+	<div class="pull-right" data-ng-show="((authentication.user) && (authentication.user._id == task.createdBy))">
 		<a class="btn btn-primary" href="/#!/tasks/{{task._id}}/edit">
 			<i class="glyphicon glyphicon-edit"></i>
 		</a>

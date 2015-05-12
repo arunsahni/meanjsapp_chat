@@ -23,6 +23,9 @@ angular.module('tasks').factory('Tasks', ['$http',
         serviceFactory.getTaskByUserId = function (req, res) {
             return $http.get('/tasks/myTask');
         };
+		serviceFactory.updateMilestone = function (req, res) {
+            return $http.post('/tasks/updateMilestone', req);
+        };
 
 		return serviceFactory;
 	}

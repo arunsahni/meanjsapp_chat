@@ -33,9 +33,15 @@ var TaskSchema = new Schema({
         default: ''
     },
     assignees: [{
-        type: Schema.ObjectId,
-        ref: 'User',
-        required: 'Please fill assignee'
+        id: {
+            type: Schema.ObjectId,
+            ref: 'User',
+            required: 'Please fill assignee',
+        },
+        milestone: {
+            type: Number,
+            default: 0
+        }
     }],
     deadline: {
         type: Date,

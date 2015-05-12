@@ -10,6 +10,10 @@ module.exports = function(app) {
 		tasks.create(req, res);
 	});
 
+	app.post('/tasks/updateMilestone', function(req, res) {
+		tasks.updateMilestone(req, res);
+	});
+
 	app.get('/tasks', function(req, res) {
 		tasks.list(req, res);
 	});

@@ -80,7 +80,7 @@ exports.delete = function(req, res) {
  * List of Tasks
  */
 exports.list = function(req, res) { 
-	Task.find({group: req.user.group}).sort('-createdDate').populate('createdBy assignees').exec(function(err, tasks) {
+	Task.find({group: req.user.group}).sort('-createdDate').populate('createdBy assignees.id').exec(function(err, tasks) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
@@ -101,7 +101,7 @@ exports.taskByID = function(req, res, next, id) {
 		});
 	}
 
-	Task.findById(req.params.id).populate('createdBy assignees').exec(function(err, task) {
+	Task.findById(req.params.id).populate('createdBy assignees.id').exec(function(err, task) {
 		if (err) return next(err);
 		if (!task) {
 			return res.status(404).send({
@@ -118,7 +118,7 @@ exports.taskByUserId = function(req, res, next, id) {
             message: 'User is invalid'
         });
     }
-    Task.find({assignees: {$in:[req.user.id]} ,group: req.user.group}).sort('-createdDate').populate('createdBy assignees').exec(function(err, tasks) {
+    Task.find({'assignees.id': {$in:[req.user.id]} ,group: req.user.group}).sort('-createdDate').populate('createdBy assignees.id').exec(function(err, tasks) {
         if (err) {
             return res.status(400).send({
                 message: errorHandler.getErrorMessage(err)
@@ -145,6 +145,19 @@ exports.hasAuthorization = function(req, res, next) {
 
 exports.updateAssigneesList = function(req, res) {
 	Task.findOneAndUpdate({_id: mongoose.Types.ObjectId(req.params.taskId)}, {$pull : { 'assignees' : mongoose.Types.ObjectId(req.params.assigneeId)}}).populate('createdBy assignees').exec(function (err, Task) {
+		if (err) {
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		}
+		else {
+			res.json(Task);
+		}
+	});
+};
+
+exports.updateMilestone = function(req, res) {
+	Task.findOneAndUpdate({group: req.user.group, _id: mongoose.Types.ObjectId(req.body.taskId), 'assignees._id' : mongoose.Types.ObjectId(req.body.milestoneId)},{$set :{'assignees.$.milestone': req.body.updatedMilestoneValue}}).exec(function (err, Task) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)

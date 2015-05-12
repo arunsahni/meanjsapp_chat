@@ -121,10 +121,12 @@
     "stus": "Status",
     "asig": "Assignee",
     "cby": "Created By",
+    "prt": "Priority",
     "desc": "Description",
     "pri": "Priority",
     "assig": "Assignees",
-    "deddt": "Deadline Date"
+    "deddt": "Deadline Date",
+    "nty": "No Tasks yet, why don't you"
   }
 }
 

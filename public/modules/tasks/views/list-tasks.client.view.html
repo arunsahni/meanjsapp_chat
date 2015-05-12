@@ -18,13 +18,16 @@
                 <h4 class="title" translate="Tit"></h4>
             </div>
             <div class="col-md-2 col-xs-2">
-                <h4 class="title" translate="task.stus"></h4>
+                <h4 class="title" translate="task.prt"></h4>
             </div>
-            <div class="col-md-3 col-xs-3">
+            <div class="col-md-2 col-xs-2">
                 <h4 class="title" translate="task.asig"></h4>
             </div>
-            <div class="col-md-3 col-xs-3">
+            <div class="col-md-2 col-xs-2">
                 <h4 class="title" translate="task.cby"></h4>
+            </div>
+            <div class="col-md-2 col-xs-2">
+                <h4 class="title" translate="task.stus"></h4>
             </div>
         </tr>
         <table class="table table-bordered table-hover">
@@ -36,17 +39,20 @@
                     <td class="col-md-2 col-xs-2">
                         <h5 class="list-group-item-heading" style="color: black" data-ng-bind="task.priority"></h5>
                     </td>
-                    <td class="col-md-3 col-xs-3">
-                        <h5 class="list-group-item-heading" style="color: black" ng-repeat="assign in task.assignees" data-ng-bind="assign.displayName"></h5>
+                    <td class="col-md-2 col-xs-2">
+                        <h5 class="list-group-item-heading" style="color: black" ng-repeat="assign in task.assignees" data-ng-bind="assign.id.displayName"></h5>
                     </td>
-                    <td class="col-md-3 col-xs-3">
+                    <td class="col-md-2 col-xs-2">
                         <h5 class="list-group-item-heading" style="color: black" data-ng-bind="task.createdBy.displayName"></h5>
+                    </td>
+                    <td class="col-md-2 col-xs-2">
+                        <h5 class="list-group-item-heading" style="color: black" data-ng-bind="task.totalPercentage + '% completed'"></h5>
                     </td>
                 </a>
             </tr>
         </table>
-        <div class="alert alert-warning text-center" data-ng-hide="!tasks.$resolved || tasks.length">
-            No Tasks yet, why don't you <a href="/#!/tasks/create">create one</a>?
+        <div class="alert alert-warning text-center" data-ng-show="!tasks.$resolved || tasks.length">
+            <span translate="task.nty"></span> <a href="/#!/tasks/create" translate="list.crto"></a>?
         </div>
     </div>
 </section>
