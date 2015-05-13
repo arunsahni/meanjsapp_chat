@@ -50,6 +50,7 @@ angular.module('groups').controller('GroupsController', ['$scope', '$stateParams
                 groupId: $stateParams.groupId
             }).success(function (group) {
                 $scope.group = group;
+                $scope.uploadedImage = 'https://s3.amazonaws.com/sumacrm/groups/' + group._id;
             });
         };
 
@@ -57,7 +58,7 @@ angular.module('groups').controller('GroupsController', ['$scope', '$stateParams
             var this_s3upload, xhr;
             this_s3upload = this;
             xhr = new XMLHttpRequest();
-            xhr.open('GET', '/sign_s3' + '?s3_object_type=' + file.type + '&s3_object_name=' + 'default_name', true);
+            xhr.open('GET', '/sign_s3' + '?s3_object_type=' + file.type + '&s3_object_name=' + 'default_name'+ '&group=' + $scope.group._id, true);
             xhr.overrideMimeType('text/plain; charset=x-user-defined');
             xhr.onreadystatechange = function(e) {
                 var result;
@@ -145,8 +146,8 @@ angular.module('groups').controller('GroupsController', ['$scope', '$stateParams
                     toastr.error('Image size should be less than 500KB');
                     return;
                 }
-                if (image.type !== 'image/png') {
-                    toastr.error('Only PNG is accepted.');
+                if (image.type !== 'image/png' && image.type !== 'image/jpeg') {
+                    toastr.error('Only PNG and JPEG are accepted.');
                     return;
                 }
                 $scope.uploadInProgress = true;
