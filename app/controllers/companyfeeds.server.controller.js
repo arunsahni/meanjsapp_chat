@@ -39,10 +39,10 @@ exports.create = function(req, res) {
 					User.findOneAndUpdate({group: req.user.group},{$push : {bellnotification: BellNotification}}, {multi: true}).exec(function(err, data){
 						if(err) {
 							return res.status(500).json({
-								error: 'Cannot add the bid'
+								error: 'Cannot add the Bell Notificatiom'
 							});
 						}else{
-							console.log('Here in Like');
+							console.log('Here in create post');
 						}
 					});
 					companyfeed.populate('user likers comment.commentLiker comment.commenteduser',function(err, data){
@@ -143,7 +143,7 @@ exports.addComment = function(req,res){
 	Companyfeed.findOneAndUpdate({_id: mongoose.Types.ObjectId(req.body.compnayfeedId)},{$push:{ comment : req.body.comment}}).populate('user likers comment.commentLiker comment.commenteduser').exec(function(err,data) {
 		if (err) {
 			return res.status(500).json({
-				error: 'Cannot add the bid'
+				error: 'Cannot add the comment on post'
 			});
 		} else {
 			var BellNotification = {
@@ -156,10 +156,10 @@ exports.addComment = function(req,res){
 			User.findOneAndUpdate({group: req.user.group},{$push : {bellnotification: BellNotification}}, {multi: true}).exec(function(err, data){
 				if(err) {
 					return res.status(500).json({
-						error: 'Cannot add the bid'
+						error: 'Cannot add the Bell Notification'
 					});
 				}else{
-					console.log('Here in Like');
+					console.log('Here in Comment Add');
 					//pusherService.pusherGenerate('Channel-Public', 'Post-LikeEvent', {'message': req.user.displayName+' like post ' + data.name,'userData':req.user,'data': data});
 				}
 			});
@@ -182,7 +182,7 @@ exports.addLikers = function(req, res){
 	Companyfeed.findOneAndUpdate({_id: mongoose.Types.ObjectId(req.body.compnayfeedId)}, {$push : {likers: req.user}}).populate('user likers comment.commentLiker comment.commenteduser').exec(function(err,data) {
 		if (err) {
 			return res.status(500).json({
-				error: 'Cannot add the bid'
+				error: 'Cannot add the Like'
 			});
 		} else {
 			var BellNotification = {
@@ -195,10 +195,10 @@ exports.addLikers = function(req, res){
 			User.findOneAndUpdate({group: req.user.group},{$push : {bellnotification: BellNotification}}, {multi: true}).exec(function(err, data){
 				if(err) {
 					return res.status(500).json({
-						error: 'Cannot add the bid'
+						error: 'Cannot add the Bell Notification'
 					});
 				}else{
-					console.log('Here in comment');
+					console.log('Here in Likes add ');
 
 				}
 			});
@@ -220,7 +220,7 @@ exports.removeLiker = function(req, res){
     Companyfeed.findOneAndUpdate({_id: mongoose.Types.ObjectId(req.body.compnayfeedId)}, {$pop: {likers: req.user}}).populate('user likers comment.commentLiker comment.commenteduser').exec(function(err, data) {
         if (err) {
             return res.status(500).json({
-                error: 'Cannot add the bid'
+                error: 'Cannot Remove Like'
             });
         } else {
             Companyfeed.find().sort('-created').populate('user likers comment.commentLiker comment.commenteduser').exec(function(err, companyfeeds) {
@@ -241,7 +241,7 @@ exports.addCommentLike = function(req, res) {
 	Companyfeed.findOneAndUpdate(({_id: mongoose.Types.ObjectId(req.body.compnayfeedId)},{'comment._id' : mongoose.Types.ObjectId(req.body.commentId)}), {$push : {'comment.$.commentLiker': req.user}}).populate('user likers comment.commentLiker comment.commenteduser').exec(function (err, data) {
 		if (err) {
 			return res.status(500).json({
-				error: 'Cannot add the bid'
+				error: 'Cannot add the Comment Likes'
 			});
 		} else {
 			var BellNotification = {
@@ -254,7 +254,7 @@ exports.addCommentLike = function(req, res) {
 			User.findOneAndUpdate({group: req.user.group},{$push : {bellnotification: BellNotification}}, {multi: true}).exec(function(err, data){
 				if(err) {
 					return res.status(500).json({
-						error: 'Cannot add the bid'
+						error: 'Cannot add the Bell Notification'
 					});
 				}else{
 					console.log('Here in commentLike');
@@ -279,7 +279,7 @@ exports.removeCommentLike = function(req, res) {
 	Companyfeed.findOneAndUpdate(({_id: mongoose.Types.ObjectId(req.body.compnayfeedId)}, {'comment._id' : mongoose.Types.ObjectId(req.body.commentId)}), {$pop : {'comment.$.commentLiker': req.body.commentLiker}}).populate('user likers comment.commentLiker comment.commenteduser').exec(function (err, data) {
 		if (err) {
 			return res.status(500).json({
-				error: 'Cannot add the bid'
+				error: 'Cannot Remove comment Like'
 			});
 		} else {
 			Companyfeed.find().sort('-created').populate('user likers comment.commentLiker comment.commenteduser').exec(function(err, companyfeeds) {
