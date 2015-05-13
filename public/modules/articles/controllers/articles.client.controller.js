@@ -1,9 +1,15 @@
 'use strict';
 
 // Articles controller
-angular.module('articles').controller('ArticlesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Articles','toastr', '$modal','$rootScope',
-	function($scope, $stateParams, $location, Authentication, Articles, toastr, $modal, $rootScope) {
+angular.module('articles').controller('ArticlesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Articles','toastr', '$modal','$rootScope', 'mySocket',
+	function($scope, $stateParams, $location, Authentication, Articles, toastr, $modal, $rootScope, mySocket) {
 		$scope.authentication = Authentication;
+
+
+
+		mySocket.on('chat message', function(msg){
+			toastr.info(Authentication.user.displayName +' : '+ msg);
+		});
 
 		if($stateParams && $stateParams.redirectUrl) {
 			$scope.redirectUrl = $stateParams.redirectUrl;
@@ -11,6 +17,7 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
 
 		var modalInstance;
 		$scope.toasterCheckSuc = function() {
+			mySocket.emit('chat message', 'hello');
 			toastr.success('Message with Title', 'Successfully');
 		};
 		$scope.toasterCheckInf = function() {

@@ -33,7 +33,9 @@ module.exports = {
 				'public/lib/pusher-angular/lib/pusher-angular.js',
 				'public/lib/ng-file-upload/angular-file-upload.js',
 				'public/lib/angular-translate/angular-translate.js',
-				'public/lib/angular-translate-loader-static-files/angular-translate-loader-static-files.js'
+				'public/lib/angular-translate-loader-static-files/angular-translate-loader-static-files.js',
+				'public/lib/angular-socket-io/socket.js',
+				'public/lib/socket.io-client/socket.io.js'
 			]
 		},
 		css: [
