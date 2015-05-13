@@ -14,7 +14,7 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
 		if($stateParams && $stateParams.redirectUrl) {
 			$scope.redirectUrl = $stateParams.redirectUrl;
 		}
-
+		$scope.imgPath = 'https://s3.amazonaws.com/sumacrm/avatars/' + Authentication.user._id;
 		var modalInstance;
 		$scope.toasterCheckSuc = function() {
 			mySocket.emit('chat message', 'hello');
@@ -151,6 +151,10 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
 			}).success(function(payment){
 				$scope.paymentDetail = payment;
 			});
+		};
+		$scope.submitchat = function () {
+			$scope.messagedata = $scope.firstName;
+			$scope.firstName = '';
 		};
 	}
 ]);
