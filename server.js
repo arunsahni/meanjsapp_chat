@@ -32,6 +32,7 @@ var server = app.listen(config.port);
 var io = require('socket.io')(server);
 io.on('connection', function(socket){
 	socket.on('chat message', function(msg){
+		msg.time = new Date();
 		io.emit('chat message', msg);
 	});
 

@@ -4,20 +4,12 @@
 angular.module('articles').controller('ArticlesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Articles','toastr', '$modal','$rootScope', 'mySocket',
 	function($scope, $stateParams, $location, Authentication, Articles, toastr, $modal, $rootScope, mySocket) {
 		$scope.authentication = Authentication;
-
-
-
-		mySocket.on('chat message', function(msg){
-			toastr.info(Authentication.user.displayName +' : '+ msg);
-		});
-
 		if($stateParams && $stateParams.redirectUrl) {
 			$scope.redirectUrl = $stateParams.redirectUrl;
 		}
 		$scope.imgPath = 'https://s3.amazonaws.com/sumacrm/avatars/' + Authentication.user._id;
 		var modalInstance;
 		$scope.toasterCheckSuc = function() {
-			mySocket.emit('chat message', 'hello');
 			toastr.success('Message with Title', 'Successfully');
 		};
 		$scope.toasterCheckInf = function() {
@@ -153,8 +145,24 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
 			});
 		};
 		$scope.submitchat = function () {
-			$scope.messagedata = $scope.firstName;
-			$scope.firstName = '';
+			var packet = {
+				id: Authentication.user._id,
+				msg: $scope.msg,
+				isImage: Authentication	.user.isImage
+			};
+			mySocket.emit('chat message', packet);
+			$scope.msg = '';
 		};
+		$scope.Messages = [];
+
+		mySocket.on('chat message', function(packet){
+			if (Authentication.user._id === packet.id) {
+				packet.type = 'Sender';
+			} else {
+				packet.type = 'Reciever';
+			}
+			$scope.Messages.push(packet);
+
+		});
 	}
 ]);
