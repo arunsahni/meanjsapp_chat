@@ -8,7 +8,7 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
 		if($stateParams && $stateParams.redirectUrl) {
 			$scope.redirectUrl = $stateParams.redirectUrl;
 		}
-
+		$scope.imgPath = 'https://s3.amazonaws.com/sumacrm/avatars/' + Authentication.user._id;
 		var modalInstance;
 		$scope.toasterCheckSuc = function() {
 			toastr.success('Message with Title', 'Successfully');
@@ -144,6 +144,10 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
 			}).success(function(payment){
 				$scope.paymentDetail = payment;
 			});
+		};
+		$scope.submitchat = function () {
+			$scope.messagedata = $scope.firstName;
+			$scope.firstName = '';
 		};
 	}
 ]);
