@@ -92,7 +92,7 @@
 									<div class="col-md-10 col-xs-10">
 										<div class="messages msg_receive">
 											<p ng-bind="packet.msg"></p>
-											<time>{{packet.time}}</time>
+											<time>{{packet.time | date:"dd/MM/yyyy 'at' h:mma"}} </time>
 										</div>
 									</div>
 								</div>
