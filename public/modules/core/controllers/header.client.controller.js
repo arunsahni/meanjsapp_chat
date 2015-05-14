@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('core').controller('HeaderController', ['$scope', '$rootScope', 'Authentication', 'Menus','toastr', 'PusherService','$translate','$location','$stateParams',
-	function($scope, $rootScope, Authentication, Menus, toastr, PusherService, $translate, $location, $stateParams) {
+angular.module('core').controller('HeaderController', ['$scope', '$rootScope', 'Authentication', 'Menus','toastr', 'PusherService','$translate','$location','$stateParams','mySocket',
+	function($scope, $rootScope, Authentication, Menus, toastr, PusherService, $translate, $location, $stateParams, mySocket) {
 
 		$scope.authentication = Authentication;
 
@@ -48,6 +48,29 @@ angular.module('core').controller('HeaderController', ['$scope', '$rootScope', '
 
 		PusherService.listen('Pusher-channel','Pusher-event', function(err, data) {
 			toastr.success(data.message);
+		});
+
+	//	move logic
+
+		$scope.submitchat = function () {
+			var packet = {
+				id: Authentication.user._id,
+				msg: $scope.msg,
+				isImage: Authentication	.user.isImage
+			};
+			mySocket.emit('chat message', packet);
+			$scope.msg = '';
+		};
+		$scope.Messages = [];
+
+		mySocket.on('chat message', function(packet){
+			if (Authentication.user._id === packet.id) {
+				packet.type = 'Sender';
+			} else {
+				packet.type = 'Reciever';
+			}
+			$scope.Messages.push(packet);
+
 		});
 	}
 ]);
