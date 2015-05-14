@@ -34,7 +34,7 @@ exports.create = function(req, res) {
 exports.getSignedURL = function (req, res) {
 	aws.config.update({accessKeyId: AWS_ACCESS_KEY , secretAccessKey: AWS_SECRET_KEY });
 	var s3 = new aws.S3();
-	var fileName =  req.query.group;
+	var fileName = req.user.group.id;
 	var s3_params = {
 		Bucket: S3_BUCKET,
 		Key: fileName,

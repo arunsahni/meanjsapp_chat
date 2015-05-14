@@ -146,8 +146,8 @@ angular.module('groups').controller('GroupsController', ['$scope', '$stateParams
                     toastr.error('Image size should be less than 500KB');
                     return;
                 }
-                if (image.type !== 'image/png' && image.type !== 'image/jpeg') {
-                    toastr.error('Only PNG and JPEG are accepted.');
+                if (image.type !== 'image/png') {
+                    toastr.error('Only PNG is accepted.');
                     return;
                 }
                 $scope.uploadInProgress = true;
