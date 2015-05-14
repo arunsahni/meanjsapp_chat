@@ -144,25 +144,25 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
 				$scope.paymentDetail = payment;
 			});
 		};
-		$scope.submitchat = function () {
-			var packet = {
-				id: Authentication.user._id,
-				msg: $scope.msg,
-				isImage: Authentication	.user.isImage
-			};
-			mySocket.emit('chat message', packet);
-			$scope.msg = '';
-		};
-		$scope.Messages = [];
-
-		mySocket.on('chat message', function(packet){
-			if (Authentication.user._id === packet.id) {
-				packet.type = 'Sender';
-			} else {
-				packet.type = 'Reciever';
-			}
-			$scope.Messages.push(packet);
-
-		});
+		//$scope.submitchat = function () {
+		//	var packet = {
+		//		id: Authentication.user._id,
+		//		msg: $scope.msg,
+		//		isImage: Authentication	.user.isImage
+		//	};
+		//	mySocket.emit('chat message', packet);
+		//	$scope.msg = '';
+		//};
+		//$scope.Messages = [];
+        //
+		//mySocket.on('chat message', function(packet){
+		//	if (Authentication.user._id === packet.id) {
+		//		packet.type = 'Sender';
+		//	} else {
+		//		packet.type = 'Reciever';
+		//	}
+		//	$scope.Messages.push(packet);
+        //
+		//});
 	}
 ]);
