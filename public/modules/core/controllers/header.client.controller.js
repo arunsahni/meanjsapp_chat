@@ -8,7 +8,7 @@ angular.module('core').controller('HeaderController', ['$scope', '$rootScope', '
 		$scope.isCollapsed = false;
 		$scope.prepareMenu = function() {
 			if ($scope.authentication.user !== '') {
-				$scope.groupImage = 'https://s3.amazonaws.com/sumacrm/groups/' + Authentication.user.group._id;
+				$scope.groupImage = 'https://s3.amazonaws.com/sumacrm/groups/' + $scope.authentication.user.group._id;
 				$rootScope.menu = Menus.getMenu('topbar');
 			}
 		};
