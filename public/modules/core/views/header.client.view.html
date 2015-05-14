@@ -81,10 +81,11 @@
 								<div class="panel-heading top-bar" style="background: #265a88" ng-click="widgetExpanded = !widgetExpanded" >
 								<div class="col-md-8 col-xs-8">
 									<h3 class="panel-title" style="color: white" ><span class="glyphicon glyphicon-comment"></span> Chat</h3>
+
 								</div>
 								<!--<div class="col-md-4 col-xs-4" style="text-align: right;">-->
 								<!--<a href="#"><span id="minim_chat_window" class="glyphicon glyphicon-minus icon_minim" style="color: black"></span></a>-->
-								<!--<a href="#"><span class="glyphicon glyphicon-remove icon_close" data-id="chat_window_1" style="color: black"></span></a>-->
+								<a href="#" ng-if="chatCount>0"><span style="color: red ; float: right; font-weight: 800">{{chatCount}}</span></a>
 								<!--</div>-->
 								</div>
 							</div>

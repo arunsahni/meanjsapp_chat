@@ -63,12 +63,15 @@ angular.module('core').controller('HeaderController', ['$scope', '$rootScope', '
 			$scope.msg = '';
 		};
 		$scope.Messages = [];
-
+		$scope.chatCount = 0;
 		mySocket.on('chat message', function(packet){
 			if (Authentication.user._id === packet.id) {
 				packet.type = 'Sender';
 			} else {
 				packet.type = 'Reciever';
+				if(!$scope.showChat) {
+					$scope.chatCount = $scope.chatCount+1;
+				}
 			}
 			$scope.Messages.push(packet);
 
@@ -79,6 +82,7 @@ angular.module('core').controller('HeaderController', ['$scope', '$rootScope', '
 				$scope.showChat = false;
 			else
 				$scope.showChat = true;
+				$scope.chatCount = 0;
 		}
 	}
 ]);
