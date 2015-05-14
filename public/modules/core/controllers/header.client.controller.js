@@ -33,15 +33,18 @@ angular.module('core').controller('HeaderController', ['$scope', '$rootScope', '
 
 
 		PusherService.listen('Channel-Public','Commnet-AddEvent', function(err, data) {
-			$scope.bellNotifications.push(data);
+			if(data.userData != Authentication.user._id)
+			 	$scope.bellNotifications.push(data);
 		});
 
 		PusherService.listen('Channel-Public','Post-LikeEvent', function(err, data) {
-			$scope.bellNotifications.push(data);
+			if(data.userData != Authentication.user._id)
+				$scope.bellNotifications.push(data);
 		});
 
 		PusherService.listen('Channel-Public','Commnet-LikeEvent', function(err, data) {
-			$scope.bellNotifications.push(data);
+			if(data.userData != Authentication.user._id)
+				$scope.bellNotifications.push(data);
 		});
 
 
@@ -86,6 +89,8 @@ angular.module('core').controller('HeaderController', ['$scope', '$rootScope', '
 			var index = getIndexOf($scope.bellNotifications, bellnotificationid, '_id');
 			$scope.bellNotifications.splice(index, 1);
 			$http.put('/users/updatebellnotification', {feedId: bellnotificationid}).success(function(response) {
+				if(!feedid)
+					feedid = bellnotificationid;
 				$location.path('companyfeeds/'+feedid);
 			});
 		};

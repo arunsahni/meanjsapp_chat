@@ -57,12 +57,16 @@ exports.signin = function(req, res, next) {
 			// Remove sensitive data before login
 			user.password = undefined;
 			user.salt = undefined;
-
-			req.login(user, function(err) {
-				if (err) {
-					res.status(400).send(err);
-				} else {
-					res.json(user);
+			user.populate('bellnotification.userData bellnotification.companyfeedId', function (err, user) {
+				if (err) res.status(400).send(err);
+				else {
+					req.login(user, function (err) {
+						if (err) {
+							res.status(400).send(err);
+						} else {
+							res.json(user);
+						}
+					});
 				}
 			});
 		}
