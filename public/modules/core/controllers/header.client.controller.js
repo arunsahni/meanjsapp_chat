@@ -56,7 +56,8 @@ angular.module('core').controller('HeaderController', ['$scope', '$rootScope', '
 			var packet = {
 				id: Authentication.user._id,
 				msg: $scope.msg,
-				isImage: Authentication	.user.isImage
+				isImage: Authentication.user.isImage,
+				name: Authentication.user.displayName
 			};
 			mySocket.emit('chat message', packet);
 			$scope.msg = '';

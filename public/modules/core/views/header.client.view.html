@@ -93,6 +93,7 @@
 										<div class="messages msg_sent">
 											<p>{{packet.msg}}</p>
 											<time>{{packet.time}}</time>
+											<time>{{packet.name}}</time>
 										</div>
 									</div>
 									<div class="col-md-2 col-xs-2 avatar">
@@ -109,6 +110,7 @@
 										<div class="messages msg_receive">
 											<p ng-bind="packet.msg"></p>
 											<time>{{packet.time | date:"dd/MM/yyyy 'at' h:mma"}} </time>
+											<time>{{packet.name}}</time>
 										</div>
 									</div>
 								</div>
