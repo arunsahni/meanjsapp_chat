@@ -1,0 +1,43 @@
+<section data-ng-controller="TasksController" data-ng-init="findOne()">
+    <div class="page-header">
+        <div class="title"></div>
+    </div>
+    <ul class="nav nav-tabs responsive" id="myTab">
+        <li><a href="/#!/tasks/assign/me" translate="task.mtk"></a></li>
+        <li class="active"><a href="/#!/tasks" translate="task.tsk"></a></li>
+        <li><a href="/#!/tasks/create" translate="task.ctsk"></a></li>
+    </ul>
+	<br>
+	<div class="row">
+		<div class="col-xs-9 col-md-8">
+			<div class="row article-left-pull">
+				<h4 class="col-xs-12 col-md-12 col-xs-offset-1 col-md-offset-1" data-ng-bind="task.name"></h4>
+			</div>
+			<div class="row article-left-pull">
+				<h5 class="col-xs-12 col-md-12 col-xs-offset-1 col-md-offset-1" data-ng-bind="task.description"></h5>
+			</div>
+			<div class="row article-left-pull">
+				<h5 class="col-xs-12 col-md-12 col-xs-offset-1 col-md-offset-1" data-ng-bind="task.priority"></h5>
+			</div>
+			<div class="row col-md-offset-1">
+				<div range-slider="" model='assigneeList.milestone' range-slider-options='{label: "Milestone", valueSuffix: "%"}'></div>
+			</div>
+			<div class="row article-left-pull">
+				<small class="col-xs-12 col-md-12 col-xs-offset-1 col-md-offset-1">
+					<em class="text-muted">
+						<span data-ng-bind="task.createdBy.displayName"></span>
+						<span translate="task.cat"></span> <span data-ng-bind="days"></span> <span translate="task.dysa"></span>
+					</em>
+				</small>
+			</div>
+		</div>
+	</div>
+	<div class="pull-right" data-ng-show="((authentication.user) && (authentication.user._id == task.createdBy))">
+		<a class="btn btn-primary" href="/#!/tasks/{{task._id}}/edit">
+			<i class="glyphicon glyphicon-edit"></i>
+		</a>
+		<a class="btn btn-primary" data-ng-click="remove();">
+			<i class="glyphicon glyphicon-trash"></i>
+		</a>
+	</div>
+</section>

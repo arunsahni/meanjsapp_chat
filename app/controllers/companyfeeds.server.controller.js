@@ -117,7 +117,6 @@ exports.hasAuthorization = function(req, res, next) {
 };
 
 exports.addComment = function(req,res){
-	console.log(req.body.comment);
 	Companyfeed.findOneAndUpdate({_id: mongoose.Types.ObjectId(req.body.compnayfeedId)},{$push:{ comment : req.body.comment}}).exec(function(err,data) {
 		if (err) {
 			return res.status(500).json({

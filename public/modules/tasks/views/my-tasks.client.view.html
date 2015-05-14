@@ -1,0 +1,58 @@
+<section data-ng-controller="TasksController" data-ng-init="myTasks()">
+    <div class="page-header">
+        <div class="title"></div>
+    </div>
+    <ul class="nav nav-tabs responsive" id="myTab">
+        <li class="active"><a href="/#!/tasks/assign/me" translate="task.mtk"></a></li>
+        <li><a href="/#!/tasks" translate="task.tsk"></a></li>
+        <li><a href="/#!/tasks/create" translate="task.ctsk"></a></li>
+    </ul>
+    <br>
+    <h4>
+        <span translate="task.tsk"></span>
+        (1 - {{tasks.length}} off {{tasks.length}})
+    </h4>
+    <div class="tab-content responsive">
+        <tr class="list-group row">
+            <div class="col-md-4 col-xs-4">
+                <h4 class="title" translate="Tit"></h4>
+            </div>
+            <div class="col-md-2 col-xs-2">
+                <h4 class="title" translate="task.prt"></h4>
+            </div>
+            <div class="col-md-2 col-xs-2">
+                <h4 class="title" translate="task.asig"></h4>
+            </div>
+            <div class="col-md-2 col-xs-2">
+                <h4 class="title" translate="task.cby"></h4>
+            </div>
+            <div class="col-md-2 col-xs-2">
+                <h4 class="title" translate="task.stus"></h4>
+            </div>
+        </tr>
+        <table class="table table-bordered table-hover">
+            <tr ng-class="task.priority === 'Urgent' ? 'danger' : task.priority === 'Low' ? 'warning' : task.priority === 'High' ? 'success' : 'info'" data-ng-repeat="task in tasks" ng-click="Redirect(task._id)">
+                <a class="list-group row">
+                    <td class="col-md-4 col-xs-4">
+                        <h5 class="list-group-item-heading" style="color: black" data-ng-bind="task.name"></h5>
+                    </td>
+                    <td class="col-md-2 col-xs-2">
+                        <h5 class="list-group-item-heading" style="color: black" data-ng-bind="task.priority"></h5>
+                    </td>
+                    <td class="col-md-2 col-xs-2">
+                        <h5 class="list-group-item-heading" style="color: black" ng-repeat="assign in task.assignees" data-ng-bind="assign.id.displayName"></h5>
+                    </td>
+                    <td class="col-md-2 col-xs-2">
+                        <h5 class="list-group-item-heading" style="color: black" data-ng-bind="task.createdBy.displayName"></h5>
+                    </td>
+                    <td class="col-md-2 col-xs-2">
+                        <h5 class="list-group-item-heading" style="color: black" data-ng-bind="task.totalPercentage + '% completed'"></h5>
+                    </td>
+                </a>
+            </tr>
+        </table>
+        <div class="alert alert-warning text-center" data-ng-hide="tasks.$resolved || tasks.length">
+            <span translate="task.nty"></span>  <a href="/#!/tasks/create"  translate="list.crto">create one</a>?
+        </div>
+    </div>
+</section>

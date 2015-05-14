@@ -5,7 +5,8 @@ angular.module('core').directive('autoComplete', ['$http', 'AutoComplete', funct
         restrict:'AE',
         scope:{
             selectedTags:'=model',
-            metaData: '=value'
+            metaData: '=value',
+            acPlaceholder: '@placeholder'
         },
         templateUrl: '/modules/core/views/autocomplete-template.html',
         link:function(scope, elem, attrs){
