@@ -2,7 +2,7 @@
 
 angular.module('core').controller('HeaderController', ['$scope', '$rootScope', 'Authentication', 'Menus','toastr', 'PusherService','$translate','$location','$stateParams','mySocket',
 	function($scope, $rootScope, Authentication, Menus, toastr, PusherService, $translate, $location, $stateParams, mySocket) {
-		$scope.showChat = true;
+		$scope.showChat = false;
 		$scope.authentication = Authentication;
 
 		$scope.isCollapsed = false;

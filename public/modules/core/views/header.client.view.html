@@ -76,8 +76,9 @@
 			<div class="container col-xs-12 col-md-12 col-xs-offset-8 col-md-offset-10">
 				<div class="row chat-window col-xs-5 col-md-3" id="chat_window_1" style="margin-left: -140px;">
 					<div class="col-xs-12 col-md-12">
-						<div class="panel panel-default"  ng-click="minWind()">
-							<div class="panel-heading top-bar" style="background: #265a88" ng-click="widgetExpanded = !widgetExpanded">
+						<div class="panel panel-default" >
+							<div  ng-click="minWind()">
+								<div class="panel-heading top-bar" style="background: #265a88" ng-click="widgetExpanded = !widgetExpanded" >
 								<div class="col-md-8 col-xs-8">
 									<h3 class="panel-title" style="color: white" ><span class="glyphicon glyphicon-comment"></span> Chat</h3>
 								</div>
@@ -85,6 +86,7 @@
 								<!--<a href="#"><span id="minim_chat_window" class="glyphicon glyphicon-minus icon_minim" style="color: black"></span></a>-->
 								<!--<a href="#"><span class="glyphicon glyphicon-remove icon_close" data-id="chat_window_1" style="color: black"></span></a>-->
 								<!--</div>-->
+								</div>
 							</div>
 							<div class="panel-body msg_container_base" ng-show="showChat">
 							<span ng-repeat="packet in Messages">
