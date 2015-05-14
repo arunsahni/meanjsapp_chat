@@ -179,6 +179,7 @@
     padding: 10px;
     overflow: hidden;
     display: flex;
+}
 .slider-label,
 .slider-value {
     float: left;
