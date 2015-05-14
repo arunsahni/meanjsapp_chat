@@ -110,6 +110,35 @@
     "adm": "Admin",
     "rmgt": "Role Management",
     "accmgt":"Access Management"
+  },
+  "task": {
+    "mtk": "My Tasks",
+    "tsk": "Tasks",
+    "ctsk": "Create Task",
+    "issu": "Issues",
+    "cat": "created a task",
+    "dysa": "days ago...",
+    "stus": "Status",
+    "asig": "Assignee",
+    "cby": "Created By",
+    "prt": "Priority",
+    "desc": "Description",
+    "pri": "Priority",
+    "assig": "Assignees",
+    "deddt": "Deadline Date",
+    "nty": "No Tasks yet, why don't you"
+  },
+  "paypal": {
+    "paypal" : "PayPal",
+    "pplRstApi": "PayPal REST API" ,
+    "amt" : "Amount",
+    "currncy" : "Currency",
+    "crtpymt" : "Createं Payment",
+    "crtNpymt": "Created New Payment",
+    "redt" : "Redirect",
+    "pymtDnt": "Payment Sucessfull",
+    "hom" : "Go Home",
+    "pyrinfo" : "Payer info"
   }
 }
 

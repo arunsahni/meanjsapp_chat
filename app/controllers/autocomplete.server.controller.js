@@ -23,10 +23,10 @@ exports.customQuery = function(req, res) {
         }
         EntityName.aggregate([
             {$match: aggregateField},
-            {$match: {group: req.user.group}},
+            {$match: {group: req.user.group._id}},
             {$project: projection},
             {$skip : skip },
-            {$limit : take },
+            {$limit : take }
         ],function (err, articles) {
                 if (err) {
                     return res.status(400).send({

@@ -1,9 +1,9 @@
 <section data-ng-controller="ArticlesController">
     <div class="page-header">
-        <div class="title">Created New Payment</div>
+        <div class="title" translate="paypal.crtNpymt"></div>
     </div>
     <div>Your payment Id :{{payment.id}}</div>
     <div>Create Time :{{payment.create_time}}</div>
     <div>Transactions Amount :{{payment.transactions[0].amount.total}} {{payment.transactions[0].amount.currency}}</div>
-    <a href="https://www.sandbox.paypal.com/cgi-bin/webscr?{{redirectUrl}}"><button>Redirect</button></a>
+    <a href="https://www.sandbox.paypal.com/cgi-bin/webscr?{{redirectUrl}}"><button translate="paypal.redt">Redirect</button></a>
 </section>

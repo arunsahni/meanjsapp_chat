@@ -58,7 +58,7 @@ angular.module('groups').controller('GroupsController', ['$scope', '$stateParams
             var this_s3upload, xhr;
             this_s3upload = this;
             xhr = new XMLHttpRequest();
-            xhr.open('GET', '/sign_s3' + '?s3_object_type=' + file.type + '&s3_object_name=' + 'default_name'+ '&group=' + $scope.group._id, true);
+            xhr.open('GET', '/sign_s3_group' + '?s3_object_type=' + file.type + '&s3_object_name=' + 'default_name'+ '&group=' + $scope.group._id, true);
             xhr.overrideMimeType('text/plain; charset=x-user-defined');
             xhr.onreadystatechange = function(e) {
                 var result;
