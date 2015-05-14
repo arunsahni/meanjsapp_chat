@@ -25,5 +25,5 @@ module.exports = function(app) {
     app.post('/group/delete', function(req, res) {
         groups.delete(req, res);
     });
-    app.route('/sign_s3').get(groups.getSignedURL);
+    app.route('/sign_s3_group').get(groups.getSignedURL);
 };
