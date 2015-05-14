@@ -2,7 +2,7 @@
 
 angular.module('core').controller('HeaderController', ['$scope', '$rootScope', 'Authentication', 'Menus','toastr', 'PusherService','$translate','$location','$stateParams','mySocket',
 	function($scope, $rootScope, Authentication, Menus, toastr, PusherService, $translate, $location, $stateParams, mySocket) {
-
+		$scope.showChat = true;
 		$scope.authentication = Authentication;
 
 		$scope.isCollapsed = false;
@@ -73,5 +73,12 @@ angular.module('core').controller('HeaderController', ['$scope', '$rootScope', '
 			$scope.Messages.push(packet);
 
 		});
+
+		$scope.minWind = function(){
+			if($scope.showChat)
+				$scope.showChat = false;
+			else
+				$scope.showChat = true;
+		}
 	}
 ]);
