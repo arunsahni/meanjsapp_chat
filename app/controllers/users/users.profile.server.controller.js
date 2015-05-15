@@ -26,20 +26,39 @@ exports.getSignedURL = function (req, res) {
 		ContentType: req.query.s3_object_type,
 		ACL: 'public-read'
 	};
-	s3.getSignedUrl('putObject', s3_params, function(err, data){
-		if(err){
-			console.log(err);
-		}
-		else{
-			var return_data = {
-				signed_request: data,
-				//url: 'https://'+S3_BUCKET+'.s3.amazonaws.com/'+'Arun'
-				url: 'https://s3.amazonaws.com/sumacrm/avatars/' + fileName
-			};
-			res.write(JSON.stringify(return_data));
-			res.end();
-		}
-	});
+
+	var user = req.user;
+	if (user) {
+		// Merge existing user
+		user.updated = Date.now();
+		user.save(function(err) {
+			if (err) {
+				return res.status(400).send({
+					message: errorHandler.getErrorMessage(err)
+				});
+			} else {
+				s3.getSignedUrl('putObject', s3_params, function(err, data){
+					if(err){
+						console.log(err);
+					}
+					else{
+						var return_data = {
+							signed_request: data,
+							//url: 'https://'+S3_BUCKET+'.s3.amazonaws.com/'+'Arun'
+							url: 'https://s3.amazonaws.com/sumacrm/avatars/' + fileName,
+							date: user.updated
+						};
+						res.write(JSON.stringify(return_data));
+						res.end();
+					}
+				});
+			}
+		});
+	} else {
+		res.status(400).send({
+			message: 'User is not signed in'
+		});
+	}
 };
 
 

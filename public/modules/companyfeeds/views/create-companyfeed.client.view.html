@@ -41,7 +41,7 @@
         </div>
         <div class="col-md-1 col-xs-3">
             <img ng-hide="companyfeed.user.isImage" ng-src="../imgs/default-avatar.jpg"  height="60" width="55" class="img-rounded panel panel-default">
-            <img ng-show="companyfeed.user.isImage" ng-src="{{imgPathOwn + companyfeed.user._id}}" height="60" width="55" class="img-rounded panel panel-default">
+            <img ng-show="companyfeed.user.isImage" ng-src="{{imgPathOwn + companyfeed.user._id + '?' + companyfeed.user.updated}}" height="60" width="55" class="img-rounded panel panel-default">
         </div>
         <div class="col-md-11 col-xs-9">
             <div class="row">
@@ -75,7 +75,7 @@
                     <div class="row">
                         <div class="col-md-1 col-xs-2">
                             <img ng-hide="comment.commenteduser.isImage" ng-src="../imgs/default-avatar.jpg"  height="30" width="30" class="img-thumbnail">
-                            <img ng-show="comment.commenteduser.isImage" ng-src="{{imgPathOwn+comment.commenteduser._id}}" data-toggle="tooltip"
+                            <img ng-show="comment.commenteduser.isImage" ng-src="{{imgPathOwn+comment.commenteduser._id+ '?' + comment.commenteduser.updated}}" data-toggle="tooltip"
                                  data-placement="bottom"
                                  class="red-tooltip"
                                  tooltip="{{comment.user_name}}"

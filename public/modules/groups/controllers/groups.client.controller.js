@@ -50,6 +50,7 @@ angular.module('groups').controller('GroupsController', ['$scope', '$stateParams
                 groupId: $stateParams.groupId
             }).success(function (group) {
                 $scope.group = group;
+                $scope.uploadedImage = 'https://s3.amazonaws.com/sumacrm/groups/' + group._id;
             });
         };
 

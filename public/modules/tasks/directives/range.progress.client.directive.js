@@ -29,12 +29,14 @@ angular.module('tasks').directive('rangeSlider', function($document) {
             moveHandle = function() {
                 return scope.$evalAsync(function() {
                     scope.highlightStyle = { 'right': (100 - percentage * 100) + '%' };
-                    return scope.handleStyle = { 'left': (percentage * 100) + '%' };
+                    scope.handleStyle = { 'left': (percentage * 100) + '%' };
+                    return scope.handleStyle;
                 });
             };
 
             setPercentage = function() {
-                return percentage = scope.model / scope.max;
+                percentage = scope.model / scope.max;
+                return percentage;
             };
 
             scope.engageHandle = function(event) {
