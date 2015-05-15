@@ -8,7 +8,7 @@
         <div class="row" ng-repeat="likername in LikerNameArray">
             <div class="col-md-offset-2 col-xs-offset-2 pull-left">
                 <img ng-hide="likername.isImage" ng-src="../imgs/default-avatar.jpg"  height="30" width="20" class="img-thumbnail">
-                <img ng-show="likername.isImage" ng-src="{{imgPathOwn+likername._id}}" height="30" width="20">
+                <img ng-show="likername.isImage" ng-src="{{imgPathOwn+likername._id+ '?' +likername.updated}}" height="30" width="20">
             </div>
             <div class="col-md-offset-3 col-xs-offset-3">
                 <b><span class="text-primary" data-ng-bind="likername.displayName"></span></b>
