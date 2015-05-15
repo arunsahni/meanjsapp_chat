@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('core').controller('HeaderController', ['$scope', '$rootScope', 'Authentication', 'Menus','toastr', 'PusherService','$translate','$location','$stateParams',
-	function($scope, $rootScope, Authentication, Menus, toastr, PusherService, $translate, $location, $stateParams) {
+angular.module('core').controller('HeaderController', ['$scope', '$rootScope', 'Authentication', 'Menus','toastr', 'PusherService','$translate','$location','$stateParams','mySocket',
+	function($scope, $rootScope, Authentication, Menus, toastr, PusherService, $translate, $location, $stateParams, mySocket) {
 		$rootScope.$on('ImageChanged', function (event, args) {
 			$scope.imgPath = args.ImagePath;
 			Authentication.user.updated = args.Date;

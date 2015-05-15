@@ -26,7 +26,7 @@ angular.module('admins').controller('AdminsController', ['$scope', '$stateParams
 
 					AutoComplete.getAutoCompleteData({
 						EntityName: ['User'],
-						Projection: ['displayName', '_id', 'isImage','roles'],
+						Projection: ['displayName', '_id', 'isImage','roles','updated'],
 						skip: begin,
 						take: 10
 					}).success(function (users1) {
