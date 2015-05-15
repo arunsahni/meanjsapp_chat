@@ -1,9 +1,9 @@
 'use strict';
 
-angular.module('users').controller('SettingsController', ['$scope', '$http', '$location', 'Users', 'Authentication', 'toastr', '$upload',
-	function($scope, $http, $location, Users, Authentication, toastr, $upload) {
+angular.module('users').controller('SettingsController', ['$scope', '$rootScope', '$http', '$location', 'Users', 'Authentication', 'toastr', '$upload',
+	function($scope, $rootScope, $http, $location, Users, Authentication, toastr, $upload) {
 		$scope.user = Authentication.user;
-        $scope.uploadedImage = 'https://s3.amazonaws.com/sumacrm/avatars/' + Authentication.user._id;
+        $scope.uploadedImage = 'https://s3.amazonaws.com/sumacrm/avatars/' + Authentication.user._id + '?' + Authentication.user.updated;
 
 		var executeOnSignedUrl = function(file, callback) {
 			var this_s3upload, xhr;
@@ -53,10 +53,13 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$l
 					if (xhr.status === 200) {
 						//this_s3upload.onProgress(100, 'Upload completed.');
 						//return this_s3upload.onFinishS3Put(public_url);
-						$scope.uploadedImage = public_url;
+						$scope.uploadedImage = public_url + '?' + new Date();
+
+						$rootScope.$broadcast('ImageChanged', { ImagePath: $scope.uploadedImage });
+
 						toastr.success('File Uploaded Succsessfully');
 						$scope.$apply();
-						window.location.reload();
+						//window.location.reload();
 						//$location.path('/settings/profile');
 					} else {
 						console.log('Upload error: ' + xhr.status);

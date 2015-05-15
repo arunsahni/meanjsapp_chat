@@ -1,8 +1,12 @@
 'use strict';
 
-angular.module('core').controller('HeaderController', ['$scope', '$rootScope', 'Authentication', 'Menus','toastr', 'PusherService','$translate','$location','$stateParams',
-	function($scope, $rootScope, Authentication, Menus, toastr, PusherService, $translate, $location, $stateParams) {
+angular.module('core').controller('HeaderController', ['$scope', '$rootScope', 'Authentication', 'Menus','toastr', 'PusherService','$translate','$location','$stateParams','mySocket',
+	function($scope, $rootScope, Authentication, Menus, toastr, PusherService, $translate, $location, $stateParams, mySocket) {
+		$rootScope.$on('ImageChanged', function (event, args) {
+			$scope.imgPath = args.ImagePath;
+		});
 
+		$scope.showChat = false;
 		$scope.authentication = Authentication;
 
 		$scope.isCollapsed = false;
@@ -12,10 +16,8 @@ angular.module('core').controller('HeaderController', ['$scope', '$rootScope', '
 				$rootScope.menu = Menus.getMenu('topbar');
 			}
 		};
-
-		$scope.imgPath = Authentication.user._id + '.png';
 		$scope.isActive = true;
-		$scope.imgPath = 'https://s3.amazonaws.com/sumacrm/avatars/' + Authentication.user._id;
+		$scope.imgPath = 'https://s3.amazonaws.com/sumacrm/avatars/' + Authentication.user._id + '?' + Authentication.user.updated;
 		$scope.toggleCollapsibleMenu = function() {
 			$scope.isCollapsed = !$scope.isCollapsed;
 		};
@@ -43,7 +45,7 @@ angular.module('core').controller('HeaderController', ['$scope', '$rootScope', '
 				}
 			}
 			$scope.isCollapsed = false;
-			$scope.imgPath = 'https://s3.amazonaws.com/sumacrm/avatars/' + Authentication.user._id;
+			$scope.imgPath = 'https://s3.amazonaws.com/sumacrm/avatars/' + Authentication.user._id + '?' + Authentication.user.updated;
 		});
 
 		PusherService.listen('Pusher-channel','Pusher-event', function(err, data) {
