@@ -8,6 +8,7 @@ angular.module('tasks').controller('TasksController', ['$scope', '$stateParams',
 		$scope.items = ['Urgent','High','Nomal','Low'];
 		$scope.statusArray = ['New','Open','close'];
         $scope.task.priority = $scope.items[0];
+        $scope.task.status = $scope.statusArray[0];
 		// Create new Task
 		$scope.createTask = function() {
 			Tasks.saveTasks({
