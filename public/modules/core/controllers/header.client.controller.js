@@ -4,6 +4,7 @@ angular.module('core').controller('HeaderController', ['$scope', '$rootScope', '
 	function($scope, $rootScope, Authentication, Menus, toastr, PusherService, $translate, $location, $stateParams) {
 		$rootScope.$on('ImageChanged', function (event, args) {
 			$scope.imgPath = args.ImagePath;
+			Authentication.user.updated = args.Date;
 		});
 
 		$scope.showChat = false;

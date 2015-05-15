@@ -5,6 +5,12 @@ angular.module('users').controller('SettingsController', ['$scope', '$rootScope'
 		$scope.user = Authentication.user;
         $scope.uploadedImage = 'https://s3.amazonaws.com/sumacrm/avatars/' + Authentication.user._id + '?' + Authentication.user.updated;
 
+
+		$scope.init = function() {
+			$scope.uploadedImage = 'https://s3.amazonaws.com/sumacrm/avatars/' + Authentication.user._id + '?' + Authentication.user.updated;
+		};
+
+
 		var executeOnSignedUrl = function(file, callback) {
 			var this_s3upload, xhr;
 			this_s3upload = this;
@@ -20,7 +26,7 @@ angular.module('users').controller('SettingsController', ['$scope', '$rootScope'
 						this_s3upload.onError('Signing server returned some ugly/empty JSON: "' + this.responseText + '"');
 						return false;
 					}
-					return callback(result.signed_request, result.url);
+					return callback(result.signed_request, result.url, result.date);
 				} else if (this.readyState === 4 && this.status !== 200) {
 					return this_s3upload.onError('Could not contact request signing server. Status = ' + this.status);
 				}
@@ -42,7 +48,7 @@ angular.module('users').controller('SettingsController', ['$scope', '$rootScope'
 			return xhr;
 		};
 
-		var uploadToS3 = function(file, url, public_url) {
+		var uploadToS3 = function(file, url, public_url, date) {
 			var this_s3upload, xhr;
 			this_s3upload = this;
 			xhr = createCORSRequest('PUT', url);
@@ -53,9 +59,12 @@ angular.module('users').controller('SettingsController', ['$scope', '$rootScope'
 					if (xhr.status === 200) {
 						//this_s3upload.onProgress(100, 'Upload completed.');
 						//return this_s3upload.onFinishS3Put(public_url);
-						$scope.uploadedImage = public_url + '?' + new Date();
+						$scope.uploadedImage = public_url + '?' + date;
 
-						$rootScope.$broadcast('ImageChanged', { ImagePath: $scope.uploadedImage });
+						$rootScope.$broadcast('ImageChanged', {
+							ImagePath: $scope.uploadedImage,
+							Date: date
+						});
 
 						toastr.success('File Uploaded Succsessfully');
 						$scope.$apply();
@@ -85,8 +94,8 @@ angular.module('users').controller('SettingsController', ['$scope', '$rootScope'
 		};
 
 		var uploadFile = function(file) {
-			return executeOnSignedUrl(file, function(signedURL, publicURL) {
-				return uploadToS3(file, signedURL, publicURL);
+			return executeOnSignedUrl(file, function(signedURL, publicURL, date) {
+				return uploadToS3(file, signedURL, publicURL, date);
 			});
 		};
 
