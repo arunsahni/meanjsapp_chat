@@ -94,26 +94,26 @@
 								<div ng-if="packet.type === 'Reciever'" class="row msg_container base_sent">
 									<div class="col-md-10 col-xs-10">
 										<div class="messages msg_sent">
-											<p>{{packet.msg}}</p>
-											<time>{{packet.time}}</time>
-											<time>{{packet.name}}</time>
+											<p>{{packet.message}}</p>
+											<time>{{packet.chatDate | date:"dd/MM/yyyy 'at' h:mma"}}</time>
+											<time>{{packet.sender.displayName}}</time>
 										</div>
 									</div>
 									<div class="col-md-2 col-xs-2 avatar">
-										<img ng-show="packet.isImage" ng-src="https://s3.amazonaws.com/sumacrm/avatars/{{packet.id}}" class="img-circle" height="75" width="80">
-										<img ng-hide="packet.isImage" ng-src="../imgs/default-avatar.jpg" class="img-circle">
+										<img ng-show="packet.sender.isImage" ng-src="https://s3.amazonaws.com/sumacrm/avatars/{{packet.sender._id}}" class="img-circle" height="75" width="80">
+										<img ng-hide="packet.sender.isImage" ng-src="../imgs/default-avatar.jpg" class="img-circle" height="75" width="80">
 									</div>
 								</div>
 								<div ng-if="packet.type === 'Sender'" class="row msg_container base_receive">
 									<div class="col-md-2 col-xs-2 avatar">
-										<img ng-hide="packet.isImage" ng-src="../imgs/default-avatar.jpg" class="img-circle">
-										<img ng-show="packet.isImage" ng-src="https://s3.amazonaws.com/sumacrm/avatars/{{packet.id}}" class="img-circle" height="75" width="80">
+										<img ng-hide="packet.sender.isImage" ng-src="../imgs/default-avatar.jpg" class="img-circle" height="75" width="80">
+										<img ng-show="packet.sender.isImage" ng-src="https://s3.amazonaws.com/sumacrm/avatars/{{packet.sender._id}}" class="img-circle" height="75" width="80">
 									</div>
 									<div class="col-md-10 col-xs-10">
 										<div class="messages msg_receive">
-											<p ng-bind="packet.msg"></p>
-											<time>{{packet.time | date:"dd/MM/yyyy 'at' h:mma"}} </time>
-											<time>{{packet.name}}</time>
+											<p ng-bind="packet.message"></p>
+											<time>{{packet.chatDate | date:"dd/MM/yyyy 'at' h:mma"}} </time>
+											<time>{{packet.sender.displayName}}</time>
 										</div>
 									</div>
 								</div>
@@ -123,7 +123,7 @@
 								<div class="input-group">
 								<span class="input-group-btn">
 									<form ng-submit="submitchat()">
-										<input id="btn-input" type="text" ng-model="msg" class="form-control input-sm chat_input" placeholder="Write your message here..." />
+										<input id="btn-input" type="text" ng-model="message" class="form-control input-sm chat_input" placeholder="Write your message here..." />
 									</form>
 								</span>
 								</div>

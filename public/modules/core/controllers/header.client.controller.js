@@ -57,22 +57,25 @@ angular.module('core').controller('HeaderController', ['$scope', '$rootScope', '
 
 		$scope.submitchat = function () {
 			var packet = {
-				id: Authentication.user._id,
-				msg: $scope.msg,
-				isImage: Authentication.user.isImage,
-				name: Authentication.user.displayName
+				message: $scope.message,
+				sender: {
+					isImage: Authentication.user.isImage,
+					displayName: Authentication.user.displayName,
+					_id: Authentication.user._id
+				},
+				chatDate: new Date()
 			};
 			mySocket.emit('chat message', packet);
 			//code for saving chat message
 			Chats.saveMessageData({
-				message: $scope.msg,
+				message: $scope.message,
 				sender : Authentication.user._id ,
 				reciever : null ,
 				chatType : 'Public'
 			}).success(function(){
 				console.log('success');
 			});
-			$scope.msg = '';
+			$scope.message = '';
 		};
 		$scope.Messages = [];
 		$scope.chatCount = 0;
@@ -86,8 +89,6 @@ angular.module('core').controller('HeaderController', ['$scope', '$rootScope', '
 				}
 			}
 			$scope.Messages.push(packet);
-			console.log(Messages);
-
 		});
 
 		$scope.minWind = function(){
@@ -98,8 +99,15 @@ angular.module('core').controller('HeaderController', ['$scope', '$rootScope', '
 				$scope.chatCount = 0;
 				//code for getting last 10 chat message
 			Chats.getMessageData({}).success(function(messageData){
-				console.log(messageData);
-				$scope.Messages.push(messageData);
+				for(var i = 0, len = messageData.length; i<len; i++) {
+					if (Authentication.user._id === messageData[i].sender._id) {
+						messageData[i].type = 'Sender';
+					} else {
+						messageData[i].type = 'Reciever';
+					}
+				}
+				$scope.Messages = messageData;
+
 			});
 		};
 	}
