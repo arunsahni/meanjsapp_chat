@@ -1,10 +1,10 @@
 'use strict';
 
 // Groups controller
-angular.module('groups').controller('GroupsController', ['$scope', '$stateParams', '$location', 'toastr', 'Authentication', 'Groups',
-	function($scope, $stateParams, $location, toastr, Authentication, Groups) {
+angular.module('groups').controller('GroupsController', ['$rootScope', '$scope', '$stateParams', '$location', 'toastr', 'Authentication', 'Groups',
+	function($rootScope, $scope, $stateParams, $location, toastr, Authentication, Groups) {
 		$scope.authentication = Authentication;
-        $scope.uploadedImage = 'https://s3.amazonaws.com/sumacrm/groups/' + $scope.authentication.user.group._id;
+        $scope.uploadedImage = 'https://s3.amazonaws.com/sumacrm/groups/' + $scope.authentication.user.group._id + '?' + Authentication.user.updated;
 
 
 		// Create new Group
@@ -50,7 +50,7 @@ angular.module('groups').controller('GroupsController', ['$scope', '$stateParams
                 groupId: $stateParams.groupId
             }).success(function (group) {
                 $scope.group = group;
-                $scope.uploadedImage = 'https://s3.amazonaws.com/sumacrm/groups/' + group._id;
+                $scope.uploadedImage = 'https://s3.amazonaws.com/sumacrm/groups/' + group._id + '?' + Authentication.user.updated;
             });
         };
 
@@ -69,7 +69,7 @@ angular.module('groups').controller('GroupsController', ['$scope', '$stateParams
                         this_s3upload.onError('Signing server returned some ugly/empty JSON: "' + this.responseText + '"');
                         return false;
                     }
-                    return callback(result.signed_request, result.url);
+                    return callback(result.signed_request, result.url,  result.date);
                 } else if (this.readyState === 4 && this.status !== 200) {
                     return this_s3upload.onError('Could not contact request signing server. Status = ' + this.status);
                 }
@@ -91,7 +91,7 @@ angular.module('groups').controller('GroupsController', ['$scope', '$stateParams
             return xhr;
         };
 
-        var uploadToS3 = function(file, url, public_url) {
+        var uploadToS3 = function(file, url, public_url, date) {
             var this_s3upload, xhr;
             this_s3upload = this;
             xhr = createCORSRequest('PUT', url);
@@ -102,10 +102,13 @@ angular.module('groups').controller('GroupsController', ['$scope', '$stateParams
                     if (xhr.status === 200) {
                         //this_s3upload.onProgress(100, 'Upload completed.');
                         //return this_s3upload.onFinishS3Put(public_url);
-                        $scope.uploadedImage = public_url;
+                        $scope.uploadedImage = public_url + '?' + date;
+                        $rootScope.$broadcast('GroupImageChanged', {
+                            ImagePath: $scope.uploadedImage,
+                            Date: date
+                        });
                         toastr.success('File Uploaded Succsessfully');
                         $scope.$apply();
-                        window.location.reload();
                         //$location.path('/settings/profile');
                     } else {
                         console.log('Upload error: ' + xhr.status);
@@ -131,8 +134,8 @@ angular.module('groups').controller('GroupsController', ['$scope', '$stateParams
         };
 
         var uploadFile = function(file) {
-            return executeOnSignedUrl(file, function(signedURL, publicURL) {
-                return uploadToS3(file, signedURL, publicURL);
+            return executeOnSignedUrl(file, function(signedURL, publicURL, date) {
+                return uploadToS3(file, signedURL, publicURL, date);
             });
         };
 

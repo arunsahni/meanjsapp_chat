@@ -31,7 +31,10 @@ var GroupSchema = new Schema({
     isImage: {
         type: Boolean,
         default: false
-    }
+    },
+    updated: {
+        type: Date
+    },
 });
 
 mongoose.model('Group', GroupSchema);

@@ -19,6 +19,7 @@ var mongoose = require('mongoose'),
 exports.create = function(req, res) {
 	var group = new Group(req.body);
 	group.user = req.user;
+	group.updated = Date.now();
 
 	group.save(function(err) {
 		if (err) {
@@ -74,7 +75,8 @@ exports.update = function(req, res) {
     var conditions = {_id: req.body._id},
         update = {
             name: req.body.name,
-			isImage: req.body.isImage
+			isImage: req.body.isImage,
+			update: Date.now()
         };
     Group.findOneAndUpdate(conditions, update, function (err, group){
         if (err) {

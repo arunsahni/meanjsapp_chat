@@ -6,14 +6,17 @@ angular.module('core').controller('HeaderController', ['$scope', '$rootScope', '
 			$scope.imgPath = args.ImagePath;
 			Authentication.user.updated = args.Date;
 		});
-
+		$rootScope.$on('GroupImageChanged', function (event, args) {
+			$scope.groupImage = args.ImagePath;
+			//Authentication.user.updated = args.Date;
+		});
 		$scope.showChat = false;
 		$scope.authentication = Authentication;
 
 		$scope.isCollapsed = false;
 		$scope.prepareMenu = function() {
 			if ($scope.authentication.user !== '') {
-				$scope.groupImage = 'https://s3.amazonaws.com/sumacrm/groups/' + $scope.authentication.user.group._id;
+				$scope.groupImage = 'https://s3.amazonaws.com/sumacrm/groups/' + $scope.authentication.user.group._id + '?' + Authentication.user.updated;
 				$rootScope.menu = Menus.getMenu('topbar');
 			}
 		};
