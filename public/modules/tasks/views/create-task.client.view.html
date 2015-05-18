@@ -7,53 +7,52 @@
         <li><a href="/#!/tasks" translate="task.tsk"></a></li>
         <li class="active"><a href="/#!/tasks/create" translate="task.ctsk"></a></li>
     </ul>
-    <div class="tab-content responsive">
-        <div class="tab-pane active col-md-6 col-xs-12">
-            <form class="form-horizontal" data-ng-submit="createTask()" novalidate>
-                <fieldset>
-                    <div class="form-group">
-                        <label class="control-label" for="name" translate="grp.nam"></label>
-                        <div class="controls">
-                            <input type="text" data-ng-model="task.name" id="name" class="form-control" placeholder="{{'grp.nam' | translate}}" required>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" for="description" translate="task.desc"></label>
-                        <div class="controls">
-                            <textarea type="text" rows="3" data-ng-model="task.description" id="description" class="form-control" placeholder="{{'task.desc' | translate}}" required></textarea>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" for="status" translate="task.stus"></label>
-                        <select id='status' data-ng-model="task.status" ng-options="status for status in statusArray" ></select>
-                    </div>  
-                    <div class="form-group">
-                        <label class="control-label" for="priority" translate="task.pri"></label>
-                        <select id='priority' data-ng-model="task.priority" ng-options="item  for item in items" ></select>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" for="priority">Assignee</label>
-                        <div class="panel-body">
-                            <div class="top-buffer" auto-complete value="autoCompleteData" model="assignees" placeholder="Search the assignees"></div>
-                        </div>
-                    </div>
-                    <div class="form-group ">
-                        <label class="control-label" for="deadline" translate="task.deddt"></label>
-                        <div class="controls">
-                            <input type="date" data-ng-model="task.deadline" id="deadline" class="form-control" required>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <input type="submit" class="btn btn-primary">
-                    </div>
-                    <div data-ng-show="error" class="text-danger">
-                        <strong data-ng-bind="error"></strong>
-                    </div>
-                </fieldset>
-            </form>
+    <div class="panel panel-default col-xs-offset-1 col-xs-10 col-md-offset-4 col-md-4 panel-radius panel-top-margin">
+        <div class="panel-body">
+            <div class="tab-content responsive">
+                <div class="tab-pane active">
+                    <form class="form-horizontal" data-ng-submit="createTask()" novalidate>
+                        <fieldset>
+                            <div class="form-group">
+                                <label class="control-label" for="name" translate="grp.nam"></label>
+                                <div class="controls">
+                                    <input type="text" data-ng-model="task.name" id="name" class="form-control" placeholder="{{'grp.nam' | translate}}" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="description" translate="task.desc"></label>
+                                <div class="controls">
+                                    <textarea type="text" rows="3" data-ng-model="task.description" id="description" class="form-control" placeholder="{{'task.desc' | translate}}" required></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="status" translate="task.stus"></label>
+                                <select id='status' data-ng-model="task.status" ng-options="status for status in statusArray" ></select>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="priority" translate="task.pri"></label>
+                                <select id='priority' data-ng-model="task.priority" ng-options="item  for item in items" ></select>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="priority">Assignee</label>
+                                <div class="top-buffer" auto-complete value="autoCompleteData" model="assignees" placeholder="Search the assignees"></div>
+                            </div>
+                            <div class="form-group ">
+                                <label class="control-label" for="deadline" translate="task.deddt"></label>
+                                <div class="controls">
+                                    <input type="date" data-ng-model="task.deadline" id="deadline" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" class="btn btn-primary">
+                            </div>
+                            <div data-ng-show="error" class="text-danger">
+                                <strong data-ng-bind="error"></strong>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
         </div>
-
     </div>
-
 </section>
