@@ -1,14 +1,13 @@
 'use strict';
 
-angular.module('core').controller('HeaderController', ['$scope', '$rootScope', 'Authentication', 'Menus','toastr', 'PusherService','$translate','$location','$stateParams','mySocket',
-	function($scope, $rootScope, Authentication, Menus, toastr, PusherService, $translate, $location, $stateParams, mySocket) {
+angular.module('core').controller('HeaderController', ['$scope', '$rootScope', 'Authentication', 'Menus','toastr', 'PusherService','$translate','$location','$stateParams','mySocket','Chats',
+	function($scope, $rootScope, Authentication, Menus, toastr, PusherService, $translate, $location, $stateParams, mySocket, Chats) {
 		$rootScope.$on('ImageChanged', function (event, args) {
 			$scope.imgPath = args.ImagePath;
 			Authentication.user.updated = args.Date;
 		});
 		$scope.showChat = false;
 		$scope.authentication = Authentication;
-
 		$scope.isCollapsed = false;
 		$scope.prepareMenu = function() {
 			if ($scope.authentication.user !== '') {
@@ -17,7 +16,9 @@ angular.module('core').controller('HeaderController', ['$scope', '$rootScope', '
 			}
 		};
 		$scope.isActive = true;
+
 		$scope.imgPath = 'https://s3.amazonaws.com/sumacrm/avatars/' + Authentication.user._id + '?' + Authentication.user.updated;
+		$scope.imgPathOwn = 'https://s3.amazonaws.com/sumacrm/avatars/';
 		$scope.toggleCollapsibleMenu = function() {
 			$scope.isCollapsed = !$scope.isCollapsed;
 		};
@@ -62,6 +63,15 @@ angular.module('core').controller('HeaderController', ['$scope', '$rootScope', '
 				name: Authentication.user.displayName
 			};
 			mySocket.emit('chat message', packet);
+			//code for saving chat message
+			Chats.saveMessageData({
+				message: $scope.msg,
+				sender : Authentication.user._id ,
+				reciever : null ,
+				chatType : 'Public'
+			}).success(function(){
+				console.log('success');
+			});
 			$scope.msg = '';
 		};
 		$scope.Messages = [];
@@ -76,6 +86,7 @@ angular.module('core').controller('HeaderController', ['$scope', '$rootScope', '
 				}
 			}
 			$scope.Messages.push(packet);
+			console.log(Messages);
 
 		});
 
@@ -85,6 +96,11 @@ angular.module('core').controller('HeaderController', ['$scope', '$rootScope', '
 			else
 				$scope.showChat = true;
 				$scope.chatCount = 0;
-		}
+				//code for getting last 10 chat message
+			Chats.getMessageData({}).success(function(messageData){
+				console.log(messageData);
+				$scope.Messages.push(messageData);
+			});
+		};
 	}
 ]);
