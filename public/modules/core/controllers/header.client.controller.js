@@ -113,17 +113,19 @@ angular.module('core').controller('HeaderController', ['$scope', '$rootScope', '
 				$scope.chatCount = 0;
 
 				//code for getting last 10 chat message
-			Chats.getMessageData({}).success(function(messageData){
-				for(var i = 0, len = messageData.length; i<len; i++) {
-					if (Authentication.user._id === messageData[i].sender._id) {
-						messageData[i].type = 'Sender';
-					} else {
-						messageData[i].type = 'Reciever';
+			if($scope.Messages.length === 0) {
+				Chats.getMessageData({}).success(function (messageData) {
+					for (var i = 0, len = messageData.length; i < len; i++) {
+						if (Authentication.user._id === messageData[i].sender._id) {
+							messageData[i].type = 'Sender';
+						} else {
+							messageData[i].type = 'Reciever';
+						}
 					}
-				}
-				$scope.Messages = messageData;
+					$scope.Messages = messageData;
 
-			});
+				});
+			}
 		};
 	}
 ]);
