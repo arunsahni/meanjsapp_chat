@@ -14,16 +14,13 @@ exports.index = function(req, res) {
 };
 
 exports.chatSave = function(req,res) {
-	console.log('Save chat message',req.body);
 	var chat = new Chat(req.body);
-
 	chat.save(function(err) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			console.log(chat);
 			res.json(chat);
 		}
 	});
