@@ -98,13 +98,13 @@
 											<time>{{packet.sender.displayName}}</time>
 										</div>
 									</div>
-									<div class="col-md-2 col-xs-2 avatar">
+									<div class="col-md-2 col-xs-2 avatar" style="margin-left: 10px; margin-top: 1px;">
 										<img ng-show="packet.sender.isImage" ng-src="https://s3.amazonaws.com/sumacrm/avatars/{{packet.sender._id + '?' + authentication.user.updated}}" class="img-circle" height="75" width="80">
 										<img ng-hide="packet.sender.isImage" ng-src="../imgs/default-avatar.jpg" class="img-circle" height="80" width="80">
 									</div>
 								</div>
 								<div ng-if="packet.type === 'Sender'" class="row msg_container base_receive">
-									<div class="col-md-2 col-xs-2 avatar">
+									<div class="col-md-2 col-xs-2 avatar" style="margin-top: -5px;">
 										<img ng-hide="packet.sender.isImage" ng-src="../imgs/default-avatar.jpg" class="img-circle" height="80" width="80">
 										<img ng-show="packet.sender.isImage" ng-src="https://s3.amazonaws.com/sumacrm/avatars/{{packet.sender._id+ '?' + authentication.user.updated}}" class="img-circle" height="75" width="80">
 									</div>
