@@ -93,7 +93,7 @@ angular.module('core').controller('HeaderController', ['$scope', '$rootScope', '
 		$scope.Messages = [];
 		$scope.chatCount = 0;
 		mySocket.on('chat message', function(packet){
-			if (Authentication.user._id === packet.sender._id) {
+			if (Authentication.user._id === packet._id) {
 				packet.type = 'Sender';
 			} else {
 				packet.type = 'Reciever';
@@ -102,6 +102,9 @@ angular.module('core').controller('HeaderController', ['$scope', '$rootScope', '
 					$scope.chatCount = $scope.chatCount+1;
 				}
 			}
+			var textarea = document.getElementById('textarea_id');
+			textarea.scrollTop = textarea.scrollHeight;
+
 			$scope.Messages.push(packet);
 		});
 
@@ -123,7 +126,10 @@ angular.module('core').controller('HeaderController', ['$scope', '$rootScope', '
 				}
 				$scope.Messages = messageData;
 
+				var textarea = document.getElementById('textarea_id');
+				textarea.scrollTop = textarea.scrollHeight;
 			});
 		};
+
 	}
 ]);
