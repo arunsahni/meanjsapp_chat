@@ -99,14 +99,14 @@
 										</div>
 									</div>
 									<div class="col-md-2 col-xs-2 avatar">
-										<img ng-show="packet.sender.isImage" ng-src="https://s3.amazonaws.com/sumacrm/avatars/{{packet.sender._id}}" class="img-circle" height="75" width="80">
-										<img ng-hide="packet.sender.isImage" ng-src="../imgs/default-avatar.jpg" class="img-circle" height="75" width="80">
+										<img ng-show="packet.sender.isImage" ng-src="https://s3.amazonaws.com/sumacrm/avatars/{{packet.sender._id + '?' + authentication.user.updated}}" class="img-circle" height="75" width="80">
+										<img ng-hide="packet.sender.isImage" ng-src="../imgs/default-avatar.jpg" class="img-circle" height="80" width="80">
 									</div>
 								</div>
 								<div ng-if="packet.type === 'Sender'" class="row msg_container base_receive">
 									<div class="col-md-2 col-xs-2 avatar">
-										<img ng-hide="packet.sender.isImage" ng-src="../imgs/default-avatar.jpg" class="img-circle" height="75" width="80">
-										<img ng-show="packet.sender.isImage" ng-src="https://s3.amazonaws.com/sumacrm/avatars/{{packet.sender._id}}" class="img-circle" height="75" width="80">
+										<img ng-hide="packet.sender.isImage" ng-src="../imgs/default-avatar.jpg" class="img-circle" height="80" width="80">
+										<img ng-show="packet.sender.isImage" ng-src="https://s3.amazonaws.com/sumacrm/avatars/{{packet.sender._id+ '?' + authentication.user.updated}}" class="img-circle" height="75" width="80">
 									</div>
 									<div class="col-md-10 col-xs-10">
 										<div class="messages msg_receive">
