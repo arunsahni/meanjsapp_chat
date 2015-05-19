@@ -93,7 +93,7 @@ angular.module('core').controller('HeaderController', ['$scope', '$rootScope', '
 		$scope.Messages = [];
 		$scope.chatCount = 0;
 		mySocket.on('chat message', function(packet){
-			if (Authentication.user._id === packet._id) {
+			if (Authentication.user._id === packet.sender._id) {
 				packet.type = 'Sender';
 			} else {
 				packet.type = 'Reciever';
