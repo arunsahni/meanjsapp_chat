@@ -34,7 +34,7 @@ var GroupSchema = new Schema({
     },
     updated: {
         type: Date
-    },
+    }
 });
 
 mongoose.model('Group', GroupSchema);

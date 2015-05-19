@@ -16,7 +16,7 @@ angular.module('core').controller('HeaderController', ['$scope', '$rootScope', '
 		$scope.isCollapsed = false;
 		$scope.prepareMenu = function() {
 			if ($scope.authentication.user !== '') {
-				$scope.groupImage = 'https://s3.amazonaws.com/sumacrm/groups/' + $scope.authentication.user.group._id + '?' + Authentication.user.updated;
+				$scope.groupImage = 'https://s3.amazonaws.com/sumacrm/groups/' + $scope.authentication.user.group._id + '?' + $scope.authentication.user.group.updated;
 				$rootScope.menu = Menus.getMenu('topbar');
 			}
 		};
