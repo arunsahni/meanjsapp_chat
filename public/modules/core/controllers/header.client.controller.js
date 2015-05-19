@@ -1,13 +1,26 @@
 'use strict';
 
-angular.module('core').controller('HeaderController', ['$scope', '$rootScope', 'Authentication', 'Menus','toastr', 'PusherService','$translate','$location','$stateParams','mySocket','Chats',
-	function($scope, $rootScope, Authentication, Menus, toastr, PusherService, $translate, $location, $stateParams, mySocket, Chats) {
+angular.module('core').controller('HeaderController', ['$scope', '$rootScope', 'Authentication', 'Menus','toastr', 'PusherService','$translate','$location','$stateParams','mySocket','Chats','ngAudio',
+	function($scope, $rootScope, Authentication, Menus, toastr, PusherService, $translate, $location, $stateParams, mySocket, Chats ,ngAudio) {
+
+		$scope.sound = ngAudio.load('sounds/chat.mp3');
+
 		$rootScope.$on('ImageChanged', function (event, args) {
 			$scope.imgPath = args.ImagePath;
 			Authentication.user.updated = args.Date;
 		});
 		$scope.showChat = false;
 		$scope.authentication = Authentication;
+
+		mySocket.on('user joined', function (data) {
+			console.log('list',data);
+		});
+
+		$scope.removeUser = function(){
+			mySocket.emit('remove user', $scope.authentication.user.displayName);
+			console.log('Working on Anchor Tag');
+		};
+
 		$scope.isCollapsed = false;
 		$scope.prepareMenu = function() {
 			if ($scope.authentication.user !== '') {
@@ -88,6 +101,7 @@ angular.module('core').controller('HeaderController', ['$scope', '$rootScope', '
 					$scope.chatCount = $scope.chatCount+1;
 				}
 			}
+			$scope.sound.play();
 			$scope.Messages.push(packet);
 		});
 
@@ -97,6 +111,7 @@ angular.module('core').controller('HeaderController', ['$scope', '$rootScope', '
 			else
 				$scope.showChat = true;
 				$scope.chatCount = 0;
+
 				//code for getting last 10 chat message
 			Chats.getMessageData({}).success(function(messageData){
 				for(var i = 0, len = messageData.length; i<len; i++) {

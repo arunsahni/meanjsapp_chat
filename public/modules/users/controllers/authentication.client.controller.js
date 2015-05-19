@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('users').controller('AuthenticationController', ['$scope', '$http', '$location', 'Authentication', 'toastr', 'Groups',
-	function($scope, $http, $location, Authentication, toastr, Groups) {
+angular.module('users').controller('AuthenticationController', ['$scope', '$http', '$location', 'Authentication', 'toastr', 'Groups','mySocket',
+	function($scope, $http, $location, Authentication, toastr, Groups, mySocket) {
 		$scope.authentication = Authentication;
         $scope.credentials = {};
 		// If user is signed in then redirect back home
@@ -33,6 +33,7 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$http
 				// If successful we assign the response to the global user model
 				$scope.authentication.user = response;
 
+				mySocket.emit('add user', $scope.authentication.user.displayName);
 				// And redirect to the index page
 				$location.path('/companyfeeds/create');
                 toastr.success('You are successfully logged in.', 'done');
