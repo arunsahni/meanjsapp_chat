@@ -31,7 +31,7 @@ exports.chatSave = function(req,res) {
 
 exports.chatFind = function(req,res){
 	console.log('chat message show');
-	Chat.find({}).limit(10).populate('sender reciever').exec(function(err, articles) {
+	Chat.find({}).skip(Chat.count() - 10).populate('sender reciever').exec(function(err, articles) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
