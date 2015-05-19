@@ -30,14 +30,22 @@ exports.chatSave = function(req,res) {
 };
 
 exports.chatFind = function(req,res){
-	console.log('chat message show');
-	Chat.find({}).skip(Chat.count() - 10).populate('sender reciever').exec(function(err, articles) {
-		if (err) {
+	Chat.count({},function(err,count){
+		if(err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
-		} else {
-			res.json(articles);
+		}
+		else {
+			Chat.find({}).skip(count - 10).populate('sender reciever').exec(function (err, chats) {
+				if (err) {
+					return res.status(400).send({
+						message: errorHandler.getErrorMessage(err)
+					});
+				} else {
+					res.json(chats);
+				}
+			});
 		}
 	});
 };

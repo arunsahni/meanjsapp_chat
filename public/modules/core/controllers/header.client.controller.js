@@ -93,7 +93,7 @@ angular.module('core').controller('HeaderController', ['$scope', '$rootScope', '
 		$scope.Messages = [];
 		$scope.chatCount = 0;
 		mySocket.on('chat message', function(packet){
-			if (Authentication.user._id === packet.sender._id) {
+			if (Authentication.user._id === packet._id) {
 				packet.type = 'Sender';
 			} else {
 				packet.type = 'Reciever';
@@ -102,18 +102,21 @@ angular.module('core').controller('HeaderController', ['$scope', '$rootScope', '
 					$scope.chatCount = $scope.chatCount+1;
 				}
 			}
+			var textarea = document.getElementById('textarea_id');
+			textarea.scrollTop = textarea.scrollHeight;
+
 			$scope.Messages.push(packet);
 		});
 
-		$scope.minWind = function(){
-			if($scope.showChat)
+		$scope.minWind = function() {
+			if ($scope.showChat)
 				$scope.showChat = false;
 			else
 				$scope.showChat = true;
-				$scope.chatCount = 0;
+			$scope.chatCount = 0;
 
-				//code for getting last 10 chat message
-			if($scope.Messages.length === 0) {
+			//code for getting last 10 chat message
+			if ($scope.Messages.length === 0) {
 				Chats.getMessageData({}).success(function (messageData) {
 					for (var i = 0, len = messageData.length; i < len; i++) {
 						if (Authentication.user._id === messageData[i].sender._id) {
@@ -123,9 +126,11 @@ angular.module('core').controller('HeaderController', ['$scope', '$rootScope', '
 						}
 					}
 					$scope.Messages = messageData;
-
+					var textarea = document.getElementById('textarea_id');
+					textarea.scrollTop = textarea.scrollHeight;
 				});
 			}
 		};
+
 	}
 ]);
