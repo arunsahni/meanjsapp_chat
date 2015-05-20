@@ -78,26 +78,28 @@ angular.module('core').controller('HeaderController', ['$scope', '$rootScope', '
 	//	move logic
 
 		$scope.submitchat = function () {
-			var packet = {
-				message: $scope.message,
-				sender: {
-					isImage: Authentication.user.isImage,
-					displayName: Authentication.user.displayName,
-					_id: Authentication.user._id
-				},
-				chatDate: new Date()
-			};
-			mySocket.emit('chat message', packet);
-			//code for saving chat message
-			Chats.saveMessageData({
-				message: $scope.message,
-				sender : Authentication.user._id ,
-				reciever : null ,
-				chatType : 'Public'
-			}).success(function(){
-				console.log('success');
-			});
-			$scope.message = '';
+			if($scope.message) {
+				var packet = {
+					message: $scope.message,
+					sender: {
+						isImage: Authentication.user.isImage,
+						displayName: Authentication.user.displayName,
+						_id: Authentication.user._id
+					},
+					chatDate: new Date()
+				};
+				mySocket.emit('chat message', packet);
+				//code for saving chat message
+				Chats.saveMessageData({
+					message: $scope.message,
+					sender : Authentication.user._id ,
+					reciever : null ,
+					chatType : 'Public'
+				}).success(function(){
+					console.log('success');
+				});
+				$scope.message = '';
+			}
 		};
 		$scope.Messages = [];
 		$scope.chatCount = 0;
