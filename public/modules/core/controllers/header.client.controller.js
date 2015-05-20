@@ -1,22 +1,22 @@
 'use strict';
 
 angular.module('core').controller('HeaderController', ['$scope', '$rootScope', 'Authentication', 'Menus','toastr', 'PusherService','$translate','$location','$stateParams','mySocket','Chats','ngAudio',
-	function($scope, $rootScope, Authentication, Menus, toastr, PusherService, $translate, $location, $stateParams, mySocket, Chats ,ngAudio) {
+	function($scope, $rootScope, Authentication, Menus, toastr, PusherService, $translate, $location, $stateParams, mySocket, Chats , ngAudio) {
 
 		$scope.sound = ngAudio.load('sounds/chat.mp3');
+		$scope.showChat = false;
+		$scope.authentication = Authentication;
 
 		$rootScope.$on('ImageChanged', function (event, args) {
 			$scope.imgPath = args.ImagePath;
 			Authentication.user.updated = args.Date;
 		});
 
+
 		$rootScope.$on('GroupImageChanged', function (event, args) {
 			$scope.groupImage = args.ImagePath;
 			//Authentication.user.updated = args.Date;
 		});
-
-		$scope.showChat = false;
-		$scope.authentication = Authentication;
 
 		mySocket.on('user joined', function (data) {
 			console.log('list',data);
@@ -27,6 +27,9 @@ angular.module('core').controller('HeaderController', ['$scope', '$rootScope', '
 			console.log('Working on Anchor Tag');
 		};
 
+		window.onbeforeunload = function(e) {
+			$scope.removeUser();
+		};
 		$scope.isCollapsed = false;
 		$scope.prepareMenu = function() {
 			if ($scope.authentication.user !== '') {

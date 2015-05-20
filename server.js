@@ -7,7 +7,8 @@ var init = require('./config/init')(),
 	mongoose = require('mongoose'),
 	chalk = require('chalk');
 
-var usernames = [], numUsers = 0;
+var usernames = [];
+	//numUsers = 0;
 /**
  * Main application entry file.
  * Please note that the order of loading is important.
@@ -42,17 +43,33 @@ io.on('connection', function(socket){
 	socket.on('add user', function (username) {
 
 		// add the client's username to the global list
-		usernames.push({userName: username});
-		++numUsers;
-		console.log('User List',numUsers);
+		usernames.push(username);
+		//++numUsers;
+		console.log('User List',usernames);
 
 		// echo globally (all clients) that a person has connected
 		socket.emit('user joined', {
 			usernames: usernames,
-			numUsers: numUsers
+			numUsers: usernames.length
 		});
 	});
+	socket.on('remove user', function(username){
+		console.log('User to Remove', username);
+		console.log('user Data', usernames);
+		var index = usernames.indexOf(username);
+		if (index > -1) {
+			usernames.splice(index, 1);
+		}
+		//numUsers = numUsers - 1;
 
+		console.log('Remainging user',usernames);
+		socket.emit('user joined', {
+			usernames: usernames,
+			numUsers: usernames.length
+		});
+
+
+	});
 	socket.on('typing', function(msg){
 		io.emit('typing', msg);
 	});
