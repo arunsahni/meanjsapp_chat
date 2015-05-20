@@ -19,6 +19,7 @@ var mongoose = require('mongoose'),
 exports.create = function(req, res) {
 	var group = new Group(req.body);
 	group.user = req.user;
+	group.updated = Date.now();
 
 	group.save(function(err) {
 		if (err) {
@@ -34,7 +35,7 @@ exports.create = function(req, res) {
 exports.getSignedURL = function (req, res) {
 	aws.config.update({accessKeyId: AWS_ACCESS_KEY , secretAccessKey: AWS_SECRET_KEY });
 	var s3 = new aws.S3();
-	var fileName = req.user.group.id;
+	var fileName = req.query.group || req.user.group.id;
 	var s3_params = {
 		Bucket: S3_BUCKET,
 		Key: fileName,
@@ -47,13 +48,21 @@ exports.getSignedURL = function (req, res) {
 			console.log(err);
 		}
 		else{
-			var return_data = {
-				signed_request: data,
-				//url: 'https://'+S3_BUCKET+'.s3.amazonaws.com/'+'Arun'
-				url: 'https://s3.amazonaws.com/sumacrm/groups/' + fileName
-			};
-			res.write(JSON.stringify(return_data));
-			res.end();
+			var conditions = {_id: req.query.group},
+				updateQuery = {
+					updated: Date.now()
+				};
+			Group.findOneAndUpdate(conditions, updateQuery, function (err, group) {
+				var return_data = {
+					group: group.updated,
+					signed_request: data,
+					//url: 'https://'+S3_BUCKET+'.s3.amazonaws.com/'+'Arun'
+					url: 'https://s3.amazonaws.com/sumacrm/groups/' + fileName
+				};
+				res.write(JSON.stringify(return_data));
+				res.end();
+			});
+
 		}
 	});
 };
@@ -74,7 +83,8 @@ exports.update = function(req, res) {
     var conditions = {_id: req.body._id},
         update = {
             name: req.body.name,
-			isImage: req.body.isImage
+			isImage: req.body.isImage,
+			updated: Date.now()
         };
     Group.findOneAndUpdate(conditions, update, function (err, group){
         if (err) {
