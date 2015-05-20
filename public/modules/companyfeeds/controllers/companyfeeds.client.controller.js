@@ -6,8 +6,7 @@ angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '
 		$scope.authentication = Authentication;
 		var modalInstance;
 		// Create new Companyfeed
-		$scope.imgPath = Authentication.user._id + '.png';
-		$scope.imgPath = 'https://s3.amazonaws.com/sumacrm/avatars/' + Authentication.user._id;
+		$scope.imgPath = 'https://s3.amazonaws.com/sumacrm/avatars/' + Authentication.user._id + '?' + Authentication.user.updated;
 		$scope.imgPathOwn = 'https://s3.amazonaws.com/sumacrm/avatars/';
 		$scope.companyfeeds = [];
 

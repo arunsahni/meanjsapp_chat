@@ -1,0 +1,13 @@
+<section>
+    <div class='slider'>
+        <p class='slider-label'>{{label}}</p>
+        <p class='slider-value'>{{valuePrefix}}{{displayValue}}{{valueSuffix}}</p>
+        <div class='slider-container'>
+            <div class='slider-bar'>
+              <div class='slider-bar-highlight' ng-style='highlightStyle'></div>
+            </div>
+            <div class='slider-bar-stub'></div>
+            <div class='slider-handle' ng-mousedown='engageHandle($event)' ng-style='handleStyle'></div>
+        </div>
+    </div>
+</section>

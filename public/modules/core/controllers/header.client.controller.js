@@ -2,13 +2,21 @@
 
 angular.module('core').controller('HeaderController', ['$scope', '$rootScope', 'Authentication', 'Menus','toastr', 'PusherService','$translate','$location','$stateParams','$http',
 	function($scope, $rootScope, Authentication, Menus, toastr, PusherService, $translate, $location, $stateParams, $http) {
-
+		$rootScope.$on('ImageChanged', function (event, args) {
+			$scope.imgPath = args.ImagePath;
+			Authentication.user.updated = args.Date;
+		});
+		$rootScope.$on('GroupImageChanged', function (event, args) {
+			$scope.groupImage = args.ImagePath;
+			//Authentication.user.updated = args.Date;
+		});
+		$scope.showChat = false;
 		$scope.authentication = Authentication;
 
 		$scope.isCollapsed = false;
 		$scope.prepareMenu = function() {
 			if ($scope.authentication.user !== '') {
-				$scope.groupImage = 'https://s3.amazonaws.com/sumacrm/groups/' + Authentication.user.group._id;
+				$scope.groupImage = 'https://s3.amazonaws.com/sumacrm/groups/' + $scope.authentication.user.group._id + '?' + $scope.authentication.user.group.updated;
 				$rootScope.menu = Menus.getMenu('topbar');
 			}
 		};
@@ -46,11 +54,8 @@ angular.module('core').controller('HeaderController', ['$scope', '$rootScope', '
 			if(data.userData != Authentication.user._id)
 				$scope.bellNotifications.push(data);
 		});
-
-
-		$scope.imgPath = Authentication.user._id + '.png';
 		$scope.isActive = true;
-		$scope.imgPath = 'https://s3.amazonaws.com/sumacrm/avatars/' + Authentication.user._id;
+		$scope.imgPath = 'https://s3.amazonaws.com/sumacrm/avatars/' + Authentication.user._id + '?' + Authentication.user.updated;
 		$scope.toggleCollapsibleMenu = function() {
 			$scope.isCollapsed = !$scope.isCollapsed;
 		};
@@ -78,7 +83,7 @@ angular.module('core').controller('HeaderController', ['$scope', '$rootScope', '
 				}
 			}
 			$scope.isCollapsed = false;
-			$scope.imgPath = 'https://s3.amazonaws.com/sumacrm/avatars/' + Authentication.user._id;
+			$scope.imgPath = 'https://s3.amazonaws.com/sumacrm/avatars/' + Authentication.user._id + '?' + Authentication.user.updated;
 		});
 
 		PusherService.listen('Pusher-channel','Pusher-event', function(err, data) {
