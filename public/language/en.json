@@ -109,7 +109,8 @@
   "admin": {
     "adm": "Admin",
     "rmgt": "Role Management",
-    "accmgt":"Access Management"
+    "accmgt":"Access Management",
+    "noti": "Notifications"
   },
   "task": {
     "mtk": "My Tasks",

@@ -1,13 +1,25 @@
 'use strict';
 
 // Companyfeeds controller
-angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Companyfeeds','$modal',
-	function($scope, $stateParams, $location, Authentication, Companyfeeds, $modal) {
+angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Companyfeeds','$modal','toastr','PusherService',
+	function($scope, $stateParams, $location, Authentication, Companyfeeds, $modal, toastr, PusherService) {
 		$scope.authentication = Authentication;
 		var modalInstance;
 		// Create new Companyfeed
 		$scope.imgPath = 'https://s3.amazonaws.com/sumacrm/avatars/' + Authentication.user._id + '?' + Authentication.user.updated;
 		$scope.imgPathOwn = 'https://s3.amazonaws.com/sumacrm/avatars/';
+		$scope.companyfeeds = [];
+
+		function getIndexOf(arr, val, prop) {
+			var l = arr.length,
+				k = 0;
+			for (k = 0; k < l; k = k + 1) {
+				if (arr[k][prop] === val) {
+					return k;
+				}
+			}
+			return false;
+		}
 
 		$scope.create = function () {
 			Companyfeeds.savecompanyfeed({
@@ -55,11 +67,11 @@ angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '
 		};
 
 		// Find existing Companyfeed
-		$scope.findOne = function () {
+		$scope.initOne = function () {
 			Companyfeeds.getcompanyfeedById({
 				companyfeedId: $stateParams.companyfeedId
 			}).success(function (companyfeed) {
-				$scope.companyfeed = companyfeed;
+				$scope.companyfeeds.push(companyfeed);
 			});
 		};
 
@@ -72,6 +84,8 @@ angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '
 				}
 			}).success(function (companyfeeds) {
 				$scope.companyfeeds = companyfeeds;
+				delete $scope.comment;
+				$scope.initOne();
 			});
 		};
         $scope.isLiked = function (likers) {
@@ -90,16 +104,15 @@ angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '
                 Companyfeeds.addLiker({
                     compnayfeedId: $scope.companyfeeds[index]._id
                 }).success(function (companyfeeds) {
-                    $scope.companyfeeds = companyfeeds;
-                    $scope.myFlag = false;
-
+					$scope.myFlag = false;
+					$scope.companyfeeds = companyfeeds;
                 });
             } else {
                 Companyfeeds.removeLiker({
                     compnayfeedId: $scope.companyfeeds[index]._id
                 }).success(function (companyfeeds) {
                     $scope.companyfeeds = companyfeeds;
-                    $scope.myFlag = false;
+					$scope.myFlag = false;
                 });
             }
 		};
@@ -109,19 +122,20 @@ angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '
             if (!$scope.companyfeeds[feedIndex].comment.length || !$scope.isLiked($scope.companyfeeds[feedIndex].comment[commentIndex].commentLiker)) {
                 Companyfeeds.addCommentLike({
                     compnayfeedId: $scope.companyfeeds[feedIndex]._id,
-                    commentId: $scope.companyfeeds[feedIndex].comment[commentIndex]._id
+                    commentId: $scope.companyfeeds[feedIndex].comment[commentIndex]._id,
+					comment: $scope.companyfeeds[feedIndex].comment[commentIndex].comment
                 }).success(function (companyfeeds) {
-                    $scope.companyfeeds = companyfeeds;
-                    $scope.myFlag = false;
+					$scope.companyfeeds = companyfeeds;
+					$scope.myFlag = false;
                 });
             } else {
                 Companyfeeds.removeCommentLike({
                     compnayfeedId: $scope.companyfeeds[feedIndex]._id,
                     commentId: $scope.companyfeeds[feedIndex].comment[commentIndex]._id,
-
+					comment: $scope.companyfeeds[feedIndex].comment[commentIndex].comment
                 }).success(function (companyfeeds) {
-                    $scope.companyfeeds = companyfeeds;
-                    $scope.myFlag = false;
+					$scope.companyfeeds = companyfeeds;
+					$scope.myFlag = false;
                 });
             }
 		};
@@ -182,5 +196,52 @@ angular.module('companyfeeds').controller('CompanyfeedsController', ['$scope', '
 				//console.log('Modal dismissed at: ' + new Date());
 			});
 		};
+
+		PusherService.listen('Channel-Public','Post-AddEvent', function(err, data) {
+			toastr.success(data.message);
+			$scope.companyfeeds.splice(0,0,data.data);
+		});
+
+		PusherService.listen('Channel-Public','Commnet-AddEvent', function(err, data) {
+			toastr.success(data.message);
+			var index = getIndexOf($scope.companyfeeds, data.data._id, '_id');
+			$scope.companyfeeds[index].comment = data.data.comment;
+		});
+
+		PusherService.listen('Channel-Public','Post-LikeEvent', function(err, data) {
+			toastr.success(data.message);
+			var index = getIndexOf($scope.companyfeeds, data.data._id, '_id');
+			$scope.companyfeeds[index].likers = data.data.likers;
+		});
+
+		PusherService.listen('Channel-Public','Post-UnLikeEvent', function(err, data) {
+			toastr.success(data.message);
+			var index = getIndexOf($scope.companyfeeds, data.data._id, '_id');
+			$scope.companyfeeds[index].likers = data.data.likers;
+		});
+
+		PusherService.listen('Channel-Public','Commnet-LikeEvent', function(err, data) {
+			toastr.success(data.message);
+			var index = getIndexOf($scope.companyfeeds, data.data._id, '_id');
+			for (var j in $scope.companyfeeds[index].comment) {
+				for(var k in data.data.comment){
+					if ($scope.companyfeeds[index].comment[j]._id === data.data.comment[k]._id) {
+						$scope.companyfeeds[index].comment[j].commentLiker = data.data.comment[k].commentLiker;
+					}
+				}
+			}
+		});
+
+		PusherService.listen('Channel-Public','Commnet-UnLikeEvent', function(err, data) {
+			toastr.success(data.message);
+			var index = getIndexOf($scope.companyfeeds, data.data._id, '_id');
+			for (var j in $scope.companyfeeds[index].comment) {
+				for(var k in data.data.comment){
+					if ($scope.companyfeeds[index].comment[j]._id === data.data.comment[k]._id) {
+						$scope.companyfeeds[index].comment[j].commentLiker = data.data.comment[k].commentLiker;
+					}
+				}
+			}
+		});
 	}
 ]);
