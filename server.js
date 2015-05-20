@@ -53,13 +53,21 @@ io.on('connection', function(socket){
 			numUsers: usernames.length
 		});
 	});
+
 	socket.on('remove user', function(username){
 		console.log('User to Remove', username);
 		console.log('user Data', usernames);
-		var index = usernames.indexOf(username);
-		if (index > -1) {
-			usernames.splice(index, 1);
-		}
+		//var userToremove = [];
+		usernames.forEach(function(user, key) {
+			if(user.displayName == username){
+				usernames.splice(key, 1);
+			}
+		});
+		//userToremove.push(user.displayName);
+		//var index = userToremove.indexOf(username);
+		//if (index > -1) {
+		//	usernames.splice(index, 1);
+		//}
 		//numUsers = numUsers - 1;
 
 		console.log('Remainging user',usernames);
@@ -67,9 +75,8 @@ io.on('connection', function(socket){
 			usernames: usernames,
 			numUsers: usernames.length
 		});
-
-
 	});
+	
 	socket.on('typing', function(msg){
 		io.emit('typing', msg);
 	});
