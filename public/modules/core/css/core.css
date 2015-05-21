@@ -245,5 +245,73 @@
     font: 18px Arial, sans-serif;
     margin-bottom: -11px;
 }
+menu {
+    display: block;
+}
+menu > div {
+    position: absolute;
+    z-index: 2;
+    top: 20;
+    width: 150px;
+    height: 100%;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing : border-box;
+    box-sizing: border-box;
+    -webkit-transition: -webkit-transform ease 250ms;
+    -moz-transition: -webkit-transform ease 250ms;
+    -ms-transition: -webkit-transform ease 250ms;
+    -o-transition: -webkit-transform ease 250ms;
+    transition: -webkit-transform ease 250ms;
+    /*-webkit-transition: transform ease 250ms;*/
+    /*-moz-transition: transform ease 250ms;*/
+    /*-ms-transition: transform ease 250ms;*/
+    /*-o-transition: transform ease 250ms;*/
+    /*transition: transform ease 250ms;*/
+}
+menu > div.left {
+    background: #ffffff;
+    left: -250px;
+    margin-top: 13px;
+}
+menu > div.show.left {
+    -ms-transform: translate3d(250px, 0, 0);
+    -webkit-transform: translate3d(250px, 0, 0);
+    -o-transform: translate3d(250px, 0, 0);
+    -moz-transform: translate3d(250px, 0, 0);
+    transform: translate3d(250px, 0, 0);
+}
+menu > div.right {
+    background: #265a88;
+    right: -250px;
+}
+menu > div.show.right {
 
+    -ms-transform: translate3d(-250px, 0, 0);
+    -webkit-transform: translate3d(-250px, 0, 0);
+    -o-transform: translate3d(-250px, 0, 0);
+    -moz-transform: translate3d(-250px, 0, 0);
+    transform: translate3d(-250px, 0, 0);
+}
+menu > div > menu-item {
+    display: block;
+}
+menu > div > menu-item > div {
+    float: left;
+    width: 100%;
+    margin: 0;
+    padding: 10px 15px;
+    border-bottom: solid 1px #555;
+    cursor: pointer;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing : border-box;
+    box-sizing: border-box;
+    color: #B0B0B0;
+}
+menu > div > menu-item > div:hover {
+    color: #F0F0F0;
+}
+menu > div > menu-item > div > span {
+    float: left;
+    color: inherit;
+}
 

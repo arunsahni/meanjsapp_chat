@@ -5,7 +5,9 @@ angular.module('core').controller('HeaderController', ['$scope', '$rootScope', '
 
 		$scope.sound = ngAudio.load('sounds/chat.mp3');
 		$scope.showChat = false;
+		$scope.leftVisible = false;
 		$scope.authentication = Authentication;
+		$scope.userList = [];
 		$rootScope.$on('ImageChanged', function (event, args) {
 			$scope.imgPath = args.ImagePath;
 			Authentication.user.updated = args.Date;
@@ -18,6 +20,7 @@ angular.module('core').controller('HeaderController', ['$scope', '$rootScope', '
 
 		mySocket.on('user joined', function (data) {
 			console.log('list',data);
+			$scope.userList = data.usernames;
 		});
 
 		$scope.removeUser = function(){
@@ -174,14 +177,23 @@ angular.module('core').controller('HeaderController', ['$scope', '$rootScope', '
 				});
 			}
 		};
+
 		$scope.Redirect = function(bellnotificationid, feedid) {
 			var index = getIndexOf($scope.bellNotifications, bellnotificationid, '_id');
 			$scope.bellNotifications.splice(index, 1);
-			$http.put('/users/updatebellnotification', {feedId: bellnotificationid}).success(function(response) {
-				if(!feedid)
+			$http.put('/users/updatebellnotification', {feedId: bellnotificationid}).success(function (response) {
+				if (!feedid)
 					feedid = bellnotificationid;
-				$location.path('companyfeeds/'+feedid);
+				$location.path('companyfeeds/' + feedid);
 			});
+		};
+
+		$scope.showLeft = function(e) {
+			if($scope.leftVisible === false)
+				$scope.leftVisible = true;
+			else
+				$scope.leftVisible = false;
+			e.stopPropagation();
 		};
 	}
 ]);

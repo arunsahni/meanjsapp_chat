@@ -1,5 +1,5 @@
 <div data-ng-controller="HeaderController" data-ng-init="prepareMenu()" ng-show="authentication.user">
-    <div class="navbar navbar-fixed-top navbar-inverse">
+	<div class="navbar navbar-fixed-top navbar-inverse">
 		<div class="navbar-header">
 		<button class="navbar-toggle" type="button" data-ng-click="toggleCollapsibleMenu()">
 			<span class="sr-only">Toggle navigation</span>
@@ -98,13 +98,14 @@
 							<div  ng-click="minWind()">
 								<div class="panel-heading top-bar" ng-style="{ background: chatCount > 0 ? '#666699' : '#265a88' }" ng-click="widgetExpanded = !widgetExpanded" >
 								<div class="col-md-8 col-xs-8">
-									<h3 class="panel-title" style="color: white" ><span class="glyphicon glyphicon-comment"></span> Chat</h3>
+									<h3 class="panel-title" style="color: white" ><span class="glyphicon glyphicon-comment"></span>Chat</h3>
 
 								</div>
 								<!--<div class="col-md-4 col-xs-4" style="text-align: right;">-->
 								<!--<a href="#"><span id="minim_chat_window" class="glyphicon glyphicon-minus icon_minim" style="color: black"></span></a>-->
 								<a href="#" ng-if="chatCount>0"><span style="color: white ; float: right; margin-top: -2px;" class="numberCircle">{{chatCount}}</span></a>
 								<!--</div>-->
+									<span class="glyphicon glyphicon-align-justify " style='padding-left: 52px' ng-click="showLeft($event)"></span>
 								</div>
 							</div>
 							<div class="panel-body msg_container_base" ng-show="showChat" id="textarea_id">
@@ -150,6 +151,24 @@
 					</div>
 				</div>
 			</div>
+
 		</div>
 	</div>
+	<menu visible="leftVisible" alignment="left">
+		<div class="title">Online Users</div>
+		<div ng-repeat="user in userList">
+
+			<menu-item ng-if="user.id != authentication.user._id" hash="{{user}}">
+				<span>
+					<img ng-show="user.isImage" ng-src="https://s3.amazonaws.com/sumacrm/avatars/{{user.id + '?' + authentication.user.updated}}" class="img-circle" height="30" width="40">
+					<img ng-hide="user.isImage" ng-src="../imgs/default-avatar.jpg" class="img-circle" height="30" width="40">
+				</span>
+				<span style="color:#265a88">
+					{{user.displayName}}
+				</span>
+			</menu-item>
+		</div>
+	</menu>
 </div>
+
+
