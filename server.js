@@ -59,7 +59,7 @@ io.on('connection', function(socket){
 		console.log('user Data', usernames);
 		//var userToremove = [];
 		usernames.forEach(function(user, key) {
-			if(user.displayName == username){
+			if(user.displayName === username){
 				usernames.splice(key, 1);
 			}
 		});

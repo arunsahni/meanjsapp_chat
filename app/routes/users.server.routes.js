@@ -13,6 +13,8 @@ module.exports = function(app) {
 	app.route('/users/me').get(users.me);
 	app.route('/users').put(users.update);
 	app.route('/users/accounts').delete(users.removeOAuthProvider);
+	app.route('/users/updatebellnotification').put(users.bellNotificationUpdate);
+
 
 	// Setting up the users password api
 	app.route('/users/password').post(users.changePassword);

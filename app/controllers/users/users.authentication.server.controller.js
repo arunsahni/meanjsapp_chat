@@ -57,12 +57,16 @@ exports.signin = function(req, res, next) {
 			// Remove sensitive data before login
 			user.password = undefined;
 			user.salt = undefined;
-
-			req.login(user, function(err) {
-				if (err) {
-					res.status(400).send(err);
-				} else {
-					res.json(user);
+			user.populate('bellnotification.userData bellnotification.companyfeedId', function (err, user) {
+				if (err) res.status(400).send(err);
+				else {
+					req.login(user, function (err) {
+						if (err) {
+							res.status(400).send(err);
+						} else {
+							res.json(user);
+						}
+					});
 				}
 			});
 		}
@@ -203,4 +207,17 @@ exports.removeOAuthProvider = function(req, res, next) {
 			}
 		});
 	}
+};
+
+exports.bellNotificationUpdate = function(req, res, next) {
+	var user = req.user._id;
+	User.findOneAndUpdate({group: req.user.group, _id: mongoose.Types.ObjectId(user), 'bellnotification._id' : mongoose.Types.ObjectId(req.body.feedId)},{$set :{'bellnotification.$.isSeen': true}}).exec(function(err, data){
+		if(err) {
+			return res.status(500).json({
+				error: 'Cannot update bellnotification'
+			});
+		}else{
+			res.jsonp(data);
+		}
+	});
 };

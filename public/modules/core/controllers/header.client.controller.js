@@ -1,17 +1,15 @@
 'use strict';
 
-angular.module('core').controller('HeaderController', ['$scope', '$rootScope', 'Authentication', 'Menus','toastr', 'PusherService','$translate','$location','$stateParams','mySocket','Chats','ngAudio',
-	function($scope, $rootScope, Authentication, Menus, toastr, PusherService, $translate, $location, $stateParams, mySocket, Chats , ngAudio) {
+angular.module('core').controller('HeaderController', ['$scope', '$rootScope', 'Authentication', 'Menus','toastr', 'PusherService','$translate','$location','$stateParams','mySocket','Chats','ngAudio','$http',
+	function($scope, $rootScope, Authentication, Menus, toastr, PusherService, $translate, $location, $stateParams, mySocket, Chats , ngAudio, $http) {
 
 		$scope.sound = ngAudio.load('sounds/chat.mp3');
 		$scope.showChat = false;
 		$scope.authentication = Authentication;
-
 		$rootScope.$on('ImageChanged', function (event, args) {
 			$scope.imgPath = args.ImagePath;
 			Authentication.user.updated = args.Date;
 		});
-
 
 		$rootScope.$on('GroupImageChanged', function (event, args) {
 			$scope.groupImage = args.ImagePath;
@@ -37,6 +35,40 @@ angular.module('core').controller('HeaderController', ['$scope', '$rootScope', '
 				$rootScope.menu = Menus.getMenu('topbar');
 			}
 		};
+		function getIndexOf(arr, val, prop) {
+			var l = arr.length,
+				k = 0;
+			for (k = 0; k < l; k = k + 1) {
+				if (arr[k][prop] === val) {
+					return k;
+				}
+			}
+			return false;
+		}
+		$scope.bellNotifications = [];
+		if (Authentication.user) {
+			for(var i = 0,len = Authentication.user.bellnotification.length;i < len ;i++) {
+				if(Authentication.user.bellnotification[i].isSeen === false ){
+					$scope.bellNotifications.push(Authentication.user.bellnotification[i]);
+				}
+			}
+		}
+
+
+		PusherService.listen('Channel-Public','Commnet-AddEvent', function(err, data) {
+			if(data.userData !== Authentication.user._id)
+			 	$scope.bellNotifications.push(data);
+		});
+
+		PusherService.listen('Channel-Public','Post-LikeEvent', function(err, data) {
+			if(data.userData !== Authentication.user._id)
+				$scope.bellNotifications.push(data);
+		});
+
+		PusherService.listen('Channel-Public','Commnet-LikeEvent', function(err, data) {
+			if(data.userData !== Authentication.user._id)
+				$scope.bellNotifications.push(data);
+		});
 		$scope.isActive = true;
 
 		$scope.imgPath = 'https://s3.amazonaws.com/sumacrm/avatars/' + Authentication.user._id + '?' + Authentication.user.updated;
@@ -142,6 +174,14 @@ angular.module('core').controller('HeaderController', ['$scope', '$rootScope', '
 				});
 			}
 		};
-
+		$scope.Redirect = function(bellnotificationid, feedid) {
+			var index = getIndexOf($scope.bellNotifications, bellnotificationid, '_id');
+			$scope.bellNotifications.splice(index, 1);
+			$http.put('/users/updatebellnotification', {feedId: bellnotificationid}).success(function(response) {
+				if(!feedid)
+					feedid = bellnotificationid;
+				$location.path('companyfeeds/'+feedid);
+			});
+		};
 	}
 ]);

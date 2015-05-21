@@ -19,7 +19,7 @@ module.exports = function() {
 
 	// Deserialize sessions
 	passport.deserializeUser(function(id, done) {
-		User.findOne({_id: id}, '-salt -password').populate('group').exec(function(err, user) {
+		User.findOne({_id: id}, '-salt -password').populate('group bellnotification.userData bellnotification.companyfeedId').exec(function(err, user) {
 			//User.findOne({
 			// _id: id
 			//}).populate('group'), '-salt -password', function(err, user) {

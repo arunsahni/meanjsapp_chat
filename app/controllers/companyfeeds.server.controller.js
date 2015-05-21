@@ -6,7 +6,9 @@
 var mongoose = require('mongoose'),
 	errorHandler = require('./errors.server.controller'),
 	Companyfeed = mongoose.model('Companyfeed'),
+	User = mongoose.model('User'),
 	_ = require('lodash');
+var pusherService = require('../core/pusher');
 
 /**
  * Create a Companyfeed
@@ -15,20 +17,37 @@ exports.create = function(req, res) {
 	var companyfeed = new Companyfeed(req.body);
 	companyfeed.user = req.user;
 	companyfeed.group = req.user.group;
-
-	companyfeed.save(function(err) {
+	companyfeed.save(function(err,data) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
 			Companyfeed.find({group: req.user.group}).sort('-created').populate('user likers comment.commentLiker comment.commenteduser').exec(function(err, companyfeeds) {
-
 				if (err) {
 					return res.status(400).send({
 						message: errorHandler.getErrorMessage(err)
 					});
 				} else {
+					var BellNotification = {
+						userData: req.user,
+						message: req.user.displayName+' add new post on ' + companyfeed.name,
+						notificationtype: 'Post',
+						isSeen: false,
+						companyfeedId : data._id
+					};
+					User.findOneAndUpdate({group: req.user.group},{$push : {bellnotification: BellNotification}}, {multi: true}).exec(function(err, data){
+						if(err) {
+							return res.status(500).json({
+								error: 'Cannot add the Bell Notificatiom'
+							});
+						}else{
+							console.log('Here in create post');
+						}
+					});
+					companyfeed.populate('user likers comment.commentLiker comment.commenteduser',function(err, data){
+						pusherService.pusherGenerate('Channel-Public', 'Post-AddEvent', {'message': req.user.displayName+' add new post on ' + companyfeed.name,'userData':req.user,'data': data});
+					});
 					res.jsonp(companyfeeds);
 				}
 			});
@@ -89,6 +108,7 @@ exports.list = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
+
 			res.jsonp(companyfeeds);
 		}
 	});
@@ -97,12 +117,15 @@ exports.list = function(req, res) {
 /**
  * Companyfeed middleware
  */
-exports.companyfeedByID = function(req, res, next, id) { 
-	Companyfeed.findById(id).populate('user likers comment.commentLiker comment.commenteduser').exec(function(err, companyfeed) {
+exports.companyfeedByID = function(req, res, next) {
+	Companyfeed.findById(req.params.id).populate('user likers comment.commentLiker comment.commenteduser').exec(function(err, companyfeed) {
 		if (err) return next(err);
-		if (! companyfeed) return next(new Error('Failed to load Companyfeed ' + id));
-		req.companyfeed = companyfeed ;
-		next();
+		if (!companyfeed) {
+			return res.status(404).send({
+				message: 'Companydeed not found'
+			});
+		}
+		res.json(companyfeed);
 	});
 };
 
@@ -117,18 +140,36 @@ exports.hasAuthorization = function(req, res, next) {
 };
 
 exports.addComment = function(req,res){
-	Companyfeed.findOneAndUpdate({_id: mongoose.Types.ObjectId(req.body.compnayfeedId)},{$push:{ comment : req.body.comment}}).exec(function(err,data) {
+	Companyfeed.findOneAndUpdate({_id: mongoose.Types.ObjectId(req.body.compnayfeedId)},{$push:{ comment : req.body.comment}}).populate('user likers comment.commentLiker comment.commenteduser').exec(function(err,data) {
 		if (err) {
 			return res.status(500).json({
-				error: 'Cannot add the bid'
+				error: 'Cannot add the comment on post'
 			});
 		} else {
+			var BellNotification = {
+				userData: req.user,
+				message: req.user.displayName+' commented on Post ' + data.name,
+				notificationtype: 'Comment',
+				isSeen: false,
+				companyfeedId : req.body.compnayfeedId
+			};
+			User.findOneAndUpdate({group: req.user.group},{$push : {bellnotification: BellNotification}}, {multi: true}).exec(function(err, data){
+				if(err) {
+					return res.status(500).json({
+						error: 'Cannot add the Bell Notification'
+					});
+				}else{
+					console.log('Here in Comment Add');
+					//pusherService.pusherGenerate('Channel-Public', 'Post-LikeEvent', {'message': req.user.displayName+' like post ' + data.name,'userData':req.user,'data': data});
+				}
+			});
 			Companyfeed.find().sort('-created').populate('user likers comment.commentLiker comment.commenteduser').exec(function(err, companyfeeds) {
 				if (err) {
 					return res.status(400).send({
 						message: errorHandler.getErrorMessage(err)
 					});
 				} else {
+					pusherService.pusherGenerate('Channel-Public', 'Commnet-AddEvent', {'message': req.user.displayName+' commented on Post ' + data.name,'userData':req.user._id,'data': {_id: data._id , comment: data.comment } });
 					res.jsonp(companyfeeds);
 				}
 			});
@@ -137,18 +178,37 @@ exports.addComment = function(req,res){
 };
 
 exports.addLikers = function(req, res){
-	Companyfeed.findOneAndUpdate({_id: mongoose.Types.ObjectId(req.body.compnayfeedId)}, {$push : {likers: req.user}}).exec(function(err,data) {
+
+	Companyfeed.findOneAndUpdate({_id: mongoose.Types.ObjectId(req.body.compnayfeedId)}, {$push : {likers: req.user}}).populate('user likers comment.commentLiker comment.commenteduser').exec(function(err,data) {
 		if (err) {
 			return res.status(500).json({
-				error: 'Cannot add the bid'
+				error: 'Cannot add the Like'
 			});
 		} else {
+			var BellNotification = {
+				userData: req.user,
+				message: req.user.displayName+' like post ' + data.name,
+				notificationtype: 'like',
+				isSeen: false,
+				companyfeedId : req.body.compnayfeedId
+			};
+			User.findOneAndUpdate({group: req.user.group},{$push : {bellnotification: BellNotification}}, {multi: true}).exec(function(err, data){
+				if(err) {
+					return res.status(500).json({
+						error: 'Cannot add the Bell Notification'
+					});
+				}else{
+					console.log('Here in Likes add ');
+
+				}
+			});
 			Companyfeed.find().sort('-created').populate('user likers comment.commentLiker comment.commenteduser').exec(function(err, companyfeeds) {
 				if (err) {
 					return res.status(400).send({
 						message: errorHandler.getErrorMessage(err)
 					});
 				} else {
+					pusherService.pusherGenerate('Channel-Public', 'Post-LikeEvent', {'message': req.user.displayName+' like post ' + data.name,'userData':req.user,'data': {_id: data._id , likers: data.likers }});
 					res.jsonp(companyfeeds);
 				}
 			});
@@ -157,10 +217,10 @@ exports.addLikers = function(req, res){
 };
 
 exports.removeLiker = function(req, res){
-    Companyfeed.findOneAndUpdate({_id: mongoose.Types.ObjectId(req.body.compnayfeedId)}, {$pop: {likers: req.user}}).exec(function(err, data) {
+    Companyfeed.findOneAndUpdate({_id: mongoose.Types.ObjectId(req.body.compnayfeedId)}, {$pop: {likers: req.user}}).populate('user likers comment.commentLiker comment.commenteduser').exec(function(err, data) {
         if (err) {
             return res.status(500).json({
-                error: 'Cannot add the bid'
+                error: 'Cannot Remove Like'
             });
         } else {
             Companyfeed.find().sort('-created').populate('user likers comment.commentLiker comment.commenteduser').exec(function(err, companyfeeds) {
@@ -169,6 +229,7 @@ exports.removeLiker = function(req, res){
                         message: errorHandler.getErrorMessage(err)
                     });
                 } else {
+					pusherService.pusherGenerate('Channel-Public', 'Post-UnLikeEvent', {'message': req.user.displayName+' unliked post ' + data.name,'userData':req.user,'data': {_id: data._id , likers: data.likers }});
                     res.jsonp(companyfeeds);
                 }
             });
@@ -177,18 +238,36 @@ exports.removeLiker = function(req, res){
 };
 
 exports.addCommentLike = function(req, res) {
-	Companyfeed.findOneAndUpdate(({_id: mongoose.Types.ObjectId(req.body.compnayfeedId)},{'comment._id' : mongoose.Types.ObjectId(req.body.commentId)}), {$push : {'comment.$.commentLiker': req.user}}).exec(function (err, data) {
+	Companyfeed.findOneAndUpdate(({_id: mongoose.Types.ObjectId(req.body.compnayfeedId)},{'comment._id' : mongoose.Types.ObjectId(req.body.commentId)}), {$push : {'comment.$.commentLiker': req.user}}).populate('user likers comment.commentLiker comment.commenteduser').exec(function (err, data) {
 		if (err) {
 			return res.status(500).json({
-				error: 'Cannot add the bid'
+				error: 'Cannot add the Comment Likes'
 			});
 		} else {
+			var BellNotification = {
+				userData: req.user,
+				message: req.user.displayName +' Liked comment ' + req.body.comment,
+				notificationtype: 'CommentLike',
+				isSeen: false,
+				companyfeedId : req.body.compnayfeedId
+			};
+			User.findOneAndUpdate({group: req.user.group},{$push : {bellnotification: BellNotification}}, {multi: true}).exec(function(err, data){
+				if(err) {
+					return res.status(500).json({
+						error: 'Cannot add the Bell Notification'
+					});
+				}else{
+					console.log('Here in commentLike');
+					//pusherService.pusherGenerate('Channel-Public', 'Post-LikeEvent', {'message': req.user.displayName+' like post ' + data.name,'userData':req.user,'data': data});
+				}
+			});
 			Companyfeed.find().sort('-created').populate('user likers comment.commentLiker comment.commenteduser').exec(function(err, companyfeeds) {
 				if (err) {
 					return res.status(400).send({
 						message: errorHandler.getErrorMessage(err)
 					});
 				} else {
+					pusherService.pusherGenerate('Channel-Public', 'Commnet-LikeEvent', { message: req.user.displayName +' Liked comment ' + req.body.comment,'userData':req.user,'data': {_id: data._id , comment: data.comment }});
 					res.jsonp(companyfeeds);
 				}
 			});
@@ -197,10 +276,10 @@ exports.addCommentLike = function(req, res) {
 };
 
 exports.removeCommentLike = function(req, res) {
-	Companyfeed.findOneAndUpdate(({_id: mongoose.Types.ObjectId(req.body.compnayfeedId)}, {'comment._id' : mongoose.Types.ObjectId(req.body.commentId)}), {$pop : {'comment.$.commentLiker': req.body.commentLiker}}).exec(function (err, data) {
+	Companyfeed.findOneAndUpdate(({_id: mongoose.Types.ObjectId(req.body.compnayfeedId)}, {'comment._id' : mongoose.Types.ObjectId(req.body.commentId)}), {$pop : {'comment.$.commentLiker': req.body.commentLiker}}).populate('user likers comment.commentLiker comment.commenteduser').exec(function (err, data) {
 		if (err) {
 			return res.status(500).json({
-				error: 'Cannot add the bid'
+				error: 'Cannot Remove comment Like'
 			});
 		} else {
 			Companyfeed.find().sort('-created').populate('user likers comment.commentLiker comment.commenteduser').exec(function(err, companyfeeds) {
@@ -209,6 +288,7 @@ exports.removeCommentLike = function(req, res) {
 						message: errorHandler.getErrorMessage(err)
 					});
 				} else {
+					pusherService.pusherGenerate('Channel-Public', 'Commnet-UnLikeEvent',{message : req.user.displayName+ 'Unliked Comment ' + req.body.comment,'userData':req.user,'data': {_id: data._id , comment: data.comment }});
 					res.jsonp(companyfeeds);
 				}
 			});

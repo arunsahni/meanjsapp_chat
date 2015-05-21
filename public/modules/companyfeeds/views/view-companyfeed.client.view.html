@@ -1,21 +1,97 @@
-<section data-ng-controller="CompanyfeedsController" data-ng-init="findOne()">
-	<div class="page-header">
-		<h1 data-ng-bind="companyfeed.name"></h1>
+<section data-ng-controller="CompanyfeedsController" data-ng-init="initOne()">
+	<div class="row panel panel-default">
 	</div>
-	<div class="pull-right" data-ng-show="((authentication.user) && (authentication.user._id == companyfeed.user._id))">
-		<a class="btn btn-primary" href="/#!/companyfeeds/{{companyfeed._id}}/edit">
-			<i class="glyphicon glyphicon-edit"></i>
-		</a>
-		<a class="btn btn-primary" data-ng-click="remove();">
-			<i class="glyphicon glyphicon-trash"></i>
-		</a>
+	<div class="row panel panel-default">
+		<div class="row">
+			<small class="pull-left col-md-offset-9 col-xs-offset-5">
+				<span translate="list.pon"></span>
+				<span data-ng-bind="companyfeeds[0].created | date:'medium'"></span>
+			</small>
+		</div>
+		<div class="col-md-1 col-xs-3">
+			<img ng-hide="companyfeeds[0].user.isImage" ng-src="../imgs/default-avatar.jpg"  height="60" width="55" class="img-rounded panel panel-default">
+			<img ng-show="companyfeeds[0].user.isImage" ng-src="{{imgPathOwn + companyfeeds[0].user._id}}" height="60" width="55" class="img-rounded panel panel-default">
+		</div>
+		<div class="col-md-11 col-xs-9">
+			<div class="row">
+				<div class="col-md-4 col-xs-8">
+					<b><span class="text-primary" data-ng-bind="companyfeeds[0].user.displayName"></span></b>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-11 col-xs-10 text-justify">
+					<p data-ng-bind="companyfeeds[0].name"></p>
+				</div>
+			</div>
+			<div class="row">
+				<div class = "col-md-11 col-xs-10">
+					<button ng-class="isLiked(0) ? 'btn-primary glyphicon glyphicon-thumbs-up' : 'glyphicon glyphicon-thumbs-up'"
+							ng-click="addLiker(0)"
+							ng-disabled = "myFlag">
+					</button>
+					<a ng-if="companyfeeds[0].likers.length > 0"
+					   tooltipPlacement="bottom"
+					   class="red-tooltip"
+					   ng-mouseover ="likersName(companyfeeds[0].likers)"
+					   data-toggle="tooltip"
+					   tooltip="{{LikerName}}">{{'company.lik' | translate}}</a>
+					<a ng-if="companyfeeds[0].likers.length>0" ng-mouseover ="likersName(companyfeeds[0].likers)" ng-click="showliker()">({{companyfeeds[0].likers.length}})</a>
+				</div>
+			</div>
+			<br>
+			<div class="row">
+				<div ng-repeat="comment in companyfeeds[0].comment | limitTo: paginationLimit(0)" class="col-md-11 col-xs-10">
+					<div class="row">
+						<div class="col-md-1 col-xs-2">
+							<img ng-hide="comment.commenteduser.isImage" ng-src="../imgs/default-avatar.jpg"  height="30" width="30" class="img-thumbnail">
+							<img ng-show="comment.commenteduser.isImage" ng-src="{{imgPathOwn+comment.commenteduser._id}}" data-toggle="tooltip"
+								 data-placement="bottom"
+								 class="red-tooltip"
+								 tooltip="{{comment.user_name}}"
+								 height="30" width="30">
+						</div>
+						<div class="col-md-11 col-xs-10">
+							<div class="row">
+								<div class="col-md-11 col-xs-10" ng-bind="comment.comment">
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-11 col-xs-10">
+									<button ng-class="!!isLiked($index) ? 'btn-primary glyphicon glyphicon-thumbs-up' : 'glyphicon glyphicon-thumbs-up'"
+											ng-click="addCommentLike(0, $index)"
+											ng-disabled = "myFlag"></button>
+									<a ng-if="comment.commentLiker.length"
+									   data-toggle="tooltip"
+									   data-placement="bottom"
+									   class="red-tooltip"
+									   ng-mouseover ="likersName(comment.commentLiker)"
+									   tooltip="{{LikerName}}"
+									   data-liker="{{LikerName}}">{{'company.lik' | translate}}</a>
+									<a ng-if="comment.commentLiker.length" ng-mouseover ="likersName(comment.commentLiker)" ng-click="showliker()">({{comment.commentLiker.length}})</a>
+								</div>
+							</div>
+							<br>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<a  class="row col-md-2 col-xs-8 col-xs-offset-1 col-md-offset-1" ng-show="hasMoreItemsToShow(0)" ng-click="showMoreItems(0)" translate="{{show_name}}"></a>
+					<a  class="row col-md-2 col-xs-8 col-xs-offset-1 col-md-offset-1" ng-if="!hasMoreItemsToShow(0) && Buttonshow_size > 1" ng-click="showMoreItemsLess(0)" translate="{{show_name_less}}"></a>
+				</div>
+			</div>
+			<br>
+			<div class="row">
+				<div class="col-md-1 col-xs-2">
+					<img ng-hide="authentication.user.isImage" ng-src="../imgs/default-avatar.jpg"  height="30" width="30" class="img-thumbnail">
+					<img ng-show="authentication.user.isImage" ng-src="{{imgPath}}" height="30" width="30">
+				</div>
+				<div class="col-md-9 col-xs-8">
+					<form ng-submit="addComment(companyfeeds[0]._id)">
+						<input data-ng-model="comment"  class="form-control" placeholder="{{'company.comment'| translate}}" required>
+					</form>
+				</div>
+			</div>
+			<br>
+		</div>
 	</div>
-	<small>
-		<em class="text-muted">
-			Posted on
-			<span data-ng-bind="companyfeed.created | date:'mediumDate'"></span>
-			by
-			<span data-ng-bind="companyfeed.user.displayName"></span>
-		</em>
-	</small>
 </section>
