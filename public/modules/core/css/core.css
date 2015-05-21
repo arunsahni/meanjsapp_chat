@@ -271,7 +271,8 @@ menu > div {
 menu > div.left {
     background: #ffffff;
     left: -250px;
-    margin-top: 13px;
+    margin-top: 4px;
+    border: 1px solid #e5e5e5;
 }
 menu > div.show.left {
     -ms-transform: translate3d(250px, 0, 0);

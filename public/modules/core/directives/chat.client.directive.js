@@ -5,7 +5,7 @@
 angular.module('core').directive('menu', function() {
     return {
         restrict: 'E',
-        template: "<div ng-class='{ show: visible, left: alignment === \"left\", right: alignment === \"right\" }' ng-transclude></div>",
+        template: '<div ng-class="{ show: visible, left: alignment === \'left\', right: alignment === \'right\' }" ng-transclude></div>',
         transclude: true,
         scope: {
             visible: '=',
@@ -17,7 +17,7 @@ angular.module('core').directive('menu', function() {
 angular.module('core').directive('menuItem', function() {
     return {
         restrict: 'E',
-        template: "<div ng-click='openChatBox()' ng-transclude style='margin-left: 2px'></div>",
+        template: '<div ng-click="openChatBox()" ng-transclude style="margin-left: 2px"></div>',
         transclude: true,
         scope: {
             hash: '@'
@@ -29,3 +29,4 @@ angular.module('core').directive('menuItem', function() {
         }
     };
 });
+
