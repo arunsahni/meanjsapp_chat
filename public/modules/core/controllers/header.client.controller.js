@@ -20,7 +20,11 @@ angular.module('core').controller('HeaderController', ['$scope', '$rootScope', '
 		});
 
 		Chats.getUserList({}).success(function (Users)  {
-			$scope.userList = Users;
+			angular.forEach(Users, function(val){
+				if(val._id !== $scope.authentication.user._id){
+					$scope.userList.push(val);
+				}
+			});
 		});
 
 		mySocket.on('user joined', function (data) {
