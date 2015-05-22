@@ -61,7 +61,7 @@ io.on('connection', function(socket){
 		// add the client's username to the global list
 		usernames.push(username);
 		//++numUsers;
-		User.findOneAndUpdate({_id: username.id},{$set: {'status':'online'}},function(err, data){
+		User.findOneAndUpdate({_id: username._id},{$set: {'status':'online'}},function(err, data){
 			if(err) {
 				console.log(err);
 			}

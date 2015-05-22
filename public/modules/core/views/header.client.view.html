@@ -222,7 +222,7 @@
 
 			<menu-item  hash="{{user}}">
 				<span>
-					<img ng-show="user.isImage" ng-src="https://s3.amazonaws.com/sumacrm/avatars/{{user.id + '?' + authentication.user.updated}}" class="img-circle" height="30" width="40">
+					<img ng-show="user.isImage" ng-src="https://s3.amazonaws.com/sumacrm/avatars/{{user._id + '?' + authentication.user.updated}}" class="img-circle" height="30" width="40">
 					<img ng-hide="user.isImage" ng-src="../imgs/default-avatar.jpg" class="img-circle" height="30" width="40">
 				</span>
 				<span style="color:#265a88" ng-click="minWindPrivate(user)">

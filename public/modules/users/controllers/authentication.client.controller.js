@@ -33,7 +33,7 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$http
 				// If successful we assign the response to the global user model
 				$scope.authentication.user = response;
 				var object = {};
-				object.id = $scope.authentication.user._id;
+				object._id = $scope.authentication.user._id;
 				object.displayName = $scope.authentication.user.displayName;
 				object.isImage = $scope.authentication.user.isImage;
 
