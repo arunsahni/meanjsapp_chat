@@ -22,6 +22,7 @@ var db = mongoose.connect(config.db, function(err) {
 	}
 });
 
+
 // Init the express application
 var app = require('./config/express')(db);
 
@@ -31,10 +32,25 @@ require('./config/passport')();
 // Start the app by listening on <port>
 var server = app.listen(config.port),
 
-
+	User = mongoose.model('User'),
 	io = require('socket.io')(server);
 
+
 io.on('connection', function(socket){
+	var allClients = [];
+	console.log('Socket info',socket.id);
+
+	allClients.push(socket);
+
+	socket.on('disconnect', function() {
+		console.log('Got disconnect!');
+		var i = allClients.indexOf(socket);
+		//console.log('Index', i);
+
+		delete allClients[i];
+		//console.log('Index', allClients);
+	});
+
 	socket.on('chat message', function(msg){
 		msg.time = new Date();
 		io.emit('chat message', msg);
@@ -45,6 +61,11 @@ io.on('connection', function(socket){
 		// add the client's username to the global list
 		usernames.push(username);
 		//++numUsers;
+		User.findOneAndUpdate({_id: username.id},{$set: {'status':'online'}},function(err, data){
+			if(err) {
+				console.log(err);
+			}
+		});
 		console.log('User List',usernames);
 
 		// echo globally (all clients) that a person has connected
@@ -55,12 +76,18 @@ io.on('connection', function(socket){
 	});
 
 	socket.on('remove user', function(username){
-		console.log('User to Remove', username);
 		console.log('user Data', usernames);
 		//var userToremove = [];
 		usernames.forEach(function(user, key) {
-			if(user.displayName === username){
+			if(user.displayName === username.displayName){
 				usernames.splice(key, 1);
+				User.findOneAndUpdate({_id: username._id},{$set: {'status':'offline'}},function(err, data){
+					if(err) {
+						console.log(err);
+					}else{
+						console.log('success');
+					}
+				});
 			}
 		});
 		//userToremove.push(user.displayName);

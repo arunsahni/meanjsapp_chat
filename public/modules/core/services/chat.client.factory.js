@@ -13,5 +13,9 @@ angular.module('core').factory('Chats', [ '$http' , function ($http) {
     chatService.getMessageData = function(req,res){
         return $http.get('/chats');
     };
+    chatService.getUserList = function(req, res) {
+        return $http.get('/onlineUsers');
+    };
+
     return chatService;
 }]);

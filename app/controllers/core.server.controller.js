@@ -2,7 +2,8 @@
 
 var mongoose = require('mongoose'),
 	errorHandler = require('./errors.server.controller'),
-	Chat = mongoose.model('Chat');
+	Chat = mongoose.model('Chat'),
+	User = mongoose.model('User');
 /**
  * Module dependencies.
  */
@@ -26,7 +27,21 @@ exports.chatSave = function(req,res) {
 	});
 };
 
-exports.chatFind = function(req,res){
+exports.onlineUsers = function(req, res){
+	User.find({status:'online'},{displayName: 1,isImage: 1,status: 1}).exec(function (err, users) {
+		if (err) {
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else {
+			res.json(users);
+		}
+	});
+
+
+};
+
+exports.chatFind = function(req, res){
 	Chat.find({}).sort({'chatDate':-1}).limit(10).populate('sender reciever').exec(function (err, chats) {
 		if (err) {
 			return res.status(400).send({
@@ -36,6 +51,5 @@ exports.chatFind = function(req,res){
 			res.json(chats.reverse());
 		}
 	});
-
-
 };
+

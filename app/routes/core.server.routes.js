@@ -6,4 +6,6 @@ module.exports = function(app) {
 	app.route('/').get(core.index);
 	app.route('/chat/chatSave').post(core.chatSave);
 	app.route('/chats').get(core.chatFind);
+	app.route('/onlineUsers').get(core.onlineUsers);
+
 };

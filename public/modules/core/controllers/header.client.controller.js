@@ -19,13 +19,18 @@ angular.module('core').controller('HeaderController', ['$scope', '$rootScope', '
 			//Authentication.user.updated = args.Date;
 		});
 
+		Chats.getUserList({}).success(function (Users)  {
+			$scope.userList = Users;
+		});
+
 		mySocket.on('user joined', function (data) {
 			console.log('list',data);
 			$scope.userList = data.usernames;
+
 		});
 
 		$scope.removeUser = function(){
-			mySocket.emit('remove user', $scope.authentication.user.displayName);
+			mySocket.emit('remove user', $scope.authentication.user);
 			console.log('Working on Anchor Tag');
 		};
 
@@ -38,6 +43,7 @@ angular.module('core').controller('HeaderController', ['$scope', '$rootScope', '
 				$scope.groupImage = 'https://s3.amazonaws.com/sumacrm/groups/' + $scope.authentication.user.group._id + '?' + $scope.authentication.user.group.updated;
 				$rootScope.menu = Menus.getMenu('topbar');
 			}
+
 		};
 		function getIndexOf(arr, val, prop) {
 			var l = arr.length,
