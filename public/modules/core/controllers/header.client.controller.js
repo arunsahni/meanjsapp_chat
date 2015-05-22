@@ -6,6 +6,7 @@ angular.module('core').controller('HeaderController', ['$scope', '$rootScope', '
 		$scope.sound = ngAudio.load('sounds/chat.mp3');
 		$scope.showChat = false;
 		$scope.leftVisible = false;
+		$scope.showChatPrivate = false;
 		$scope.authentication = Authentication;
 		$scope.userList = [];
 		$rootScope.$on('ImageChanged', function (event, args) {
@@ -177,7 +178,13 @@ angular.module('core').controller('HeaderController', ['$scope', '$rootScope', '
 				});
 			}
 		};
-
+		$scope.minWindPrivate = function(user) {
+			if ($scope.showChatPrivate)
+				$scope.showChatPrivate = false;
+			else
+				$scope.showChatPrivate = true;
+				$scope.bharat1212 = user.displayName;
+		};
 		$scope.Redirect = function(bellnotificationid, feedid) {
 			var index = getIndexOf($scope.bellNotifications, bellnotificationid, '_id');
 			$scope.bellNotifications.splice(index, 1);

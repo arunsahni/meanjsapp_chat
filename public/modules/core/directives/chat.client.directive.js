@@ -24,7 +24,7 @@ angular.module('core').directive('menuItem', function() {
         },
         link: function($scope) {
             $scope.openChatBox = function() {
-                window.alert($scope.hash);
+                //window.alert($scope.hash);
             };
         }
     };
