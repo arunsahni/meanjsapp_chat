@@ -127,6 +127,7 @@ angular.module('core').controller('HeaderController', ['$scope', '$rootScope', '
 			if($scope.message) {
 				var packet = {
 					message: $scope.message,
+					chatType: 'Public',
 					sender: {
 						isImage: Authentication.user.isImage,
 						displayName: Authentication.user.displayName,
@@ -147,7 +148,34 @@ angular.module('core').controller('HeaderController', ['$scope', '$rootScope', '
 				$scope.message = '';
 			}
 		};
+		$scope.submitPrivatechat = function () {
+			if($scope.privatemessage) {
+				var packet = {
+					message: $scope.privatemessage,
+					chatType: 'Private',
+					sender: {
+						isImage: Authentication.user.isImage,
+						displayName: Authentication.user.displayName,
+						_id: Authentication.user._id
+					},
+					chatDate: new Date()
+				};
+				mySocket.emit('chat message', packet);
+				//code for saving chat message
+				Chats.savePrivateMessageData({
+					message: $scope.privatemessage,
+					sender : Authentication.user._id ,
+					reciever : $scope.privatechatuser._id ,
+					chatType : 'Private'
+				}).success(function(){
+					console.log('success');
+				});
+				$scope.privatemessage = '';
+			}
+		};
+
 		$scope.Messages = [];
+		$scope.privateMessages = [];
 		$scope.chatCount = 0;
 		mySocket.on('chat message', function(packet){
 			if (Authentication.user._id === packet.sender._id) {
@@ -161,8 +189,13 @@ angular.module('core').controller('HeaderController', ['$scope', '$rootScope', '
 			}
 			var textarea = document.getElementById('textarea_id');
 			textarea.scrollTop = textarea.scrollHeight;
+			if(packet.chatType === 'Private') {
+				$scope.privateMessages.push(packet);
+			} else {
+				$scope.Messages.push(packet);
+			}
 
-			$scope.Messages.push(packet);
+
 		});
 
 		$scope.minWind = function() {
@@ -189,11 +222,28 @@ angular.module('core').controller('HeaderController', ['$scope', '$rootScope', '
 			}
 		};
 		$scope.minWindPrivate = function(user) {
-			if ($scope.showChatPrivate)
+			if ($scope.showChatPrivate) {
 				$scope.showChatPrivate = false;
+			}
 			else
 				$scope.showChatPrivate = true;
-				$scope.privatechatname = user.displayName;
+				$scope.privatechatuser = user;
+			if ($scope.privateMessages.length === 0) {
+				Chats.getPrivateMessageData({
+					reciverId : $scope.privatechatuser._id
+				}).success(function (messageData) {
+					for (var i = 0, len = messageData.length; i < len; i++) {
+						if (Authentication.user._id === messageData[i].sender._id) {
+							messageData[i].type = 'Sender';
+						} else {
+							messageData[i].type = 'Reciever';
+						}
+					}
+					$scope.privateMessages = messageData;
+					var textarea = document.getElementById('textarea_id');
+					textarea.scrollTop = textarea.scrollHeight;
+				});
+			}
 		};
 		$scope.Redirect = function(bellnotificationid, feedid) {
 			var index = getIndexOf($scope.bellNotifications, bellnotificationid, '_id');

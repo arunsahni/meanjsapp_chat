@@ -16,6 +16,11 @@ angular.module('core').factory('Chats', [ '$http' , function ($http) {
     chatService.getUserList = function(req, res) {
         return $http.get('/onlineUsers');
     };
-
+    chatService.getPrivateMessageData = function(req, res) {
+        return $http.get('/chats/private/'+req.reciverId);
+    };
+    chatService.savePrivateMessageData = function(req, res) {
+        return $http.post('/chat/privateChatSave',req);
+    };
     return chatService;
 }]);

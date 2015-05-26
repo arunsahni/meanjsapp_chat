@@ -162,7 +162,7 @@
 							<div >
 								<div class="panel-heading top-bar" ng-style="{ background: chatCount > 0 ? '#666699' : '#265a88' }" ng-click="widgetExpanded = !widgetExpanded" >
 									<div class="col-md-8 col-xs-8">
-										<h3 class="panel-title" style="color: white" ><span class="glyphicon glyphicon-comment"></span> {{privatechatname}}</h3>
+										<h3 class="panel-title" style="color: white" ><span class="glyphicon glyphicon-comment"></span> {{privatechatuser.displayName}}</h3>
 									</div>
 									<div class="col-md-4 col-xs-4" style="text-align: right;">
 									<a href="#"><span id="minim_chat_window" class="glyphicon glyphicon-remove" style="color: black" ng-click="minWindPrivate()"></span></a>
@@ -171,7 +171,7 @@
 								</div>
 							</div>
 							<div class="panel-body msg_container_base" ng-show="showChatPrivate" id="textarea_id1">
-							<span ng-repeat="packet in Messages">
+							<span ng-repeat="packet in privateMessages">
 								<div ng-if="packet.type === 'Reciever'" class="row msg_container base_sent">
 									<div class="col-md-10 col-xs-10">
 										<div class="messages msg_sent">
@@ -203,8 +203,8 @@
 							<div class="panel-footer" ng-show="showChatPrivate">
 								<div class="input-group">
 								<span class="input-group-btn">
-									<form ng-submit="submitchat()">
-										<input id="btn-input1" type="text" ng-model="message" class="form-control input-sm chat_input" placeholder="Privet chat Under Process..." />
+									<form data-ng-controller="HeaderController" ng-submit="submitPrivatechat()">
+										<input type="text" ng-model="privatemessage" class="form-control input-sm chat_input" placeholder="Privet chat Under Process..." />
 									</form>
 								</span>
 								</div>

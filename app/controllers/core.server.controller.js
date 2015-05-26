@@ -42,7 +42,7 @@ exports.onlineUsers = function(req, res){
 };
 
 exports.chatFind = function(req, res){
-	Chat.find({}).sort({'chatDate':-1}).limit(10).populate('sender reciever').exec(function (err, chats) {
+	Chat.find({'chatType' : 'Public'}).sort({'chatDate':-1}).limit(10).populate('sender reciever').exec(function (err, chats) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
@@ -53,3 +53,27 @@ exports.chatFind = function(req, res){
 	});
 };
 
+exports.privateChatSave = function(req,res) {
+	var chat = new Chat(req.body);
+	chat.save(function(err) {
+		if (err) {
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else {
+			res.json(chat);
+		}
+	});
+};
+
+exports.privatchatFind  = function(req,res){
+	Chat.find({'chatType' : 'Private', sender:mongoose.Types.ObjectId(req.user._id), reciever: mongoose.Types.ObjectId(req.params.reciverId)}).sort({'chatDate':-1}).limit(10).populate('sender reciever').exec(function (err, chats) {
+		if (err) {
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else {
+			res.json(chats.reverse());
+		}
+	});
+};
