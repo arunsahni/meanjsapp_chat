@@ -108,7 +108,11 @@ var UserSchema = new Schema({
 		notificationtype: { type: String},
 		companyfeedId : { type: Schema.ObjectId, ref: 'Companyfeed'},
 		isSeen : { type: Boolean, defalt:false }
-	}]
+	}],
+	status: {
+		type: Object,
+		default: {}
+	}
 });
 
 /**

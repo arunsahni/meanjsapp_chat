@@ -1,14 +1,13 @@
 'use strict';
 
 // Articles controller
-angular.module('articles').controller('ArticlesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Articles','toastr', '$modal','$rootScope',
-	function($scope, $stateParams, $location, Authentication, Articles, toastr, $modal, $rootScope) {
+angular.module('articles').controller('ArticlesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Articles','toastr', '$modal','$rootScope', 'mySocket',
+	function($scope, $stateParams, $location, Authentication, Articles, toastr, $modal, $rootScope, mySocket) {
 		$scope.authentication = Authentication;
-
 		if($stateParams && $stateParams.redirectUrl) {
 			$scope.redirectUrl = $stateParams.redirectUrl;
 		}
-
+		$scope.imgPath = 'https://s3.amazonaws.com/sumacrm/avatars/' + Authentication.user._id;
 		var modalInstance;
 		$scope.toasterCheckSuc = function() {
 			toastr.success('Message with Title', 'Successfully');
@@ -145,5 +144,25 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
 				$scope.paymentDetail = payment;
 			});
 		};
+		//$scope.submitchat = function () {
+		//	var packet = {
+		//		id: Authentication.user._id,
+		//		msg: $scope.msg,
+		//		isImage: Authentication	.user.isImage
+		//	};
+		//	mySocket.emit('chat message', packet);
+		//	$scope.msg = '';
+		//};
+		//$scope.Messages = [];
+        //
+		//mySocket.on('chat message', function(packet){
+		//	if (Authentication.user._id === packet.id) {
+		//		packet.type = 'Sender';
+		//	} else {
+		//		packet.type = 'Reciever';
+		//	}
+		//	$scope.Messages.push(packet);
+        //
+		//});
 	}
 ]);
