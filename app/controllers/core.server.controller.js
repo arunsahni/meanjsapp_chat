@@ -67,8 +67,11 @@ exports.privateChatSave = function(req,res) {
 };
 
 exports.privatchatFind  = function(req,res){
-	Chat.find({'chatType' : 'Private', sender:mongoose.Types.ObjectId(req.user._id), reciever: mongoose.Types.ObjectId(req.params.reciverId)}).sort({'chatDate':-1}).limit(10).populate('sender reciever').exec(function (err, chats) {
-		if (err) {
+	
+	Chat.find({$or: [{$and: [{sender:mongoose.Types.ObjectId(req.user._id), reciever: mongoose.Types.ObjectId(req.params.reciverId)}]},
+		            {$and: [{sender:mongoose.Types.ObjectId(req.params.reciverId), reciever: mongoose.Types.ObjectId(req.user._id)}]}]}).sort({'chatDate':-1}).limit(10).populate('sender reciever').exec(function (err, chats) {
+
+			if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});

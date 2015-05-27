@@ -219,7 +219,7 @@
 	<menu visible="leftVisible" alignment="left">
 		<div class="title">Online Users</div>
 		<div ng-repeat="user in userList">
-
+			<div ng-if = "user._id != authentication.user._id">
 			<menu-item  hash="{{user}}">
 				<span>
 					<img ng-show="user.isImage" ng-src="https://s3.amazonaws.com/sumacrm/avatars/{{user._id + '?' + authentication.user.updated}}" class="img-circle" height="30" width="40">
@@ -229,6 +229,7 @@
 					{{user.displayName}}
 				</span>
 			</menu-item>
+			</div>
 		</div>
 	</menu>
 </div>
