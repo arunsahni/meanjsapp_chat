@@ -28,14 +28,12 @@ angular.module('core').controller('HeaderController', ['$scope', '$rootScope', '
 		});
 
 		mySocket.on('user joined', function (data) {
-			console.log('list',data);
 			$scope.userList = data.usernames;
 
 		});
 
 		$scope.removeUser = function(){
 			mySocket.emit('remove user', $scope.authentication.user);
-			console.log('Working on Anchor Tag');
 		};
 
 		window.onbeforeunload = function(e) {

@@ -29,7 +29,8 @@ module.exports = {
 				'public/lib/angular-translate/angular-translate.js',
 				'public/lib/angular-translate-loader-static-files/angular-translate-loader-static-files.js',
 				'public/lib/angular-socket-io/socket.js',
-				'public/lib/socket.io-client/socket.io.js'
+				'public/lib/socket.io-client/socket.io.js',
+				'public/lib/angular-audio/app/angular.audio.js'
 			]
 		},
 		css: 'public/dist/application.min.css',
