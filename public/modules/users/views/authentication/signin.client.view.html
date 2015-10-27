@@ -1,43 +1,39 @@
-<section class="row" data-ng-controller="AuthenticationController">
-    <div class="panel panel-default col-xs-offset-1 col-xs-10 col-md-offset-4 col-md-4 panel-radius">
-        <div class="">
-            <h3 class="col-md-12 text-center"> <span translate="signin.log"></span> <a href="/#!/signup" translate="signin.up"> </a></h3>
-        </div>
-        <div class="panel-body">
-            <form data-ng-submit="signin()" class="signin form-horizontal" autocomplete="off">
-                <fieldset>
-                    <div class="form-group">
-                        <div data-ng-show="error" class="text-center text-danger">
-                            <div class="alert alert-danger" role="alert">
-                                <strong data-ng-bind="error"></strong>
-                            </div>
+<section ng-controller="AuthenticationController">
+    <h3 class="col-md-12 text-center"> <span translate="signin.log"></span> <a href="/#!/signup" translate="signin.up"> </a></h3>
+    <div class="col-xs-offset-2 col-xs-8 col-md-offset-4 col-md-4">
+        <form ng-submit="signin(userForm.$valid)" class="signin" novalidate autocomplete="off">
+            <fieldset>
+                <div class="form-group">
+                    <div data-ng-show="error" class="text-center text-danger">
+                        <div class="alert alert-danger" role="alert">
+                            <strong data-ng-bind="error"></strong>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div class="input-group input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                            <input type="text" class="form-control" name="username" data-ng-model="credentials.username" placeholder="User Name" >
-                        </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        <input type="text" class="form-control" name="username" data-ng-model="credentials.username" placeholder="User Name" >
                     </div>
-                    <span class="help-block"></span>
-                    <div class="form-group">
-                        <div class="input-group input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                            <input type="password" class="form-control" name="password" data-ng-model="credentials.password" placeholder="Password">
-                        </div>
+                </div>
+                <span class="help-block"></span>
+                <div class="form-group">
+                    <div class="input-group input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                        <input type="password" class="form-control" name="password" data-ng-model="credentials.password" placeholder="Password">
                     </div>
-                    <span class="help-block"></span>
-                    <div class="text center form-group">
-                        <button type="submit" class="btn btn-lg btn-primary btn-block" translate="signin.login"></button>
-                    </div>
-                    <p class="forgot-password">
-                        <label class="checkbox">
-                            <input type="checkbox" value="remember-me" ><span translate="signin.rem"> </span> &nbsp; <span translate="signin.or"></span> &nbsp;
-                            <a href="/#!/password/forgot" translate="signin.fpass"></a>
-                        </label>
-                    </p>
-                </fieldset>
-            </form>
-        </div>
+                </div>
+                <span class="help-block"></span>
+                <div class="text center form-group">
+                    <button type="submit" class="btn btn-lg btn-primary btn-block" translate="signin.login"></button>
+                </div>
+                <p class="forgot-password">
+                    <label class="checkbox">
+                        <input type="checkbox" value="remember-me" ><span translate="signin.rem"> </span> &nbsp; <span translate="signin.or"></span> &nbsp;
+                        <a href="/#!/password/forgot" translate="signin.fpass"></a>
+                    </label>
+                </p>
+            </fieldset>
+        </form>
     </div>
 </section>

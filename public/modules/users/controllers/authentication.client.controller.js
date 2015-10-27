@@ -8,7 +8,7 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$http
 		if ($scope.authentication.user) $location.path('/companyfeeds/create');
 
 		$scope.signup = function() {
-            $scope.credentials.group = $scope.credentials.group._id;
+            //$scope.credentials.group = '';
 			$http.post('/auth/signup', $scope.credentials).success(function(response) {
 				// If successful we assign the response to the global user model
 				$scope.authentication.user = response;
@@ -17,16 +17,16 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$http
 				$location.path('/companyfeeds/create');
 			}).error(function(response) {
 				$scope.error = response.message;
-                $scope.credentials.group = $scope.groups[0];
+                //$scope.credentials.group = 1;
 			});
 		};
 
-        $scope.init = function() {
-            Groups.getGroups().success(function(groups){
-                $scope.groups = groups;
-                $scope.credentials.group = $scope.groups[0];
-            });
-        };
+        //$scope.init = function() {
+        //    Groups.getGroups().success(function(groups){
+        //        $scope.groups = groups;
+        //        $scope.credentials.group = $scope.groups[0];
+        //    });
+        //};
         //$scope.defaultSelected = $scope.groups[0];
 		$scope.signin = function() {
 			$http.post('/auth/signin', $scope.credentials).success(function(response) {
