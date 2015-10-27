@@ -1,80 +1,74 @@
 <section class="row" data-ng-controller="SettingsController" ng-init="init()">
-    <div class="panel panel-default col-xs-offset-1 col-xs-10 col-md-offset-4 col-md-4 panel-radius panel-top-margin">
-        <div class="">
-            <h3 class="col-md-12 text-center" translate="editpfile.eyp"></h3>
-        </div>
-        <div class="panel-body">
-                <form name="userForm" data-ng-submit="updateUserProfile(userForm.$valid)" class="signin form-horizontal" nonvalidate autocomplete="off">
-                    <fieldset>
-                        <div class="form-group">
-                            <div data-ng-show="error" class="text-center text-danger">
-                                <div class="alert alert-danger" role="alert">
-                                    <strong data-ng-bind="error"></strong>
-                                </div>
-                            </div>
+    <h3 class="col-md-12 text-center" translate="editpfile.eyp"></h3>
+    <div class="col-xs-offset-1 col-xs-10 col-md-offset-4 col-md-4">
+        <form name="userForm" ng-submit="updateUserProfile(userForm.$valid)" class="signin" novalidate autocomplete="off">
+            <fieldset>
+                <div class="form-group">
+                    <div data-ng-show="error" class="text-center text-danger">
+                        <div class="alert alert-danger" role="alert">
+                            <strong data-ng-bind="error"></strong>
                         </div>
-                        <div class="form-group">
-                            <div data-ng-show="success" class="text-center text-success">
-                                <div class="alert alert-success" role="alert">
-                                    <strong translate="editpfile.pss"></strong>
-                                </div>
-                            </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div data-ng-show="success" class="text-center text-success">
+                        <div class="alert alert-success" role="alert">
+                            <strong translate="editpfile.pss"></strong>
                         </div>
-                        <div>
-                            <h3 class="col-md-12 text-center">
-                                <img ng-src="../imgs/default-avatar.jpg" data-ng-if="!user.isImage" class="img-thumbnail">
-                                <img ng-src="{{uploadedImage}}" data-ng-if="user.isImage" class="img-thumbnail avatar-uploaded">
+                    </div>
+                </div>
+                <div>
+                    <h3 class="col-md-12 text-center">
+                        <img ng-src="../imgs/default-avatar.jpg" data-ng-if="!user.isImage" class="img-thumbnail">
+                        <img ng-src="{{uploadedImage}}" data-ng-if="user.isImage" class="img-thumbnail avatar-uploaded">
 
-                            </h3>
-                            <div class="form-group">
-                                <div class="input-group col-md-12 col-xs-1">
-                                    <input type="file" data-ng-file-select="onFileSelect($files)" accept="image/png, image/jpeg">
-                                </div>
-                            </div>
-                            <span data-ng-if="uploadInProgress">{{'editpfile.up' | translate}} {{ uploadProgress }} %</span>
-                            <div class="progress" data-ng-if="uploadInProgress">
-                                <div class="progress-bar" ng-style="{width:((uploadProgress / 100) * 100) + '%'}">
-                                    <span class="percent" ng-show="((uploadProgress / 100) * 100) <= 100">{{((uploadProgress / 100) * 100) | number:0}}%</span>
-                                    <span class="percent" ng-show="((uploadProgress / 100) * 100) > 100">100%</span>
-                                </div>
-                            </div>
+                    </h3>
+                    <div class="form-group">
+                        <div class="input-group col-md-12 col-xs-1">
+                            <input type="file" data-ng-file-select="onFileSelect($files)" accept="image/png, image/jpeg">
                         </div>
-                        <div class="form-group">
-                            <label for="firstName" translate="editpfile.fnam"></label>
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                <input type="text" id="firstName" name="firstName" class="form-control" data-ng-model="user.firstName" placeholder="{{'editpfile.fnam' | translate}}">
-                            </div>
+                    </div>
+                    <span data-ng-if="uploadInProgress">{{'editpfile.up' | translate}} {{ uploadProgress }} %</span>
+                    <div class="progress" data-ng-if="uploadInProgress">
+                        <div class="progress-bar" ng-style="{width:((uploadProgress / 100) * 100) + '%'}">
+                            <span class="percent" ng-show="((uploadProgress / 100) * 100) <= 100">{{((uploadProgress / 100) * 100) | number:0}}%</span>
+                            <span class="percent" ng-show="((uploadProgress / 100) * 100) > 100">100%</span>
                         </div>
-                        <div class="form-group">
-                            <label for="lastName" translate="editpfile.lnam"></label>
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                <input type="text" id="lastName" name="lastName" class="form-control" data-ng-model="user.lastName" placeholder="{{'editpfile.lnam' | translate}}">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="email" translate="editpfile.eml"></label>
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-                                <input type="email" id="email" name="email" class="form-control" data-ng-model="user.email" placeholder="{{'editpfile.eml' | translate}}">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="username" translate="editpfile.unam"></label>
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                <input type="text" id="username" name="username" class="form-control" data-ng-model="user.username" placeholder="{{'editpfile.unam' | translate}}">
-                            </div>
-                        </div>
-                        <div class="text-center form-group">
-                            <button type="submit" class="btn btn-lg btn-primary btn-block" translate="editpfile.spr"></button>
-                        </div>
-                    </fieldset>
-                </form>
-            </div>
-        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="firstName" translate="editpfile.fnam"></label>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        <input type="text" id="firstName" name="firstName" class="form-control" data-ng-model="user.firstName" placeholder="{{'editpfile.fnam' | translate}}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="lastName" translate="editpfile.lnam"></label>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        <input type="text" id="lastName" name="lastName" class="form-control" data-ng-model="user.lastName" placeholder="{{'editpfile.lnam' | translate}}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="email" translate="editpfile.eml"></label>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                        <input type="email" id="email" name="email" class="form-control" data-ng-model="user.email" placeholder="{{'editpfile.eml' | translate}}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="username" translate="editpfile.unam"></label>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        <input type="text" id="username" name="username" class="form-control" data-ng-model="user.username" placeholder="{{'editpfile.unam' | translate}}">
+                    </div>
+                </div>
+                <div class="text-center form-group">
+                    <button type="submit" class="btn btn-lg btn-primary btn-block" translate="editpfile.spr"></button>
+                </div>
+            </fieldset>
+        </form>
     </div>
-
 
 </section>
